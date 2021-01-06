@@ -37,3 +37,14 @@ I think I have done most normal cases with most of the commands.
 So now I will be going over all of them again but this time I
 will try and compare results of defferent options to command,
 and think more "not normal" use cases of the commands.
+
+# 17:15
+Started round two with the git-scm reference https://git-scm.com/docs
+
+# 18:59
+End of the Day.
+Done with-
+git, config, init, clone, add, status, diff, commit
+
+Goal for tommorow:
+complete as many as possible commands from the reference
