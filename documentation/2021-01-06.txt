@@ -1,11 +1,15 @@
-TLDR:
+TLDR: TIL -
 git's inner working
-git reflog
-
+git reflog, revert
+conflicts while revert and merge
+work on other people repo & let them work on my repo
+git squash, rebase
+start doing everything again thorogly
 -----
 
 # 9:22
 continued reading from https://www.atlassian.com/git/tutorials
+found a wonderful guide for beginners https://swcarpentry.github.io/git-novice/
 
 # 11:00
 Found an article which showcases some inner working of git.
@@ -15,3 +19,21 @@ Learned (a little) about under the hood working of git system.
 One note worthy point is - *"Commited data doesn't get lost even if
 we reset to some previous commits. git reflog can help to recover
 the lost commit."*
+It won't help if -
+    pull someone else's code
+    remove repo and clone again
+    finding >90 days change (git gc cleans it up)
+
+# 12:22
+Tried causing a conflict when using revert and resolving it
+Tried causing a conflict when merging and resolving it
+
+# 14:02
+Learned and tried git squash command
+Tried interactive rebase to squash local commits
+
+# 17:03
+I think I have done most normal cases with most of the commands.
+So now I will be going over all of them again but this time I
+will try and compare results of defferent options to command,
+and think more "not normal" use cases of the commands.
