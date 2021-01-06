@@ -1,0 +1,6 @@
+TLDR:
+
+-----
+
+# 9:22
+continued reading from https://www.atlassian.com/git/tutorials

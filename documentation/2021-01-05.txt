@@ -6,6 +6,7 @@ Today I Learned
 - branch, checkout, merge
 - remote add, fetch, pull, push
 
+-----
 
 Today i started learning about using git and github.
 How to manage local and remote repository with them.
