@@ -1,6 +1,17 @@
 TLDR:
+git's inner working
+git reflog
 
 -----
 
 # 9:22
 continued reading from https://www.atlassian.com/git/tutorials
+
+# 11:00
+Found an article which showcases some inner working of git.
+https://dev.to/maxpou/what-s-happens-when-you-git-commit-59n7
+Learned (a little) about under the hood working of git system.
+
+One note worthy point is - *"Commited data doesn't get lost even if
+we reset to some previous commits. git reflog can help to recover
+the lost commit."*
