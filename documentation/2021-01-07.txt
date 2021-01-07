@@ -5,3 +5,12 @@ TLDR; TIL -
 
 # 09:25
 Continue from the git reference
+
+# 11:23
+Solved an issue of a friend.
+In the process learned more about git push policies,
+merge conflicts and mergetool usage.
+Then continue from the reference.
+
+# 13:39
+Continue with the reference (after lunch)
