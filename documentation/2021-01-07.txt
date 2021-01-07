@@ -1,5 +1,7 @@
 TLDR; TIL -
-
+most common commands with different options
+most common error while operating git
+most common mistakes while operating git
 
 -----
 
@@ -14,3 +16,11 @@ Then continue from the reference.
 
 # 13:39
 Continue with the reference (after lunch)
+
+# 17:03
+Tried the commands and scenarios discussed in the meeting.
+
+# 18:55
+Done with the most commonly used commands, most common mistakes one can make,
+most common errors and their possible solutions.
+I still have some scenarios in mind, which i'll do later at night.
