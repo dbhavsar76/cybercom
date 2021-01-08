@@ -1,4 +1,12 @@
 TLDR; TIL -
+js hello world, primitive variable
+what is js and role of js
+comments, alert, prompt, operators, operator precedence
+var vs let
+
+-----
+Javascript numbers don't have sub types like int, float, etc.
+Everything is just 'number'.
 
 -----
 
@@ -7,3 +15,8 @@ Started with shared link
 
 # 10:55
 Finished watching videos for today
+
+# 17:13
+Done with exercises
+Now I'll read something about js on dev.to, medium or some other site like these.
+Later I'll learn from yt or some other course.
