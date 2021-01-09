@@ -1,26 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JS Coding Challange 2</title>
-</head>
-<body>
-    <h1>JS Coding Challange 2</h1>
-    BasketBall <br>
-</body>
-<script>
     // John's teams scores
     var jnMatch1, jnMatch2, jnMatch3, jnAvg;
-    jnMatch1 = 111;
-    jnMatch2 = 120;
-    jnMatch3 = 102;
+    jnMatch1 = 111; // prompt('Enter John Match 1 Score : ');
+    jnMatch2 = 120; // prompt('Enter John Match 2 Score : ');
+    jnMatch3 = 102; // prompt('Enter John Match 3 Score : ');
 
     // Mike's teams score
     var mkMatch1, mkMatch2, mkMatch3, mkAvg;
-    mkMatch1 = 116;
-    mkMatch2 = 94;
-    mkMatch3 = 123;
+    mkMatch1 = 116; // prompt('Enter Mike Match 1 Score : ');
+    mkMatch2 = 94;  // prompt('Enter Mike Match 2 Score : ');
+    mkMatch3 = 123; // prompt('Enter Mike Match 3 Score : ');
 
     jnAvg = (jnMatch1 + jnMatch2 + jnMatch3) / 3;
     mkAvg = (mkMatch1 + mkMatch2 + mkMatch3) / 3;
@@ -33,5 +21,3 @@
         console.log('Winner : John\'s Team.');
     else
         console.log('Winner : Mike\'s Team.');
-</script>
-</html>
