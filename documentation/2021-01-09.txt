@@ -1,5 +1,11 @@
 TLDR; TIL - 
+css writing-mode, box-sizing, text-orientation
 
 -----
+universal box-sizing helps a lot for size manipulation of different elements.
+i.e.
+* { box-sizing : border-box; }
 
+writing-mode is used to place the text vertical or horizontal.
+text-orientation can be used in combination for different effects.
 -----
