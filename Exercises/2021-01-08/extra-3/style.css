@@ -1,0 +1,16 @@
+* {
+    box-sizing: border-box;
+}
+
+table {
+    border: 10px solid black;
+    border-collapse: collapse;
+    width: calc(7 * 80px);
+    height: calc(20 * 25px);
+}
+
+td {
+    width: 80px;
+    border: 5px solid black;
+    height: 25px;
+}

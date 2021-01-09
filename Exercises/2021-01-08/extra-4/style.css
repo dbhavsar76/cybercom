@@ -1,0 +1,62 @@
+* {
+    font-family: Arial;
+}
+
+table {
+    border: 4px outset lightgrey;
+}
+
+td, th {
+    border: 1px inset lightgrey;
+}
+
+.bg-graphic {
+    background-color: lightblue;
+    background: url('img/bg-image.jpg') grey;
+    background-size:cover;
+}
+
+.bg-red {
+    background-color: red;
+}
+
+.bg-green {
+    background-color: green;
+}
+
+.tx-nowrap {
+    white-space: nowrap;
+}
+
+.tx-white {
+    color: white;
+}
+
+.tx-pink {
+    color: palevioletred;
+}
+
+.v-top {
+    vertical-align: top;
+}
+
+.tx-center {
+    text-align: center;
+}
+
+.tx-right {
+    text-align: right;
+}
+
+.tx-bold {
+    font-weight: 700;
+}
+
+.tx-obl {
+    font-style: oblique;
+}
+
+.tx-vert {
+    writing-mode:vertical-lr;
+    text-orientation: upright;
+}

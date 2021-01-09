@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extra Table 4</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <table>
+        <tr>
+            <th scope="col" style="min-width: 450px;">Heading 1</th>
+            <th scope="col">Heading 2</th>
+            <th scope="col" style="min-width: 200px;">Heading 3</th>
+        </tr>
+        <tr class="v-top">
+            <td class="tx-center">cell 1 text</td>
+            <td>cell 2 text A <br>cell 2 text B</td>
+            <td class="tx-center">cell 3 text</td>
+        </tr>
+        <tr>
+            <td class="tx-nowrap tx-center">a long piece of cell text all on one line without a break</td>
+            <td class="tx-obl">cell text</td>
+            <td class="tx-right">cell text aligned right</td>
+        </tr>
+        <tr>
+            <td class="tx-bold tx-center">cell text</td>
+            <td>&nbsp;</td>
+            <td class="bg-graphic">graphic background</td>
+        </tr>
+        <tr>
+            <th colspan="3" scope="colgroup">Mid-Table Heading</th>
+        </tr>
+        <tr>
+            <td>Things to do today</td>
+            <td rowspan="5">
+                <p class="tx-center tx-bold tx-vert" style="margin: auto;">
+                    WEEK <span style="writing-mode: horizontal-tb;">26</span>
+                </p>
+            </td>
+            <td>Monday</td>
+        </tr>
+        <tr>
+            <td class="bg-red">Things to do on tuesday</td>
+            <td class="bg-red">Tuesday</td>
+        </tr>
+        <tr>
+            <td>things to do today</td>
+            <td>Wednesday</td>
+        </tr>
+        <tr>
+            <td class="bg-green tx-white tx-center">Things to do today</td>
+            <td class="bg-green tx-pink">Thursday</td>
+        </tr>
+        <tr>
+            <td>Stuff to tidy up <span class="tx-bold tx-obl">before the weekend!!!</span></td>
+            <td>Friday</td>
+        </tr>
+    </table>
+</body>
+</html>
