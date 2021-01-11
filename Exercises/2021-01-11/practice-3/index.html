@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice - 3 : Nested Table</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <table id="outer-table">
+        <caption>Example : Nested</caption>
+        <tr>
+            <th rowspan="2" colspan="2" scope="col">CI</th>
+            <th rowspan="2" scope="col">All<br>Genders</th>
+            <th scope="col">By Gender</th>
+        </tr>
+        <tr>
+            <td>
+                <table border="2">
+                    <tr>
+                        <th scope="col">Males</th>
+                        <th scope="col">Females</th>
+                    </tr>
+                    <tr>
+                        <td>9215604</td>
+                        <td>4512358</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">Rural</th>
+            <td>6521458</td>
+            <td>4215389</td>
+            <td>4152348</td>
+        </tr>
+    </table>
+</body>
+</html>
