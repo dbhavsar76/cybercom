@@ -6,7 +6,22 @@ js
     function, arrays
 
 -----
+function declaration :
+1)  function doSomething(params) {
+        code; [return;]
+    }
 
+2)  var doSomething = function(params) {
+        code; [return;]
+    }
+
+arrays :
+1)  var arr = [1, 2, 3];
+2)  var arr = new Array(1, 2, 3);
+.lenght               > length of array
+.push(o), .pop()      > insert, delete respectively at end
+.shift(o), .unshift() > insert, delete respectively at front
+.indexOf(o)           > return index if o(object) exists in array else -1
 -----
 
 # 09:26
@@ -15,3 +30,6 @@ Watch scheduled videos for today.
 
 # 11:33
 finished js challange 2 with extra case
+
+# didn't notice time
+finished html exercise 2 & 3 from drive folder
