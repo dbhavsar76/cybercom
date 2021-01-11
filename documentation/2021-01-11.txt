@@ -4,7 +4,8 @@ js
         if..else, if..else if..else, ternery, switch
     truthy, falsy values
     function, arrays
-
+    let vs var
+    function declaration vs function expression
 -----
 function declaration :
 1)  function doSomething(params) {
@@ -39,3 +40,8 @@ Explored the topics discussed in 2 pm meeting
 
 # 18:07
 experimented with js functions
+
+# 21:10
+done with experiment with functions and function expressions
+learned about let vs var
+searched for more in depth information these topics
