@@ -33,3 +33,9 @@ finished js challange 2 with extra case
 
 # didn't notice time
 finished html exercise 2 & 3 from drive folder
+
+# 16:12
+Explored the topics discussed in 2 pm meeting
+
+# 18:07
+experimented with js functions
