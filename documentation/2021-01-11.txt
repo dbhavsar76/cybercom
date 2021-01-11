@@ -1,0 +1,17 @@
+TLDR; TIL -
+js 
+    control statements
+        if..else, if..else if..else, ternery, switch
+    truthy, falsy values
+    function, arrays
+
+-----
+
+-----
+
+# 09:26
+Start of the day.
+Watch scheduled videos for today.
+
+# 11:33
+finished js challange 2 with extra case
