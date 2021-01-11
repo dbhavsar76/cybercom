@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Filter</title>
+</head>
+<body>
+    <form>
+        <label for="image-upload">Image Upload : </label>
+        <input type="file" name="image-upload" id="image-upload" accept="image/*"><br><br>
+
+        <label for="audio-upload">Audio Upload : </label>
+        <input type="file" name="audio-upload" id="audio-upload" accept="audio/*"><br><br>
+
+        <label for="video-upload">Video Upload : </label>
+        <input type="file" name="vide-upload" id="video-upload" accept="video/*"><br><br>
+
+        <label for="video-upload">PDF Upload (with extension) : </label>
+        <input type="file" name="vide-upload" id="video-upload" accept=".pdf"><br><br>
+
+        <label for="video-upload">PDF Upload (with mime type) : </label>
+        <input type="file" name="vide-upload" id="video-upload" accept="application/pdf"><br><br>
+    </form>
+
+    The accept attribute only filters the files in the file picker dialog box. <br>
+    but user can still upload any type of file despite of that. <br>
+    the file picker dialog still shows 'All Files' option. <br>
+    removing that is not in our hands. it is OS dependant. <br>
+    thats why a client side as well as server side validator is necessary. <br>
+</body>
+</html>

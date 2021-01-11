@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Bullets</title>
+    <style>
+        #pass-field-1, #pass-field-5 {
+            text-security: none;
+            -webkit-text-security: none;
+        }
+        #pass-field-2, #pass-field-6 {
+            text-security: circle;
+            -webkit-text-security: circle;            
+        }
+        #pass-field-3, #pass-field-7 {
+            text-security: square;
+            -webkit-text-security: square;
+        }
+        #pass-field-4, #pass-field-8 {
+            text-security: disc;
+            -webkit-text-security: disc;
+        }
+
+        @font-face {
+            font-family: 'fontello';
+            src: url('fonts/fontello.eot');
+            src: url('fonts/fontello.eot') format('embedded-opentype'),
+            url('fonts/fontello.woff') format('woff'),
+            url('fonts/fontello.ttf') format('truetype'),
+            url('fonts/fontello.svg') format('svg');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        #pass-field-9 {
+            font-family: "fontello";
+            font-style: normal;
+            font-weight: normal;
+            speak: never;
+            font-size: 16px;
+            font-variant: normal;
+            text-transform: none;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            letter-spacing: 2px;
+        }
+</style>
+</head>
+<body>
+    <form>
+        <label for="pass-field-1">Password Field 1 (None) : </label>
+        <input type="password" name="pass-field-1" id="pass-field-1"><br>
+
+        <label for="pass-field-2">Password Field 2 (Cirlce) : </label>
+        <input type="password" name="pass-field-2" id="pass-field-2"><br>
+
+        <label for="pass-field-3">Password Field 3 (Square) : </label>
+        <input type="password" name="pass-field-3" id="pass-field-3"><br>
+
+        <label for="pass-field-4">Password Field 4 (Disc) : </label>
+        <input type="password" name="pass-field-4" id="pass-field-4"><br>
+
+        <label for="pass-field-5">Password Field 5 (None) : </label>
+        <input type="text" name="pass-field-5" id="pass-field-5"><br>
+
+        <label for="pass-field-6">Password Field 6 (Cirlce) : </label>
+        <input type="text" name="pass-field-6" id="pass-field-6"><br>
+
+        <label for="pass-field-7">Password Field 7 (Square) : </label>
+        <input type="text" name="pass-field-7" id="pass-field-7"><br>
+
+        <label for="pass-field-8">Password Field 8 (Disc) : </label>
+        <input type="text" name="pass-field-8" id="pass-field-8"><br>
+        <br><br>
+        <label for="pass-field-9">Password Field 9 (Hack) : </label>
+        <input type="password" name="pass-field-9" id="pass-field-9"><br>
+
+    </form>
+    <br><br>
+    The css property used here is not part of any standard. <br>
+    It may not work on every device and/or browser. <br>
+    <br>
+    The property only affects the inputs which doesn't have <br>
+    type="password". <br>
+    <br>
+    There's hack available.
+    Basically create own font with desired character replacing everything else. <br>
+    and apply that font to the password field. <br>
+    Reference : 
+    <a href="https://stackoverflow.com/questions/1648665/changing-the-symbols-shown-in-a-html-password-field">StackOverflow</a>
+    <a href="https://github.com/Mottie/input-password-bullet">GitHub</a> <br>
+</body>
+</html>
