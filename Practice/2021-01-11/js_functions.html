@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS functions</title>
+</head>
+<body>
+</body>
+<script>
+    alert(f1()); // prints f1
+    var f1 = () => 'f1a'; // override f1 to print f1a
+                            // cannot use let here because declaration is in same block
+    alert(f1()); // prints f1a
+
+    {
+        let f1 = () => 'f1b'; // override f1 to print f1b
+        alert(f1());      // prints f1b
+    } // this is only applicable in the block
+    // after block ends its back to f1a
+    alert(f1()); // prints f1a
+    
+    let f2 = function() { return 'f2'; };
+    alert(f2()); // prints f2
+    delete f2; // delete doesn't work here either
+    alert(f2()); // prints f2
+    
+    function f1() { return 'f1'; };
+
+    alert(f1()); // still prints f1a
+
+    delete f1; // variable declared with var cannot be destroyed by delete operator
+                // and if we use let instead of var then it throws an error stating 
+                // f1 is already declared
+    alert(f1()); // error f1 is not a function
+    // so once the
+
+    
+</script>
+</html>
+<!-- https://stackoverflow.com/questions/1596782/how-to-unset-a-javascript-variable -->

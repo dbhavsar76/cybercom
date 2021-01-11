@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Truthy Falsy</title>
+</head>
+<body>
+    Falsy values are : <br>
+    false <br>
+    0 <br>
+    -0 <br>
+    0n <br>
+    "" (empty string) <br>
+    null <br>
+    undefined <br>
+    NaN <br>
+    <br>
+    Everything other than that is truthy.
+</body>
+<script>
+console.log('0 : ',0 || false);
+console.log('1 : ',1 || false);
+console.log('Empty String : ','' || false);
+console.log('"0" : ','0' || false);
+console.log('"1" : ','1' || false);
+console.log('"a" : ','a' || false);
+console.log('NaN : ',NaN || false);
+console.log('null : ',null || false);
+console.log('undefined : ',undefined || false);
+console.log('"null" : ','null' || false);
+console.log('"undefined" : ','undefined' || false);
+console.log('"false" : ','false' || false);
+console.log('[] : ',[] || false);
+console.log('{} : ',{} || false);
+</script>
+</html>
