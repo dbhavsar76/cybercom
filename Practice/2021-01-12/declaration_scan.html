@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS Declaration Scan Sequencing Experiment</title>
+</head>
+<body>
+    JS Declaration Scan Sequencing Experiment
+</body>
+<script>
+    function f1() {
+        return 'f1';
+    }
+    alert(f1());
+    // this sequencing works (Duh..)
+    // function is declared before the code referencing it
+
+    alert(f2());
+    function f2() {
+        return 'f2';
+    }
+    // this sequencing also works because
+    // the function declarations are scanned before 
+    // execution of code even starts..
+
+    var v1 = 'v1';
+    alert(v1);
+    // this again works as it should be
+
+    // will this sequencing work ???
+    alert(v2);
+    var v2 = 'v2'; // let's see
+    // Nope...doesn't work...only function declarations are scanned.
+
+    // what about function declaration inside a function declaration
+    function n1() {
+        alert(n2());
+        return 'n1';
+
+        function n2() {
+            return 'n2';
+        }
+    }
+    alert(n1());
+    // well this works just fine...
+    
+    alert(n2());
+    // but n2 is limited to n1's scope...
+    // above line throws uncaught reference error
+</script>
+</html>
