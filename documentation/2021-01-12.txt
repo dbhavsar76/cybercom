@@ -28,7 +28,17 @@ When returning from function the context is popped off the stack and previous co
 
 Sequencing in creation of execution context.
 1. create argument object with all passed args
-2. scan the code for declarations
+2. scan the code for function declarations (compile the function and add to the context)
+3. scan the code for variable declarations (add to the context and initialize with 'undefined')
+
+Noteworthy deiiference:
+functions are already defined when execution phase starts
+but variable are set to undefined. they are only defined after the execution starts.
+
+Due to this sequence of events..
+functions declared normally can be called before the declaration(of course...in the same context)
+but functions created through function expressions cant be called before declaration because
+the assignment needs to executed first to go from undefined to function.
 -----
 
 # 09:47
