@@ -1,6 +1,9 @@
 TLDR; TIL - 
 js bts
-
+    engine
+    execution context, execution stack
+    hoisting, scoping
+    this keywod
 -----
 
 Js is run host environment. browser, node server etc.
@@ -12,13 +15,18 @@ Engine Work :
 ----------------------------------------------------------------------------------------------
 
 Environment called Execution Context. (Analogus to a container)
-Default contaxt is global context.
+Default context is global context.
 Global context is for variables and functions not inside of any function.
 (
     In case of browser, the global context is the 'window' object.
     firstName === window.firstName  // holds true
     Anything declared globally is associated with the window object.
 )
+
+Every execution context has three objects:
+1. Variable Object (stores the variables and functions of current context)
+2. Scopechaine (Has references to parent contexts)
+3. 'this' variable (has reference to object associated with current context)
 
 Execution Stack holds the current context.
 There is global context on stack by default.
@@ -39,7 +47,14 @@ Due to this sequence of events..
 functions declared normally can be called before the declaration(of course...in the same context)
 but functions created through function expressions cant be called before declaration because
 the assignment needs to executed first to go from undefined to function.
+
+'this' keyword
+Default value for 'this' variable is the gobal object(for browser, it's window)
+
 -----
 
 # 09:47
 Start the day with videos
+
+# 13:39
+End of videos with practice exercise
