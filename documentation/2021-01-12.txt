@@ -1,7 +1,34 @@
 TLDR; TIL - 
+js bts
 
 -----
 
+Js is run host environment. browser, node server etc.
+Host has a js engine to run js code. google V8, reno, spidermonkey, jscore etc.
+
+Engine Work :
+----------------------------------------------------------------------------------------------
+|   Source -> |Parser| -> Abstract Syntax Tree -> |Compile| -> Machine Code -> |CPU|(run)    |
+----------------------------------------------------------------------------------------------
+
+Environment called Execution Context. (Analogus to a container)
+Default contaxt is global context.
+Global context is for variables and functions not inside of any function.
+(
+    In case of browser, the global context is the 'window' object.
+    firstName === window.firstName  // holds true
+    Anything declared globally is associated with the window object.
+)
+
+Execution Stack holds the current context.
+There is global context on stack by default.
+When function is called its context is added on top of the stack.
+Local variable to that functions are stored in that particular function's context.
+When returning from function the context is popped off the stack and previous context becomes active.
+
+Sequencing in creation of execution context.
+1. create argument object with all passed args
+2. scan the code for declarations
 -----
 
 # 09:47
