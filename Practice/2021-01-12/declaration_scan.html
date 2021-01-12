@@ -6,7 +6,8 @@
     <title>JS Declaration Scan Sequencing Experiment</title>
 </head>
 <body>
-    JS Declaration Scan Sequencing Experiment
+    JS Declaration Scan Sequencing Experiment <br>
+    I think This also clears the scope and scopechaine.
 </body>
 <script>
     function f1() {
@@ -36,10 +37,24 @@
     // what about function declaration inside a function declaration
     function n1() {
         alert(n2());
+        // this call works because of local context
+
+        alert(f1());
+        // this call also works because of scopechaine
+        // current context also holds reference to parent contexts
+
         return 'n1';
 
         function n2() {
+            alert(f2());
+
             return 'n2';
+
+            function n3() {
+                alert(f1());
+
+                return 'n3';
+            }
         }
     }
     alert(n1());
