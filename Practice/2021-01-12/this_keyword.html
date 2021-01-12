@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>this Keyword Experiment</title>
+</head>
+<body>
+    this Keyword Experiment
+</body>
+<script>
+    var a = 'a';
+    console.log(this);
+    // prints the window object in console
+
+    alert(f1());
+    // prints the window object here too...
+    // because of regular function call
+
+    var ob = {
+        n : 12,
+        of1 : function() {
+            console.log(this);
+        },
+    };
+    
+    ob.of1()
+
+    var ob2 = {
+        n : 34,
+        of2 : ob.of1,
+    }
+    ob2.of2();
+    // prints object ob in the console
+    // because it's a method call
+
+    function f1() {
+        var f1 = 'f1';
+        console.log(this);
+        return f1;
+    }
+</script>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loops</title>
+</head>
+<body>
+    Loops
+</body>
+<script>
+    // classic for loop
+    console.log('classic for');
+    for (var i=0; i < 10; i++) {
+        console.log(i);
+    }
+
+    // iteration on array
+    console.log('iteration on array with for')
+    var arr = [3,5,2,8,1,8,9,0];
+    for (var i = 0; i < arr.length; i++) {
+        console.log(arr[i]);
+    }
+
+    // while loop
+    console.log('while loop');
+    var i = 0;
+    while (i < 10) {
+        console.log(i);
+        i++;
+    }
+
+    // for/in loop iterate through properties of object
+    console.log('for/in loop');
+    var ob = {
+        a : 1,
+        b : 2,
+        c : 3,
+    };
+    for (key in ob) {
+        console.log(key, ':',ob[key]);
+    }
+
+    // for/of loop iterate over an array
+    console.log('for/of loop');
+    for (n of arr) {
+        console.log(n);
+    }
+
+    var str = 'helloworld';
+    for (ch of str) {
+        console.log(ch);
+    }
+
+    // there's also a do while loop
+    //continue, break...
+</script>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Objects and Properties and Methods</title>
+</head>
+<body>
+    Objects and Properties and Methods
+</body>
+<script>
+    // creating an object
+    var person = {
+        firstName : 'Dhruv',
+        lastName : 'Bhavsar',
+        phone : 1234567890,
+        someArray : [1,2,3,4,5],
+        someObject : { a : 10, },
+    }
+    console.log(person);
+
+    // alternate way of creating object
+    var p2 = new Object(); // create empty object
+    p2.firstName = 'SomeName';  // then assign properties
+    console.log(p2);
+
+    // accessing values from the object
+    console.log(person.firstName);    // 1
+    console.log(person['lastName']); // 2
+    var x = 'phone';                // 3
+    console.log(person[x]);
+
+    // mutating properties
+    person.firstName = 'DhrV';      // 1
+    person['lastName'] = 'Bhvsr';  // 2
+    person[x] = 9078563412;       // 3
+
+    // methods
+    // didn't feel like writing about methods, it's all pretty straight forward
+
+</script>
+</html>
