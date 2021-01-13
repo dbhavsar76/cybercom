@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local Storage and Session Storage</title>
+</head>
+<body>
+    <h1>Local Storage</h1>
+    <ul>
+        <li>Persistant over refreshes, tabs(close/open), browser restarts, os reboots.</li>
+        <li>Shared between all tabs and windows with same origin</li>
+        <li>Does not expire. Only gets deleted if done manually</li>
+    </ul>
+
+    <h1>Session Storage</h1>
+    <ul>
+        <li>Persistant over page refreshes</li>
+        <li>But expires on tab close</li>
+        <li>Not shared between tabs and windows</li>
+        <li>Every tab has new instance of storage</li>
+        <li>But is shared between iframes(from same origin) in the same tab</li>
+    </ul>
+
+    <h2>Click the links below for demo</h2>
+    <a href="page1.html">Local Storage</a>&nbsp;&nbsp;<a href="page2.html">Session Storage</a>
+</body>
+</html>

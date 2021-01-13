@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local Storage and Session Storage</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Local Storage</h1>
+    <p>Check by opening in new windows and tabs</p>
+    <div id="frm" class="hidden">
+        <h3>You haven't logged in yet.</h3>
+        <p>Enter name to continue.</p>
+        <form action="#">
+            <label for="name">Enter Name : </label>
+            <input type="text" name="name" id="name">
+            <button id="btn-log-in">Log In</button>
+        </form>
+        <p id="error"></p>
+    </div>
+    <div id="greetings" class="hidden">
+        <h3>Hello, <span id="user">User</span>! Welcome Back.</h3>
+        <button id="btn-log-out">Log Out</button>
+    </div>
+</body>
+<script src="js/page1.js"></script>
+</html>
