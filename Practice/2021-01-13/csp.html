@@ -1,0 +1,79 @@
+<!-- Reference : https://developers.google.com/web/fundamentals/security/csp -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self';
+                 img-src 'self' https://www.koenigsegg.com">
+  <title>Content security policy</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div>
+    <h1>Content Security Policy</h1>
+    <p>
+      Long story short : <br>
+      Browser is an idiot. It doesn't know the difference between <br>
+      good sources and bad sources. So we provide a list of trusted <br>
+      sources. Only resources from these sources are allowed to <br>
+      be rendered or to be executed. <br>
+    </p>
+  </div>
+  <div class="container">
+    <h1 style="text-align: center;">Koenigsegg Gemera</h1>
+    <div class="card-container">
+      <div class="card">
+        <div>
+          <img height="315px" src="img/Gemera_exterior_22_high.jpg" alt="Gemera_exterior_22_high">
+          <p>Exterior Front</p>
+        </div>
+      </div>
+      <div class="card">
+        <div>
+          <img height="315px" src="img/Gemera_front_high.jpg" alt="Gemera_front_high">
+          <p>Front</p>
+        </div>
+      </div>
+      <div class="card">
+        <div>
+          <img height="315px" src="https://www.koenigsegg.com/wp-content/themes/koenigsegg/gemera/assets/images/gallery/Gemera_rear.jpg" alt="Gemera_rear_high">
+          <p>rear</p>
+        </div>
+      </div>
+      <div class="card">
+        <div>
+          <img height="315px" src="https://via.placeholder.com/215x315.png/333333/ffffff" alt="Gemera_exterior_21_high">
+          <p>exterior rear</p>
+        </div>
+      </div>
+    </div>
+    <div class="text-container">
+      <p>
+        Ultimate performance has belonged to the world of two-seaters with very limited luggage space – until now. 
+        The Gemera is the world’s first Mega-GT and Koenigsegg’s first four-seater. 
+        Extreme megacar meets spacious interior and ultimate environmental consciousness. <br>
+        The notion behind Gemera’s name – a combination of the two Swedish words – “ge” (give) and “mera” (more) signifies “to give more”. 
+        A suitable name for a car that adds features and functions without taking away anything that makes it a true megacar.
+      </p>
+      <hr>
+    </div>
+  </div>
+  <div>
+    <p>
+      Above the first and second images are self hosted, <br>
+      third image is from koenigsegg.com and the fourth image is <br>
+      from placeholder.com. It also blocks the inline css and inline javascript.(unless allowed in csp). <br>
+      (Find errors in the console or in the attached image in the repository.)</p>
+    <p>
+      Browser renders the third image because we provided koenigsegg.com <br>
+      in the CSP's img-src list. While the last image isn't rendered <br>
+      because placeholder.com isn't in the list. </p>
+    <p>
+      Content Security Policy also provides directives to limit <br>
+      other contnt type like scripts(main goal of csp: prevent xss), <br>
+      media, stylesheets, fonts, plugins, form-actions, base-uris, etc.</p>
+  </div>
+</body>
+</html>
