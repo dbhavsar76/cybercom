@@ -10,6 +10,14 @@ td, th {
     border: 1px inset lightgrey;
 }
 
+.head-1 {
+    min-width: 450px;
+}
+
+.head-3 {
+    min-width: 200px;
+}
+
 .bg-graphic {
     background-color: lightblue;
     background: url('img/bg-image.jpg') grey;
@@ -59,4 +67,12 @@ td, th {
 .tx-vert {
     writing-mode:vertical-lr;
     text-orientation: upright;
+}
+
+.tx-horz {
+    writing-mode: horizontal-tb;
+}
+
+.m-auto {
+    margin: auto;
 }
