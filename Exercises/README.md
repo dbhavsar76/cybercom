@@ -3,3 +3,5 @@
 Contains code for problems given in the exercises folder.
 
 > Code written whiles learning from videos and other practice can be found in practice folder.
+
+*Code for challanges given in the meetings are on 'html' branch in 'Practice' Folder*
