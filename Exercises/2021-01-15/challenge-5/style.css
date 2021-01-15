@@ -1,0 +1,22 @@
+* {
+    box-sizing: border-box;
+}
+
+h1 {
+    text-align: center;
+}
+
+.tooltip {
+    position: relative;
+}
+
+.tooltip .tooltip-text {
+    visibility: hidden;
+    position: absolute;
+    transition: 1s;
+    background-color: #555;
+    color: white;
+    padding: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+}

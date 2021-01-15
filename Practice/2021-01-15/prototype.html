@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playing with Prototype</title>
+</head>
+<body>
+    <h1>Playing with Prototype</h1>
+    <hr>
+    <h1>Null Checking</h1>
+    <p>
+        Check if the object exists before checking its properties. <br>
+        Well I haven't written any code with that scenario in these files. <br>
+        But here's how i would do it. <br> <br>
+        <code>
+            var p1 = { <br>
+                name: 'abc', <br>
+            }; <br><br>
+
+            var p2 = null; <br> <br>
+
+            if (p1?.name) { ... } <br>
+            if (p2?.name) { ... } <br>
+        </code>
+    </p>
+</body>
+<script src="js/prototype.js"></script>
+</html>
