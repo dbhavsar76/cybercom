@@ -1,0 +1,22 @@
+table {
+    border: 1px double black;
+    border-collapse: collapse;
+}
+
+caption {
+    font-weight: bold;
+    text-transform: capitalize;
+}
+
+thead {
+    background-color: palegreen;
+}
+
+th, td {
+    border: 1px solid;
+}
+
+th[scope="row"] {
+    vertical-align: top;
+    text-align: left;
+}

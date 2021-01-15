@@ -1,0 +1,19 @@
+* {
+    box-sizing: border-box;
+}
+
+h1 {
+    margin-bottom: 30px;
+}
+
+table {
+    border: 1px solid black;
+}
+
+th, td {
+    border: 1px solid black;
+}
+
+img {
+    height: 80px;
+}
