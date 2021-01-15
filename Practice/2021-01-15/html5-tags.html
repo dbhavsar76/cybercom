@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML 5 Tags demo</title>
+</head>
+<body>
+    <h1>HTML5 New Tags</h1>
+    <br><br>
+    
+    <h2>Header, Main, Footer, Section, Article</h2>
+    <p>Header : Represents the header of a document or a section<br>
+        Main : Represents the main or dominant content of the document<br>
+        Footer : Represents the footer of a document or a section<br>
+        Section : Defines a section of a document, such as header, footer etc<br>
+        Article : Defines an article</p>
+    <hr><header>
+        <h1>Welcome to our website</h1>
+    </header>
+    <main>
+        <h1>Core Web Technologies</h1>
+        <p>HTML and CSS are two of the core technologies for building web pages.</p>
+        <article>
+            <h2>What is HTML?</h2>
+            <p>HTML stands for HyperText Markup Language. HTML is the standard markup language for describing the structure of web pages.</p>
+        </article>
+        <article>
+            <h2>What is CSS?</h2>
+            <p>CSS stands for Cascading Style Sheet. CSS allows you to specify various style properties for HTML elements such as colors, backgrounds, fonts etc.</p>
+        </article>
+    </main>
+    <footer>
+        <p>copyright &copy; tutorialrepublic.com</p>
+    </footer><hr>
+    <br><br>
+
+    <h2>Audio</h2>
+    <p>Embeds a sound, or an audio stream in an HTML document</p>
+    <audio controls="controls" src="media/birds.mp3">
+        Your browser does not support the HTML5 Audio element.
+    </audio>
+    <br><br>
+
+    <h2>Video</h2>
+    <p>Embeds video content in an HTML document</p>
+    <video controls="controls" src="media/shuttle.mp4">
+        Your browser does not support the HTML5 Video element.
+    </video>
+    <br><br>
+
+    <h2>Canvas</h2>
+    <p>Defines a region in the document, which can be used to draw graphics on the fly via scripting</p>
+    <canvas id="myCanvas" width="300" height="200"></canvas>
+    <br><br>
+
+    <h2>Dialog</h2>
+    <p>Defines a dialog box or subwindow</p>
+    <dialog open>
+        <p>Are you sure you want to remove this item?</p>
+        <button type="button">Yes</button>
+        <button type="button">No</button>
+    </dialog>
+    <br><br><br><br><br>
+
+    <h2>Embed</h2>
+    <p>Embeds external application, typically multimedia content like audio or video into an HTML document</p>
+    <embed src="blur.swf" width="400px" height="200px">
+    <br><br>
+
+    <h2>Figure, Figcaption</h2>
+    <p>Figure : Represents a figure illustrated as part of the document <br>Figcaption : Defines a caption or legend for a figure</p>
+    <figure>
+        <img src="media/discovery.jpg" alt="Space Shuttle">
+        <figcaption>NASA - Space Shuttle Discovery</figcaption>
+    </figure>
+
+    <h2>Output</h2>
+    <p>Represents the result of a calculation</p>
+    <form oninput="result.value=parseInt(a.value)+parseInt(b.value)">
+        <input type="range" id="a" value="50"> +
+        <input type="number" id="b" value="100"> =
+        <output name="result" for="a b"></output>
+    </form>
+    <br><br>
+
+    <h2>Picture</h2>
+    <p>Defines a container for multiple image sources</p>
+    <picture>
+        <source media="(min-width: 1024px)" srcset="media/banner-large.png">
+        <source media="(max-width: 768px)" srcset="media/banner-small.png">
+        <img src="media/banner.png" alt="Banner">
+    </picture>
+    <br><br>
+
+    <h2>Progress</h2>
+    <p>Represents the completion progress of a task</p>
+    <h2>Task Progress</h2>
+    <p>Progress: <progress id="bar" value="0" max="100"><span>0</span>%</progress></p>
+    <br><br>
+
+    <h2>SVG</h2>
+    <p>Embed SVG (Scalable Vector Graphics) content in an HTML document</p>
+    <svg width="500" height="350">
+        <rect x="100" y="100" width="300" height="150" fill="yellow" stroke="black" stroke-width="5" />
+    </svg>
+    <br><br>
+
+    <h2>Time</h2>
+    <p>Represents a time and/or date</p>
+    <p>The library opens at <time>8:30 am</time> every morning.</p>
+    <p>The concert took place on <time datetime="2016-12-31 12:00">31 Dec</time>.</p>
+    <br><br>
+
+
+</body>
+<script>
+    window.onload = function(){
+        var canvas = document.getElementById("myCanvas");
+        var context = canvas.getContext("2d");
+        context.moveTo(50, 150);
+        context.lineTo(250, 50);
+        context.stroke();
+    };
+</script>
+<script type="text/javascript">
+    var i = 0;
+    var progressBar = document.getElementById("bar");
+    function countNumbers(){
+        if(i < 100){
+            i = i + 1;
+            progressBar.value = i;
+            progressBar.getElementsByTagName("span")[0].textContent = i;
+        }
+        setTimeout("countNumbers()", 500);
+    }
+    countNumbers();
+</script>
+</html>
