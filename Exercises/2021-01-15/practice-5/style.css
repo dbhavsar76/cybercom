@@ -1,3 +1,8 @@
+* {
+    box-sizing: border-box;
+    font-size: small;
+}
+
 table {
     border: 1px double black;
     border-collapse: collapse;
@@ -6,6 +11,7 @@ table {
 caption {
     font-weight: bold;
     text-transform: capitalize;
+    text-align: left;
 }
 
 thead {
@@ -14,9 +20,33 @@ thead {
 
 th, td {
     border: 1px solid;
+    padding: 10px 5px 5px 5px;
 }
 
 th[scope="row"] {
     vertical-align: top;
     text-align: left;
+    background-color: aqua;
+}
+
+td:nth-child(2) {
+    background-color: white;
+}
+
+td:nth-child(3) {
+    background-color: pink;
+}
+
+td:nth-child(4) {
+    background-color: #ffff44;
+}
+
+.grp-1:first-of-type th,
+.grp-1:first-of-type td {
+    border-bottom: hidden;
+}
+
+.grp-1:last-of-type td,
+.grp-1:last-of-type th {
+    border-top: hidden;
 }
