@@ -18,5 +18,3 @@ document.getElementById('pass-placeholder').addEventListener('input', e => {
     pass.value += e.data;
     ip.value = '%'.repeat(ip.value.length);
 });
-
-// for more real-world like case
