@@ -1,0 +1,12 @@
+* {
+    box-sizing: border-box;
+}
+
+label {
+    display: inline-block;
+    width: 200px;
+}
+
+.field * {
+    vertical-align: text-top;
+}

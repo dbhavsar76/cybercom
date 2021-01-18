@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice 7</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Form</h1>
+    <form action="success.html">
+        <fieldset>
+            <legend>Your Address</legend>
+            <p class="field">
+                <label for="first-name">First Name</label>
+                <input type="text" name="first-name" id="first-name">
+            </p>
+            <p class="field">
+                <label for="last-name">Last Name</label>
+                <input type="text" name="last-name" id="last-name">
+            </p>
+            <p class="field">
+                <label for="street">Street</label>
+                <input type="text" name="street" id="street">
+            </p>
+            <p class="field">
+                <label for="city">City</label>
+                <input type="text" name="city" id="city">
+            </p>
+        </fieldset>
+        <fieldset>
+            <legend>Additional Details</legend>
+            <p class="field">
+                <label for="biography">Biography</label>
+                <textarea name="biography" id="biography"></textarea>
+            </p>
+            <p class="field">
+                <label for="image">Image</label>
+                <input type="file" name="image" id="image">
+            </p>
+            <p class="field">
+                <label for="agegrp">Age Group</label>
+                <select name="agegrp" id="agegrp">
+                    <option value="0-9">0 to 9 Years</option>
+                    <option value="10-19">10 to 19 Years</option>
+                    <option value="20-29">20 to 29 Years</option>
+                    <option value="30-39">30 to 39 Years</option>
+                    <option value="40-49">40 to 49 Years</option>
+                    <option value="50-59">50 to 59 Years</option>
+                    <option value="60-69">60 to 69 Years</option>
+                    <option value="70-79">70 to 79 Years</option>
+                    <option value="80-89">80 to 89 Years</option>
+                    <option value="90-99">90 to 99 Years</option>
+                </select>
+            </p>
+        </fieldset>
+        <fieldset>
+            <legend>Interests</legend>
+            <p class="field">
+                <label for="hobbies">Hobbies</label>
+                <textarea name="hobbies" id="hobbies"></textarea>
+            </p>
+            <p class="field">
+                <label for="favcar">Favourite Car?</label>
+                <select name="favcar" id="favcar">
+                    <option value="maruti">Maruti</option>
+                    <option value="honda">Honda</option>
+                    <option value="hyundai">Hyundai</option>
+                    <option value="fiat">Fiat</option>
+                    <option value="other">Other</option>
+                </select>
+            </p>
+            <p class="field">
+                <label for="fav-pub-tr">Favourite Public Transport?</label>
+                <select name="fav-pub-tr" id="fav-pub-tr">
+                    <optgroup label="Ground">
+                        <option value="train">Train</option>
+                        <option value="bus">Bus</option>
+                    </optgroup>
+                    <optgroup label="Water">
+                        <option value="ferry">Ferry</option>
+                        <option value="waterbus">Water Bus</option>
+                    </optgroup>
+                </select>
+            </p>
+        </fieldset>
+        <fieldset>
+            <legend>Submission</legend>
+            <p>
+            	<button type="submit">Submit</button>
+            	<button type="reset">Reset</button>
+            </p>
+        </fieldset>
+    </form>
+</body>
+</html>
