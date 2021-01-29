@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice Challenge 2</title>
+</head>
+<body>
+    <h1>Storing JS Objects in the Local Storage</h1>
+    <p>The script creates a bunch of objects and then stores in <br>
+        the Local Storage. Then on clicking the button "Show Objects" it loads the <br>
+        array of objects and recreate them in another variable and <br>
+        prints them here. Click "Populate" for initial creation of the objects <br>
+        or for adding more entries. (entries are hard coded for now).
+    </p>
+    <p>(See console for result.)</p>
+    <p>
+        <button id="populate">Populate</button> add entries <br><br>
+        <button id="load">Show Objects</button> refresh table <br>
+    </p>
+    <p>
+        <table id="content-table" border="1">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Age</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Telephone No.</th>
+                </tr>
+            </thead>
+            <tbody id="table-body"></tbody>
+        </table>
+    </p>
+</body>
+<script src="js/Person.js"></script>
+<script src="js/script.js"></script>
+</html>
