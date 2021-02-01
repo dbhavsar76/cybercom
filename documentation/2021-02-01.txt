@@ -7,3 +7,5 @@ basic queries and hit counter application
 die and exit, expr matching
 functions, include, require
 string functions
+
+finished 5 forms exercises given in the docs
