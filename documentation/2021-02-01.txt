@@ -1,0 +1,9 @@
+finished todays videos and some of previous videos
+
+learned about databases and phpmyadmin
+connecting to database through php
+basic queries and hit counter application
+
+die and exit, expr matching
+functions, include, require
+string functions
