@@ -1,0 +1,82 @@
+* {
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    position: relative;
+    height: 100vh;
+}
+
+.wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 350px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.title {
+    text-align: center;
+    color: white;
+    background-color: #E77632;
+    padding: 20px;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.inputs {
+    padding: 20px 30px;
+    background-color: #FBEFBF;
+}
+
+.submit-div {
+    background-color: #F8CC37;
+    color: #4B2813;
+    padding: 10px;
+}
+
+input, textarea {
+    display: block;
+    width: 100%;
+    margin: 15px auto;
+    margin-bottom: 5px;
+    border: none;
+    outline: none;
+    padding: 5px;
+}
+
+input[type=submit] {
+    background: none;
+    font-size: 2rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.error {
+    outline: solid red 2px !important;
+}
+
+.error-msg {
+    font-size: 0.7rem;
+    color: red;
+    margin-top: 0;
+}
+
+.sub-msg {
+    font-size: 0.9rem;
+    text-align: center;
+    padding: 5px;
+}
+
+.red {
+    background-color: #D9544F;
+    color: red;
+}
+
+.green {
+    background-color: #62AF5E;
+    color: green;
+}
