@@ -1,16 +1,12 @@
 <?php
+require_once '../common/functions.php';
+
 // var initiallization
 $name = $email = $subject = $message = '';
 $name_err = $email_err = $subject_err = $message_err =  '';
 $name_class = $email_class = $subject_class = $message_class = '';
 $submit_msg = $submit_class = '';
 
-function transform($data) {
-    $data = trim($data);
-    $data = stripslashes($data);
-    $data = htmlspecialchars($data);
-    return $data;
-}
 
 if (isset($_POST['submit'])) {
     $name = transform($_POST['name']);

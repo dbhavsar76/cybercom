@@ -1,90 +1,92 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form 1</title>
-    <link rel="stylesheet" href="form1.css">
-</head>
-<body>
-<div class="wrapper">
-    <form action="printdata.php" method="post" enctype="multipart/form-data" id="user-form">
-        <table>
-            <thead>
-                <tr>
-                    <th colspan="2" scope="colgroup">User Form</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><label for="name">Enter Name</label></td>
-                    <td><input type="text" name="name" id="name"></td>
-                </tr>
-                <tr>
-                    <td><label for="password">Enter Password</label></td>
-                    <td><input type="password" name="password" id="password"></td>
-                </tr>
-                <tr>
-                    <td><label for="address">Enter Address</label></td>
-                    <td><textarea name="address" id="address"></textarea></td>
-                </tr>
-                <tr>
-                    <td>Select Game</td>
-                    <td>
-                        <input type="checkbox" name="game[]" id="g-hockey" value="hockey">
-                        <label for="g-hockey">Hockey</label><br>
-                        <input type="checkbox" name="game[]" id="g-football" value="football">
-                        <label for="g-football">Football</label><br>
-                        <input type="checkbox" name="game[]" id="g-badminton" value="badminton">
-                        <label for="g-badminton">Badminton</label><br>
-                        <input type="checkbox" name="game[]" id="g-cricket" value="cricket">
-                        <label for="g-cricket">Cricket</label><br>
-                        <input type="checkbox" name="game[]" id="g-volleyball" value="volleyball">
-                        <label for="g-volleyball">Volleyball</label>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Gender</td>
-                    <td>
-                        <input type="radio" name="gender" id="ge-m" value="male">
-                        <label for="ge-m">Male</label>
-                        <input type="radio" name="gender" id="ge-f" value="female">
-                        <label for="ge-f">Female</label>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Age Group</td>
-                    <td>
-                        <select name="age-grp" id="age-grp">
-                            <option value="">Select</option>
-                            <option value="1">&le; 9</option>
-                            <option value="2">10 - 19</option>
-                            <option value="3">20 - 29</option>
-                            <option value="4">30 - 39</option>
-                            <option value="5">40 - 49</option>
-                            <option value="6">50 - 59</option>
-                            <option value="7">60 - 69</option>
-                            <option value="8">70 - 79</option>
-                            <option value="9">80 - 89</option>
-                            <option value="10">&ge; 90</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2"><input type="file" name="image" id="img-upload"></td>
-                </tr>
-            </tbody>
-            <tfoot>
-                <tr>
-                    <td colspan="2">
-                        <input type="reset" value="Reset" name="reset" id="reset">
-                        <input type="submit" value="Submit Form" name="submit" id="submit">
-                    </td>
-                </tr>
-            </tfoot>
-        </table>
-    </form>
-</div>
-</body>
-<script src="form1.js"></script>
-</html>
+<?php
+$self = htmlspecialchars($_SERVER["PHP_SELF"]);
+require_once '../common/functions.php';
+
+$games_a = ['hockey', 'football', 'badminton', 'cricket', 'volleyball'];
+$name = $pass = $gender = $address = $age_grp = '';
+$games = [];
+$errors = array_fill(0, 7, '');
+$errors_cl = array_fill(0, 7, '');
+$submit_msg = '';
+$male_checked = $female_checked = '';
+$games_checked = array_fill(0, count($games_a), '');
+
+
+
+if (isset($_POST['submit'])) {
+    $name = transform($_POST['name']);
+    $pass = transform($_POST['password']);
+    $address = transform($_POST['address']);
+    $games = isset($_POST['game']) ? $_POST['game'] : [];
+    $gender = isset($_POST['gender']) ? transform($_POST['gender']) : '';
+    $age_grp = transform($_POST['age-grp']);
+    $validated = true;
+
+    if (empty($name)) {
+        $validated = false;
+        $errors[0] = '* First Name is Required';
+    }
+
+    if (empty($pass)) {
+        $validated = false;
+        $errors[1] = '* Password is Required';
+    }
+
+    if (empty($address)) {
+        $validated = false;
+        $errors[2] = '* Address is Required';
+    }
+
+
+    if (empty($games)) {
+        $validated = false;
+        $errors[3] = '* Games is Required';
+    } else {
+        foreach ($games_a as $i => $game) {
+            if(array_search($game, $games)) {
+                $games_checked[$i] = 'checked';
+            }
+        }
+    }
+
+    if (empty($gender)) {
+        $validated = false;
+        $errors[4] = '* Gender is Required';
+    } else {
+        $male_checked = ($gender == 'male') ? 'checked' : '';
+        $female_checked = ($gender == 'female') ? 'checked' : '';
+    }
+
+    if (empty($age_grp)) {
+        $validated = false;
+        $errors[5] = '* Age Group is Required';
+    }
+
+    // todo: implement file validation
+    // create database and change the insert code
+
+    if ($validated) {
+        require '../common/db_connect.php';
+        $stmt = mysqli_prepare($con, 'INSERT INTO form2 (name, password, gender, address, dob, games, mstatus) VALUES (?,?,?,?,?,?,?)');
+        mysqli_stmt_bind_param($stmt, 'sssssss', $name, $pass, $gender, $address, $dob, $games, $mstatus);
+        mysqli_stmt_execute($stmt);
+
+        // successfully inserted
+        if (mysqli_affected_rows($con)) {
+            session_start();
+            $_SESSION['success'] = true;
+            header('location:success.php');
+            die();
+        } else { // failed to insert
+            $submit_msg = 'There was an error in registration.<br>Please try again.';
+        }
+    } else {
+        foreach ($errors as $index => $err) {
+            if (!empty($err)) {
+                $errors_cl[$index] = 'error';
+            }
+        }
+    }
+}
+
+include_once 'index-template.php';

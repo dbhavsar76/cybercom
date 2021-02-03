@@ -2,8 +2,7 @@
 $self = htmlspecialchars($_SERVER["PHP_SELF"]);
 require_once '../common/functions.php';
 
-$name = $pass = $gender = $address = $dob_d = $dob_m = $dob_y = $mstatus = $tnc = '';
-$games = [];
+$name = $pass = $gender = $address = $dob_d = $dob_m = $dob_y = $mstatus = $tnc = $games = '';
 $errors = array_fill(0, 8, '');
 $errors_cl = array_fill(0, 8, '');
 $submit_msg = '';

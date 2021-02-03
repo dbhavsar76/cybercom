@@ -1,15 +1,11 @@
 <?php 
+require_once '../common/functions.php';
+
 // initiallizing vars
 $email = $pass = '';
 $email_err = $pass_err = $sign_in_error = '';
 $email_class = $pass_class = '';
 
-function transform($data) {
-    $data = trim($data);
-    $data = stripslashes($data);
-    $data = htmlspecialchars($data);
-    return $data;
-}
 
 if (isset($_POST['submit'])) {
     $email = transform($_POST['email']);

@@ -1,16 +1,11 @@
 <?php
+require_once '../common/functions.php';
+
 // vars initiallization
 $fname = $lname = $email = $phone = $pass = $pass2 = $gender = $dob_date = $dob_month = $dob_year = $country = $tnc = '';
 $errors = array_fill(0, 10, '');
 $errors_cl = array_fill(0, 10, '');
 $submit_msg = '';
-
-function transform($data) {
-    $data = trim($data);
-    $data = stripslashes($data);
-    $data = htmlspecialchars($data);
-    return $data;
-}
 
 if (isset($_POST['submit'])) {
     $fname = transform($_POST['firstname']);

@@ -1,11 +1,3 @@
-// yes, i didn't use 'required' attribute in html
-// and i thought about backend validation also
-// but since there isn't explicit mention of that,
-// i ignored it to save some time
-
-// js file of every form is almost same (same for html and php files)
-// subsequent files may not be fully documented
-
 // attaching listener that validates inputs on submit event
 document.getElementById('user-form').addEventListener('submit', function(e) {
     e.returnValue = validateForm();
@@ -14,9 +6,6 @@ document.getElementById('user-form').addEventListener('submit', function(e) {
 // function takes every inputs and validates them
 // - if an input is not validated its outline turns red
 //   if successfully validated after correcting then reset back the outline
-// - for more user-friendliness i could also print various messages
-//   next to every input based on validation error but it would 
-//   make code way bigger and i had to do 5 forms in a day so...
 function validateForm() {
     
     // get all input elements
@@ -27,6 +16,7 @@ function validateForm() {
     const genders = document.getElementsByName('gender');
     const ageGrp = document.getElementById('age-grp');
     const imgUpload = document.getElementById('img-upload');
+    const errors = document.querySelectorAll('.err-msg');
     let validated = true;
 
     // validating name
@@ -36,31 +26,32 @@ function validateForm() {
     if (!name?.value) {
         validated = false;
         name?.classList.add('error');
+        errors[0].innerHTML = '* Name is Required.';
     } else {
-        name?.classList.remove('error');
+        name.classList.remove('error');
+        errors[0].innerHTML = '';
     }
 
-    // validating gender
-    // if no radio btn is checked then show error
-    if (!(genders?.[0].checked || genders?.[1].checked)) {
+    // validating password
+    if (!password?.value) {
         validated = false;
-        genders?.forEach(el => {
-            el.classList.add('error');
-        });
+        password?.classList.add('error');
+        errors[1].innerHTML = '* Password is Required.';
     } else {
-        genders?.forEach(el => {
-            el.classList.remove('error');
-        });
+        password.classList.remove('error');
+        errors[1].innerHTML = '';
     }
 
     // validate address for empty value
     if (!address?.value) {
         validated = false;
         address?.classList.add('error');
+        errors[2].innerHTML = '* Address is Required.';
     } else {
-        address?.classList.remove('error');
+        address.classList.remove('error');
+        errors[2].innerHTML = '';
     }
-
+    
     // check every checkboxes
     // if not a single checkbox is checked then show error
     let checked = false;
@@ -77,35 +68,52 @@ function validateForm() {
             games.forEach(el => {
                 el.classList.add('error');
             });
+            errors[3].innerHTML = '* Atleast One game is required.';
         } else {
             games.forEach(el => {
                 el.classList.remove('error');
             });
+            errors[3].innerHTML = '';
         }
     }
 
-    // validating password
-    if (!password?.value) {
+    // validating gender
+    // if no radio btn is checked then show error
+    if (!(genders?.[0].checked || genders?.[1].checked)) {
         validated = false;
-        password?.classList.add('error');
+        genders?.forEach(el => {
+            el.classList.add('error');
+        });
+        errors[4].innerHTML = '* Gender is Required.';
     } else {
-        password?.classList.remove('error');
+        genders.forEach(el => {
+            el.classList.remove('error');
+        });
+        errors[4].innerHTML = '';
     }
 
     // validating age group
     if (!ageGrp?.value) {
         validated = false;
         ageGrp?.classList.add('error');
+        errors[5].innerHTML = '* Age group is required.';
     } else {
-        ageGrp?.classList.remove('error');
+        ageGrp.classList.remove('error');
+        errors[5].innerHTML = '';
     }
 
     // validating image upload by file extension
-    if (!validateImageUpload(imgUpload?.value)) {
+    if (!imgUpload?.value) {
         validated = false;
-        imgUpload?.classList.add('error');
+        errors[6].innerHTML = '* File upload is Required.';
+    }
+    else if (!validateImageUpload(imgUpload.value)) {
+        validated = false;
+        imgUpload.classList.add('error');
+        errors[6].innerHTML = '* Invalid File. Expected formats are jpeg, jpg, png';
     } else {
-        imgUpload?.classList.remove('error');
+        imgUpload.classList.remove('error');
+        errors[6].innerHTML = '';
     }
 
     return validated;
@@ -113,7 +121,9 @@ function validateForm() {
 
 // for validating uploaded file extension
 function validateImageUpload(fileName) {
-    if (!fileName) return false;
+    if (!fileName) {
+        return false;
+    }
 
     var allowed_extensions = ['jpeg','jpg','png'];
     var file_extension = fileName.split('.').pop().toLowerCase(); 
