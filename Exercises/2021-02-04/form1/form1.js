@@ -105,6 +105,7 @@ function validateForm() {
     // validating image upload by file extension
     if (!imgUpload?.value) {
         validated = false;
+        imgUpload?.classList.add('error');
         errors[6].innerHTML = '* File upload is Required.';
     }
     else if (!validateImageUpload(imgUpload.value)) {

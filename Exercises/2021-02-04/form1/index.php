@@ -19,6 +19,7 @@ if (isset($_POST['submit'])) {
     $pass = transform($_POST['password']);
     $address = transform($_POST['address']);
     $games = isset($_POST['game']) ? $_POST['game'] : [];
+    print_r($games);
     $gender = isset($_POST['gender']) ? transform($_POST['gender']) : '';
     $age_grp = transform($_POST['age-grp']);
     $validated = true;
@@ -44,7 +45,7 @@ if (isset($_POST['submit'])) {
         $errors[3] = '* Games is Required';
     } else {
         foreach ($games_a as $i => $game) {
-            if(array_search($game, $games)) {
+            if(false !== array_search($game, $games)) {
                 $games_checked[$i] = 'checked';
             }
         }
