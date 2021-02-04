@@ -1,0 +1,78 @@
+* {
+    box-sizing: border-box;
+    text-transform: capitalize;
+}
+
+body {
+    position: relative;
+    height: 95vh;
+}
+
+.wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+table {
+    width: 100%;
+    border: 4px darkgray outset;
+}
+
+thead {
+    background-color: #FFFFAA;
+}
+
+tbody, tfoot {
+    background-color: #00CCFF;
+}
+
+th, td {
+    border: 1px inset;
+}
+
+th {
+    font-size: 2rem;
+    color: red;
+}
+
+td {
+    padding: 5px 20px;
+}
+
+tbody tr:last-of-type td,
+tfoot td {
+    text-align: center;
+}
+
+input, select, textarea {
+    background-color: #CCFFCC;
+}
+
+input[type=text],input[type=password], select, textarea {
+    width: 100%;
+}
+
+input[type=submit], input[type=reset] {
+    padding: 5px 30px;
+}
+
+.error {
+    outline: solid red 2px !important;
+}
+
+.err-msg {
+    font-size: 0.7rem;
+    color: red;
+    margin: 0;
+    margin-top: 2px;
+}
+
+.sub {
+    text-align: center;
+    color: red;
+}
