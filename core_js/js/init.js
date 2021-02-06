@@ -30,7 +30,7 @@ const ID = {
         return this.lastId;
     },
     refreshId: function() {
-        this.lastId = parseInt(localStorage.getItem('lastId')) ?? 0;
+        this.lastId = parseInt(localStorage.getItem('lastId')) || 0;
     }
 }
 ID.refreshId();

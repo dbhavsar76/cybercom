@@ -59,3 +59,7 @@ td, th {
     text-align: left;
     font-size: smaller;
 }
+
+.error {
+    border: 2px red solid !important;
+}

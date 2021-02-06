@@ -49,11 +49,7 @@ document.getElementById('user-form-btn').addEventListener('click', function(e) {
         validated = false;
         email?.classList.add('error');
         errors[1].innerHTML = '* Invalid Email Format';
-    } else if (userAlreadyExists(email?.value, mode.value)) {
-        validated = false;
-        email.classList.add('error');
-        errors[1].innerHTML = '* User email already exists';
-    } else if (userAlreadyExists(email?.value, mode.value)) {
+    } else if (userAlreadyExists(email?.value, mode.value, id.value)) {
         validated = false;
         email.classList.add('error');
         errors[1].innerHTML = '* User email already exists';
@@ -75,6 +71,10 @@ document.getElementById('user-form-btn').addEventListener('click', function(e) {
         validated = false;
         birthdate?.classList.add('error');
         errors[3].innerHTML = '* Birthdate is required';
+    } else if (!isValidDate(birthdate.value)) {
+        validated = false;
+        birthdate?.classList.add('error');
+        errors[3].innerHTML = '* Invalid Date';
     } else {
         birthdate.classList.remove('error');
         errors[3].innerHTML = '';
@@ -202,9 +202,33 @@ function resetForm() {
     document.getElementById('form-title').innerHTML = 'Add User';
 }
 
+function isValidDate(date) {
+    const today = new Date();
+    const bday = new Date(date);
+    if (isNaN(bday.getFullYear())) return false;
+    const age = today.getFullYear() - bday.getFullYear();
+    if (age < 0 || age > 120) return false;
+    return true;
+}
+
 
 // checks if user email already exists 
-function userAlreadyExists(email, mode) {
-    // after lunch
+function userAlreadyExists(email, mode = 'add', id = '') {
+    if (!email) return false;
+    if (mode == 'add') {
+        if (liveStorage.admin?.email == email) return true;
+        for (const user of liveStorage.users) {
+            if (user.email == email) {
+                return true;
+            }
+        }
+    } else if (mode == 'update') {
+        if (liveStorage.admin?.email == email) return true;
+        for (const user of liveStorage.users) {
+            if (user.email == email && user.id != id) {
+                return true;
+            }
+        }
+    }
     return false;
 }

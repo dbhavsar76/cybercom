@@ -39,3 +39,7 @@ main h1 {
     text-align: center;
     font-weight: 900 !important;
 }
+
+#g2 {
+    background-color: lightpink;
+}

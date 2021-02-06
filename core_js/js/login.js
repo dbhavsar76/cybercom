@@ -65,6 +65,7 @@ document.getElementById('login-button').addEventListener('click', function(e) {
     }
 });
 
+// register button functionality
 document.getElementById('register-button').addEventListener('click', function(e) {
     location.href = 'register.html';
 });
