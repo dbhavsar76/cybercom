@@ -46,7 +46,8 @@ function refreshSessionsTable() {
                 td.innerHTML = liveStorage.admin.name;
         }
         else {
-            td.innerHTML = liveStorage.users.find(user => user.id == session.userid).name;
+            const usr = liveStorage.users.find(user => user.id == session.userid);
+            td.innerHTML = usr?.name ?? session.username;
         }
         
         td = tr.insertCell();

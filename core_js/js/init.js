@@ -61,12 +61,14 @@ const Logger = {
         const userid = sessionStorage.getItem('userid');
         const start = sessionStorage.getItem('sessionStart');
         const end = sessionStorage.getItem('sessionEnd');
+        const username = sessionStorage.getItem('username');
         if (userid && start && end) {
             // comment below line to start logging admin's session data
             if (!this.logAdmin && usertype == 'admin') return;
             const sessions = this.getSessions();
             sessions.unshift({ // using unshift so recent one stays on top
                 userid: userid, // storing user ids so that name changes in the log when updated in users panel.
+                username: username, // also keep name if user is deleted
                 sessionStart: start,
                 sessionEnd: end
             });
