@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web App</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/register.css">
+</head>
+<body>
+    <div class="wrapper">
+        <h2>Registration</h2>
+        <form action="" id="registration-form">
+            <div>
+                <input class="form-control" type="text" name="name" id="name" placeholder="Name">
+                <p class="err-msg"></p>
+            </div>
+            <div>
+                <input class="form-control" type="text" name="email" id="email" placeholder="Email">
+                <p class="err-msg"></p>
+            </div>
+            <div>
+                <input class="form-control" type="password" name="password" id="password" placeholder="Password">
+                <p class="err-msg"></p>
+            </div>
+            <div>
+                <input class="form-control" type="password" name="password-2" id="password-2" placeholder="Confirm Password">
+                <p class="err-msg"></p>
+            </div>
+            <div>
+                <select class="form-control" name="state" id="state">
+                    <option value="">SELECT STATE</option>
+                    <option value="Gujarat">Gujarat</option>
+                    <!-- i'm not going to add more -->
+                </select>
+                <p class="err-msg"></p>
+            </div>
+            <div>
+                <select class="form-control" name="city" id="city">
+                    <option value="">SELECT CITY</option>
+                    <option value="Ahmedabad">Ahmedabad</option>
+                    <!-- i'm not going to add more -->
+                </select>
+                <p class="err-msg"></p>
+            </div>
+            <div>
+                <input type="checkbox" name="tnc" id="tnc"> 
+                <label for="tnc">Agree to Terms & Conditions</label>
+                <p class="err-msg tnc-err"></p>
+            </div>
+            <div>
+                <button class="form-control" id="register-button">Register</button>
+            </div>
+        </form>
+        <div id="already-registered">Admin Already Registered. Go to <a href="login.html">Login Page</a>.</div>
+    </div>
+</body>
+<script src="js/init.js"></script>
+<script src="js/register.js"></script>
+</html>

@@ -1,0 +1,63 @@
+body {
+    display: flex;
+    flex-direction: row;
+    margin: 0;
+    height: 100vh;
+}
+
+
+
+main table {
+    width: 100%;
+    border: 2px solid gray;
+    border-collapse: collapse;
+}
+
+main thead {
+    background-color: #444444;
+    color: white;
+}
+
+td, th {
+    padding: 5px 10px;
+    text-align: left;
+}
+
+#user-form {
+    background: none;
+    border: none;
+    padding: 0;
+    text-align: end;
+}
+
+#user-form > div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#user-form > div div {
+    width: 24%;
+}
+
+#user-form input {
+    padding: 3px;
+    border: 2px black solid;
+    height: 28px;
+    width: 100%;
+}
+
+#user-form-btn {
+    float: inline-end;
+    margin-top: 10px;
+    width: 15%;
+    min-width: 130px;
+    padding: 3px;
+}
+
+.err-msg {
+    margin: 0;
+    color: red;
+    text-align: left;
+    font-size: smaller;
+}
