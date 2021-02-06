@@ -49,3 +49,24 @@ class User {
     }
 }
 
+
+// this function is only called when logout is clicked
+// i don't know how to trigger it when window/tab is closed without clicking logout
+// there is a window.onunload event but it triggers on link click, redirect, refresh, etc. so can't use it
+function addSession() {
+    const usertype = sessionStorage.getItem('usertype');
+    const userid = sessionStorage.getItem('userid');
+    const start = sessionStorage.getItem('sessionStart');
+    const end = sessionStorage.getItem('sessionEnd');
+    if (userid && start && end) {
+        // comment below line to start logging admin's session data
+        if (usertype == 'admin') return;
+        const sessions = JSON.parse(localStorage.getItem('sessions')) ?? [];
+        sessions.unshift({ // using unshift so recent one stays on top
+            userid: userid, // storing user ids so that name changes in the log when updated in users panel.
+            sessionStart: start,
+            sessionEnd: end
+        });
+        localStorage.setItem('sessions', JSON.stringify(sessions));
+    }
+}

@@ -6,13 +6,17 @@ window.addEventListener('load', function(e) {
     
     // if not logged in or not admin user then redirect to login
     if (!username || !usertype || usertype != 'admin') {
+        if (usertype != 'admin') {
+            sessionStorage.setItem('sessionEnd', (new Date()).toLocaleString());
+            addSession();
+        }
         sessionStorage.clear();
         location.href = 'login.html';
     }
 
     // if admin logged in, replace name and refresh user table
     document.querySelector('.greeting').innerHTML = `Hello, ${username}`;
-    // refreshUserTable();
+    refreshUserTable();
 });
 
 
@@ -45,6 +49,14 @@ document.getElementById('user-form-btn').addEventListener('click', function(e) {
         validated = false;
         email?.classList.add('error');
         errors[1].innerHTML = '* Invalid Email Format';
+    } else if (userAlreadyExists(email?.value, mode.value)) {
+        validated = false;
+        email.classList.add('error');
+        errors[1].innerHTML = '* User email already exists';
+    } else if (userAlreadyExists(email?.value, mode.value)) {
+        validated = false;
+        email.classList.add('error');
+        errors[1].innerHTML = '* User email already exists';
     } else {
         email.classList.remove('error');
         errors[1].innerHTML = '';
@@ -80,11 +92,56 @@ document.getElementById('user-form-btn').addEventListener('click', function(e) {
             );
             liveStorage.updateUsers();
             resetForm();
-            // refreshUserTable();
+            refreshUserTable();
         } else if (mode?.value === 'update') {
-
+            const index = liveStorage.users.findIndex(user => user.id === parseInt(id.value));
+            const user = liveStorage.users[index];
+            user.name = name.value;
+            user.email = email.value;
+            user.password = password.value;
+            user.birthdate = birthdate.value;
+            const today = new Date();
+            const bday = new Date(birthdate.value);
+            user.age = today.getFullYear() - bday.getFullYear();
+            liveStorage.updateUsers();
+            resetForm();
+            refreshUserTable();
         }
     }
+});
+
+
+// for action links
+// since table is created dynamically, instead of attaching the
+// listener to every row individually, use event bubbling and
+// attach the listener to the table and capture the events there
+document.getElementById('user-table').addEventListener('click', function(e) {
+    // when edit link is clicked
+    const index = liveStorage.users.findIndex(user => user.id === parseInt(e.target.dataset.id))
+    if (e.target.innerHTML == 'Edit') {
+        const user = liveStorage.users[index];
+        document.getElementById('mode').value = 'update';
+        document.getElementById('id').value = user.id;
+        document.getElementById('name').value = user.name;
+        document.getElementById('email').value = user.email;
+        document.getElementById('password').value = user.password;
+        document.getElementById('birthdate').value = user.birthdate;
+        document.getElementById('user-form-btn').innerHTML = 'Update User';
+        document.getElementById('form-title').innerHTML = 'Update User';
+    } // when delete link is clicked
+    else if (e.target.innerHTML == 'Delete') {
+        liveStorage.users.splice(index, 1);
+        liveStorage.updateUsers();
+        refreshUserTable();
+    }
+});
+
+// logout button functionallity
+document.getElementById('logout').addEventListener('click', function(e) {
+    sessionStorage.setItem('sessionEnd', (new Date()).toLocaleString());
+    addSession();
+    sessionStorage.clear();
+    location.href = 'login.html';
 });
 
 
@@ -93,6 +150,46 @@ document.getElementById('user-form').addEventListener('submit', function(e) {
     e.preventDefault();
     e.returnValue = false;
 });
+
+
+// dynamically create or update the table
+function refreshUserTable() {
+    const tbody = document.getElementById('user-table-content');
+
+    // remove all rows
+    while (tbody.rows.length) tbody.deleteRow(0);
+
+    // build all rows fresh
+    liveStorage.users.forEach(user => {
+        const tr = tbody.insertRow();
+        let td;
+
+        // name
+        td = tr.insertCell();
+        td.innerHTML = user.name;
+
+        // email
+        td = tr.insertCell();
+        td.innerHTML = `<a href="mailto:${user.email}">${user.email}</a>`;
+
+        // password
+        td = tr.insertCell();
+        td.innerHTML = user.password;
+
+        // birthdate
+        td = tr.insertCell();
+        td.innerHTML = user.birthdate;
+
+        // age
+        td = tr.insertCell();
+        td.innerHTML = user.age;
+
+        // actions
+        td = tr.insertCell();
+        td.innerHTML = `<a href="#" data-id="${user.id}">Edit</a> 
+                        <a href="#" data-id="${user.id}">Delete</a>`;
+    });
+}
 
 function resetForm() {
     document.getElementById('mode').value = 'add';
@@ -103,4 +200,11 @@ function resetForm() {
     document.getElementById('birthdate').value = '';
     document.getElementById('user-form-btn').innerHTML = 'Add User';
     document.getElementById('form-title').innerHTML = 'Add User';
+}
+
+
+// checks if user email already exists 
+function userAlreadyExists(email, mode) {
+    // after lunch
+    return false;
 }
