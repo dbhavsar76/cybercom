@@ -8,7 +8,7 @@ window.addEventListener('load', function(e) {
     if (!username || !usertype || usertype != 'admin') {
         if (usertype != 'admin') {
             sessionStorage.setItem('sessionEnd', (new Date()).toLocaleString());
-            addSession();
+            Logger.addSession();
         }
         sessionStorage.clear();
         location.href = 'login.html';
@@ -24,7 +24,7 @@ window.addEventListener('load', function(e) {
 // logout button functionallity
 document.getElementById('logout').addEventListener('click', function(e) {
     sessionStorage.setItem('sessionEnd', (new Date()).toLocaleString());
-    addSession();
+    Logger.addSession();
     sessionStorage.clear();
     location.href = 'login.html';
 });
@@ -32,17 +32,22 @@ document.getElementById('logout').addEventListener('click', function(e) {
 
 function refreshSessionsTable() {
     const tbody = document.getElementById('user-table-content');
-    const sessions = JSON.parse(localStorage.getItem('sessions')) ?? [];
+    const sessions = Logger.getSessions();
 
     sessions.forEach(session => {
         const tr = tbody.insertRow();
         let td;
 
         td = tr.insertCell();
-        if (session.userid == -1)
-            td.innerHTML = liveStorage.admin.name;
-        else
+        if (session.userid == -1) {
+            if (Logger.differentiateAdmin)
+                td.innerHTML = `<strong>${liveStorage.admin.name} *</strong>`;
+            else
+                td.innerHTML = liveStorage.admin.name;
+        }
+        else {
             td.innerHTML = liveStorage.users.find(user => user.id == session.userid).name;
+        }
         
         td = tr.insertCell();
         td.innerHTML = session.sessionStart;

@@ -9,7 +9,7 @@ window.addEventListener('load', function(e) {
     if (!username || !usertype || usertype != 'subuser') {
         if (usertype != 'subuser') {
             sessionStorage.setItem('sessionEnd', (new Date()).toLocaleString());
-            addSession();
+            Logger.addSession();
         }
         sessionStorage.clear();
         location.href = 'login.html';
@@ -30,7 +30,7 @@ window.addEventListener('load', function(e) {
 // logout button functionallity
 document.getElementById('logout').addEventListener('click', function(e) {
     sessionStorage.setItem('sessionEnd', (new Date()).toLocaleString());
-    addSession();
+    Logger.addSession();
     sessionStorage.clear();
     location.href = 'login.html';
 });
