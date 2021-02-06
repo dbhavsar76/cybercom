@@ -65,6 +65,9 @@ document.getElementById('login-button').addEventListener('click', function(e) {
     }
 });
 
+document.getElementById('register-button').addEventListener('click', function(e) {
+    location.href = 'register.html';
+});
 
 // stop the form from submitting
 document.getElementById('login-form').addEventListener('submit', function(e) {
