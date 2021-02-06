@@ -18,6 +18,7 @@ window.addEventListener('load', function(e) {
     document.querySelector('.greeting').innerHTML = `Hello, ${username}`;
     handleUserAgeGroups();
     handleUserBirthdays();
+    document.querySelector('.loading-screen').style.display = 'none';
 });
 
 

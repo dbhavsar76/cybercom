@@ -45,8 +45,7 @@ td, th {
     width: 100%;
 }
 
-#user-form-btn {
-    float: inline-end;
+#user-form-btn, #cancel-btn {
     margin-top: 10px;
     width: 15%;
     min-width: 130px;
@@ -62,4 +61,8 @@ td, th {
 
 .error {
     border: 2px red solid !important;
+}
+
+.hidden {
+    display: none;
 }

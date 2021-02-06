@@ -17,6 +17,7 @@ window.addEventListener('load', function(e) {
     // if admin logged in, replace name and refresh user table
     document.querySelector('.greeting').innerHTML = `Hello, ${username}`;
     refreshUserTable();
+    document.querySelector('.loading-screen').style.display = 'none';
 });
 
 
@@ -128,12 +129,18 @@ document.getElementById('user-table').addEventListener('click', function(e) {
         document.getElementById('birthdate').value = user.birthdate;
         document.getElementById('user-form-btn').innerHTML = 'Update User';
         document.getElementById('form-title').innerHTML = 'Update User';
+        document.getElementById('cancel-btn').classList.remove('hidden');
     } // when delete link is clicked
     else if (e.target.innerHTML == 'Delete') {
         liveStorage.users.splice(index, 1);
         liveStorage.updateUsers();
         refreshUserTable();
     }
+});
+
+// cancel button functionality : just resets the form
+document.getElementById('cancel-btn').addEventListener('click', function(e) {
+    resetForm();
 });
 
 // logout button functionallity
@@ -200,6 +207,7 @@ function resetForm() {
     document.getElementById('birthdate').value = '';
     document.getElementById('user-form-btn').innerHTML = 'Add User';
     document.getElementById('form-title').innerHTML = 'Add User';
+    document.getElementById('cancel-btn').classList.add('hidden');
 }
 
 function isValidDate(date) {

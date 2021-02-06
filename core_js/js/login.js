@@ -17,6 +17,7 @@ window.addEventListener('load', function(e) {
     } else if (username && usertype == 'subuser') {
         location.href = 'subuser.html';
     }
+    document.querySelector('.loading-screen').style.display = 'none';
 });
 
 // login button functionality

@@ -23,6 +23,7 @@ window.addEventListener('load', function(e) {
     if (today.getDate() == bday.getDate() && today.getMonth() == bday.getMonth()) {
         document.querySelector('.birthday-msg').classList.remove('hidden');
     }
+    document.querySelector('.loading-screen').style.display = 'none';
 });
 
 

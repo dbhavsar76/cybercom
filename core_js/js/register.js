@@ -9,6 +9,7 @@ window.addEventListener('load', function(e) {
         document.querySelector('.wrapper').removeChild(document.getElementById('registration-form'));
         document.getElementById('already-registered').style.display = 'block';
     }
+    document.querySelector('.loading-screen').style.display = 'none';
 });
 
 // register button functionality

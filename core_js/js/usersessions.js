@@ -17,6 +17,7 @@ window.addEventListener('load', function(e) {
     // if admin logged in, replace name and refresh user table
     document.querySelector('.greeting').innerHTML = `Hello, ${username}`;
     refreshSessionsTable();
+    document.querySelector('.loading-screen').style.display = 'none';
 });
 
 
