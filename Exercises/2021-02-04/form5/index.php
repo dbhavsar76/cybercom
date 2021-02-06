@@ -41,6 +41,7 @@ if (isset($_POST['submit'])) {
             $row = mysqli_fetch_assoc($result);
             // if password matches then redirect
             if ($row['password'] == $pass) {
+                mysqli_close($con);
                 session_start();
                 $_SESSION['email'] = $email;
                 header('location:success.php');
@@ -51,6 +52,7 @@ if (isset($_POST['submit'])) {
         } else {
             $sign_in_error = 'Sign In Failed<br>Incorrect Email';
         }
+        mysqli_close($con);
     }
 }
 

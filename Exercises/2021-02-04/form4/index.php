@@ -53,9 +53,10 @@ if (isset($_POST['submit'])) {
         $stmt = mysqli_prepare($con, 'INSERT INTO form4 (name, email, subject, message) VALUES (?,?,?,?)');
         mysqli_stmt_bind_param($stmt, 'ssss', $name, $email, $subject, $message);
         mysqli_stmt_execute($stmt);
+        $affected_rows = mysqli_affected_rows($con);
 
         // successfully inserted
-        if (mysqli_affected_rows($con)) {
+        if ($affected_rows) {
             $submit_msg = 'Posted Successfully!';
             $submit_class = 'green';
             $name = $email = $subject = $message = ''; // reset vars so form is empty again

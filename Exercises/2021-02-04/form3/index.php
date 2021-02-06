@@ -94,9 +94,11 @@ if (isset($_POST['submit'])) {
         $stmt = mysqli_prepare($con, 'INSERT INTO form3 (fname, lname, dob, gender, country, email, phone, password) VALUES (?,?,?,?,?,?,?,?)');
         mysqli_stmt_bind_param($stmt, 'ssssssss', $fname, $lname, $dob, $gender, $country, $email, $phone, $pass);
         mysqli_stmt_execute($stmt);
+        $affected_rows = mysqli_affected_rows($con);
+        mysqli_close($con);
 
         // successfully inserted
-        if (mysqli_affected_rows($con)) {
+        if ($affected_rows) {
             session_start();
             $_SESSION['success'] = true;
             header('location:success.php');
