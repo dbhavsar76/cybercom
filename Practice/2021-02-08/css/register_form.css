@@ -1,0 +1,36 @@
+* {
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    text-align: center;
+}
+
+label {
+    width: 150px;
+    display: inline-block;
+    text-align: right;
+}
+
+.form-control {
+    margin-bottom: 10px;
+}
+
+.form-control input:not([type=submit]):not([type=reset]) {
+    width: 200px;
+}
+
+.error {
+    border: red solid 2px;
+}
+
+.err-msg {
+    color: red;
+    font-size: 0.8rem;
+}
+
+.msg {
+    font-size: 1.1rem;
+    font-weight: 700;
+}

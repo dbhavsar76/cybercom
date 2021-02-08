@@ -1,0 +1,46 @@
+a {
+    display: inline-block;
+    cursor: pointer;
+    text-decoration: none;
+    height: 2rem;
+}
+
+.create-btn {
+    padding: 8px;
+    background-color: #3FB476;
+    color: white;
+    margin-bottom: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+td, th {
+    padding: 8px;
+    border-bottom: 2px gray solid;
+
+}
+
+th {
+    border-top: 2px gray solid;
+    background-color: #EAEDF0;
+    text-align: left;
+}
+
+tbody tr:nth-child(even) td {
+    background-color: #FBFCFC;
+}
+
+.edit {
+    color: white;
+    background-color: lightseagreen;
+    padding: 3px;
+}
+
+.delete {
+    color: white;
+    background-color: tomato;
+    padding: 3px;
+}
