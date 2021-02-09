@@ -1,0 +1,36 @@
+nav {
+    background-color: #426BA4;
+    padding: 15px 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.links {
+    display: inline-block;
+}
+
+.nav-item {
+    display: inline-block;
+    height: 30px;
+    color: #C4D1E3;
+    margin-left: 25px;
+}
+
+.icon {
+    font-size: 18px import !important;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+.title {
+    font-size: 2rem;
+}
+
+.nav-item a {
+    display: inline-block;
+    text-decoration: none;
+    color: #C4D1E3;
+    font-size: 20px;
+}
+
