@@ -28,6 +28,7 @@ input[type=submit] {
     color: white;
     background-color: #3FB476;
     border: none;
+    display: inline-block;
 }
 
 .error {
@@ -39,4 +40,12 @@ input[type=submit] {
     margin-top: 5px;
     font-size: 0.8rem;
     color: red;
+}
+
+.insert-err {
+    color: red;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 15px;
+    font-size: 1.1rem;
 }

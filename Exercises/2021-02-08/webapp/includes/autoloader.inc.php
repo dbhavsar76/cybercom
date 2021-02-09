@@ -1,7 +1,7 @@
 <?php
 
 function class_autoloader($classname) {
-    $root = 'D:\\xampp\\htdocs\\cybercom\\Practice\\2021-02-08\\';
+    $root = 'D:\\xampp\\htdocs\\cybercom\\Exercises\\2021-02-08\\webapp\\';
     $path = $root . 'classes' . DIRECTORY_SEPARATOR;
     $ext = '.class.php';
     $full_path = $path . str_replace("\\", DIRECTORY_SEPARATOR, $classname) . $ext;

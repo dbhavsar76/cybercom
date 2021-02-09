@@ -1,10 +1,11 @@
 <?php
+// todo : add exception throwing on errors
 
 class DB {
     private const HOST = 'localhost';
     private const USER = 'dhrv';
     private const PASS = 'q1w2e3r4';
-    private const DATABASE = 'test';
+    private const DATABASE = 'webapp';
     private $con;
 
     function __construct() {
@@ -14,46 +15,35 @@ class DB {
         }
     }
 
-    public function insert($sql, $param_types, $params) {
+    public final function insert($sql, $param_types, $params) {
         $stmt = $this->con->prepare($sql);
-        if (!$stmt) {
-            trigger_error("Prepare Failed ({$this->con->errorno}) : {$this->con->error}", E_USER_ERROR);
-        }
-        
-        if (!$stmt->bind_param($param_types, ...$params)) {
-            trigger_error("Bind Failed ({$this->con->errorno}) : {$this->con->error}", E_USER_ERROR);
-        }
-
-        if (!$stmt->execute()) {
-            trigger_error("Execute Failed ({$this->con->errorno}) : {$this->con->error}", E_USER_ERROR);
-        }
-
+        $stmt->bind_param($param_types, ...$params);
+        $stmt->execute();
         return $this->con->insert_id;
     }
 
-    public function select($sql, $param_types = '', $params = []) {
+    public final function select($sql, $param_types = '', $params = []) {
         $stmt = $this->con->prepare($sql);
-        if (!$stmt) {
-            trigger_error("Prepare Failed ({$this->con->errorno}) : {$this->con->error}", E_USER_ERROR);
-        }
         
         if (!empty($param_types) && !empty($params)) {
-            if (!$stmt->bind_param($param_types, ...$params)) {
-                trigger_error("Bind Failed ({$this->con->errorno}) : {$this->con->error}", E_USER_ERROR);
-            }
+            $stmt->bind_param($param_types, ...$params);
         }
 
-        if (!$stmt->execute()) {
-            trigger_error("Execute Failed ({$this->con->errorno}) : {$this->con->error}", E_USER_ERROR);
-        }
+        $stmt->execute();
 
-        $result_set = [];
         $result = $stmt->get_result();
-        if ($result->num_rows > 0) {
-            $result_set = $result->fetch_all(MYSQLI_ASSOC);
-        }
-
+        $result_set = $result->fetch_all(MYSQLI_ASSOC);
         return $result_set;
+    }
+
+    public final function execute($sql, $param_types = "", $params = []) {
+        $stmt = $this->con->prepare($sql);
+        
+        if (!empty($param_types) && !empty($params)) {
+            $stmt->bind_param($param_types, ...$params);
+        }
+        echo $this->con->error;
+        return $stmt->execute();
     }
 
     function __destruct() {

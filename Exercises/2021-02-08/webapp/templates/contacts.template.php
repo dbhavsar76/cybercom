@@ -1,7 +1,10 @@
 <div class="wrapper">
     <h1>Contacts</h1>
     <hr>
-    <a class="create-btn" href="create.php">Create Contact</a><br>
+    <div>
+        <a class="create-btn" href="create.php">Create Contact</a>
+        <div class="success-msg"><?= $msg ?></div>
+    </div>
     <table>
         <thead>
             <tr>
@@ -14,8 +17,22 @@
                 <th scope="col">&nbsp;</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="contacts-table">
+        <?php foreach ($contacts as $contact) : ?>
             <tr>
+                <td><?= $contact['id'] ?></td>
+                <td><?= $contact['name'] ?></td>
+                <td><?= $contact['email'] ?></td>
+                <td><?= $contact['phone'] ?></td>
+                <td><?= $contact['title'] ?></td>
+                <td><?= $contact['created'] ?></td>
+                <td>
+                    <a class="edit" href="update.php?id=<?= $contact['id'] ?>"><span class="material-icons">edit</span></a>
+                    <a class="delete" data-id="<?= $contact['id'] ?>" href="#"><span class="material-icons">delete_forever</span></a>
+                </td>
+            </tr>
+            <?php endforeach ?>
+            <!-- <tr>
                 <td>1</td>
                 <td>John Doe</td>
                 <td>johndoe@example.com</td>
@@ -26,7 +43,7 @@
                     <a class="edit" data-id="" href="update.php"><span class="material-icons">edit</span></a>
                     <a class="delete" data-id="" href="#"><span class="material-icons">delete_forever</span></a>
                 </td>
-            </tr>
-        </tbody>
+            </tr> -->
+            </tbody>
     </table>
 </div>

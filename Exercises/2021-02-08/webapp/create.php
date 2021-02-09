@@ -1,14 +1,19 @@
 <?php
-include_once 'includes/autoloader.inc.php';
+require 'includes/autoloader.inc.php';
+require 'includes/utils.inc.php';
+
+use Create\Form;
+use Model\Contact;
 
 // init vars
 $form_values = [
     'name' => '',
-    'mail' => '',
+    'email' => '',
     'phone' => '',
     'title' => ''
 ];
 $errors = $err_class = $form_values;
+$err_msg = '';
 
 // validate and create record
 if (isset($_POST['submit'])) {
@@ -16,26 +21,29 @@ if (isset($_POST['submit'])) {
     $validated = true;
     foreach ($_POST as $key => $val) {
         if (array_key_exists($key, $form_values)) {
-            $form_values[$key] = $val;
+            $form_values[$key] = input($val);
         }
     }
 
-    if (empty($form_values['name'])) {
-        $validated = false;
-        $errors['name'] = '* Name is required';
-    }
+    Form::validateForm($validated, $form_values, $errors);
 
-    if (empty($form_values['email'])) {
-        $validated = false;
-        $errors['email'] = '* Email is required';
-    } else if (!filter_var($form_values['email'], FILTER_VALIDATE_EMAIL)) {
-        $validated = false;
-        $errors['email'] = '* Invalid email address';
-    }
-
-    if (empty($form_values['phone'])) {
-        $validated = false;
-        $errors['phone'] = '* Phone number is required';
+    if ($validated) {
+        $contact = new Contact(null, $form_values['name'], $form_values['email'], $form_values['phone'], $form_values['title']);
+        $result = $contact->insert();
+        if ($result) {
+            session_start();
+            $_SESSION['success'] = 'Contact Added Successfully';
+            header('location:contacts.php');
+            die();
+        } else {
+            $err_msg = 'There was some problem creating the record.';
+        }
+    } else {
+        foreach ($errors as $k => $e) {
+            if (!empty($e)) {
+                $err_class[$k] = 'error';
+            }
+        }
     }
 }
 
