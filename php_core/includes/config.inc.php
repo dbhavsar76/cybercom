@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 define('BASE_URL', '/cybercom/php_core/');
 
 function class_autoloader($classname) {

@@ -1,0 +1,23 @@
+.btn {
+    display: block;
+    text-align: center;
+    width: 200px;
+    background-color: #B6D7A8;
+    padding: 10px;
+    color: olive;
+    margin-bottom: 20px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border: solid 1px;
+}
+
+th, td {
+    padding: 5px;
+    text-align: left;
+    border: 1px solid;
+}

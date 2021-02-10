@@ -1,0 +1,60 @@
+body {
+    position: relative;
+    height: 100vh;
+}
+
+.wrapper {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 450px;
+}
+
+.form-control {
+    margin-bottom: 10px;
+}
+
+label {
+    display: inline-block;
+    width: 100%;
+    text-align: left;
+    vertical-align: top;
+    text-transform: capitalize;
+}
+
+input, textarea, select {
+    background-color: white;
+    border: 1px solid black;
+    padding: 6px;
+    border-radius: 10px;
+    width: 100%;
+}
+
+input[type=submit] {
+    width: 150px;
+    font-size: 1rem;
+}
+
+input[type=checkbox], label[for=tnc] {
+    display: inline-block;
+    width: unset;
+}
+
+a.btn {
+    display: inline-block;
+    width: 150px;
+    font: 1rem;
+    color: black;
+    text-decoration: none;
+    border: 1px solid black;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.error {
+    border: red 1px solid;
+}
+
+.err-msg {
+    color:red;
+}

@@ -13,7 +13,8 @@ $default_header_build_context = [
     'title' => 'Web App',       // website title
     'default_css' => true,      // to enable css inclusion with file name
     'css_directory' => 'css/',  // '/' at the end is necessary, relative to base url
-    'css_src' => []             // array of js files to include, paths relative to css_directory
+    'css_src' => [],            // array of js files to include, paths relative to css_directory
+    'include_nav' => true
 ];
 
 // $bc (build context) : short name to embed in the html
@@ -38,7 +39,6 @@ $current_file = pathinfo($_SERVER['REQUEST_URI'], PATHINFO_FILENAME);
     <!-- put default css which are always included -->
     <link rel="stylesheet" href="<?= BASE_URL ?>css/common.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>css/nav.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <!-- css to include from page name -->
     <?php if ($bc['default_css'] == true) : ?>
     <link rel="stylesheet" href="<?= BASE_URL.$bc['css_directory'].$current_file ?>.css">
@@ -49,12 +49,7 @@ $current_file = pathinfo($_SERVER['REQUEST_URI'], PATHINFO_FILENAME);
     <?php endforeach ?>
 </head>
 <body>
-<!-- insert header here -->
-    <nav>
-        <div class="nav-item title">WebApp</div>
-        <div class="links">
-            <div class="nav-item home"><a href="<?= BASE_URL ?>index.php"><span class="icon material-icons">home</span>Home</a></div>
-            <div class="nav-item"><a href="<?= BASE_URL ?>contacts.php"><span class="icon material-icons">contacts</span>Contacts</a></div>
-        </div>
-    </nav>
-<!-- end header -->
+<?php 
+if ($bc['include_nav'] == true) {
+    include 'templates/nav.template.php';
+}

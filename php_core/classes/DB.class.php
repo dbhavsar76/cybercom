@@ -1,5 +1,5 @@
 <?php
-// todo : add exception throwing on errors
+// todo : add error handling with exceptions
 
 class DB {
     private const HOST = 'localhost';
@@ -22,6 +22,17 @@ class DB {
         return $this->con->insert_id;
     }
 
+    // params is an array so arr_of_param is an array of arrays
+    // $no_of_params is the count of parameter set i.e. number of arrays in the $arr_of_param
+    // public final function insert_multiple($sql, $param_types, $arr_of_param, $no_of_params) { 
+    //     $params = array_fill(0, $no_of_params, '');
+    //     $stmt = $this->con->prepare($sql);
+    //     $stmt->bind_param()
+    //     for ($i = 0; $i < $no_of_params; $i++) {
+    //         $params = 
+    //     }
+    // }
+    
     public final function select($sql, $param_types = '', $params = []) {
         $stmt = $this->con->prepare($sql);
         
