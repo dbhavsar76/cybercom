@@ -1,4 +1,0 @@
-Object oriented php
-forms with oop php
-oop php webapp
-ajax

@@ -1,9 +1,0 @@
-Exams are over so today i'm catching up with js stuff and starting php.
-
-- Finished js object practices
-- starting php videos
-
-- form submission and validation exercise given in group done
-
-* i started php late due to exams plus i already knew php basics
-  so i'm speed running the first four/five days videos
