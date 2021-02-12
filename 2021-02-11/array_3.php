@@ -47,8 +47,8 @@ function table_to_tree($table) {
     return $tree;
 }
 
-// $tree = table_to_tree($table2);
-// print_r($tree);
+$tree = table_to_tree($table);
+print_r($tree);
 // die();
 
 function table_to_tree2($table) {
@@ -61,7 +61,7 @@ function table_to_tree2($table) {
     return $tree;
 }
 
-$tree = [
+$tree1 = [
 	'category'=> [
 		'1'=>[
 			'name' => 'c1',
@@ -126,13 +126,13 @@ function tree_to_table($tree) {
     return $table;
 }
 
-function helper(&$root, &$table, $prev_k, $record) {
+function helper(&$root, &$table, $prev_k, $record, $new=false) {
     foreach ($root as $key => $value) {
         if (is_array($value) && !isset($prev_k)) {
-            helper($value, $table, $key, $record);
+            helper($value, $table, $key, $record, true);
         } else if (is_array($value)) {
-            if (array_key_last($root) === $key) {
-                helper($value, $table, $key, $record);
+            if (array_key_last($root) === $key & !$new) {
+                helper($value, $table, $key, $record, true);
             } else {
                 $record[$prev_k] = $key;
                 helper($value, $table, $prev_k, $record);
