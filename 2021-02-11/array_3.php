@@ -47,78 +47,76 @@ function table_to_tree($table) {
     return $tree;
 }
 
-$tree = table_to_tree($table);
-print_r($tree);
 // die();
 
-function table_to_tree2($table) {
-    $tree = [];
-    foreach ($table as $record) {
-        $tree['category'][$record['category']]['name'] = $record['categoryname'];
-        $tree['category'][$record['category']]['attribute'][$record['attribute']]['name'] = $record['attributename'];
-        $tree['category'][$record['category']]['attribute'][$record['attribute']]['option'][$record['option']]['name'] = $record['optionname'];
-    }
-    return $tree;
-}
+// function table_to_tree2($table) {
+//     $tree = [];
+//     foreach ($table as $record) {
+//         $tree['category'][$record['category']]['name'] = $record['categoryname'];
+//         $tree['category'][$record['category']]['attribute'][$record['attribute']]['name'] = $record['attributename'];
+//         $tree['category'][$record['category']]['attribute'][$record['attribute']]['option'][$record['option']]['name'] = $record['optionname'];
+//     }
+//     return $tree;
+// }
 
-$tree1 = [
-	'category'=> [
-		'1'=>[
-			'name' => 'c1',
-			'attribute'=>[
-				'1' => [
-					'name'=>'a1',
-					'option' => [
-						'1'=>[
-							'name' => 'o1'
-						],
-						'2'=>[
-							'name' => 'o2'
-						]
-					]
-				],
-				'2' => [
-					'name'=>'a2',
-					'option' => [
-						'3'=>[
-							'name' => 'o3'
-						],
-						'4'=>[
-							'name' => 'o4'
-						]
-					]
-				]
-			]
-		],
-		'2'=>[
-			'name' => 'c2',
-			'attribute'=>[
-				'3' => [
-					'name'=>'a3',
-					'option' => [
-						'5'=>[
-							'name' => 'o5'
-						],
-						'6'=>[
-							'name' => 'o6'
-						]
-					]
-				],
-				'4' => [
-					'name'=>'a4',
-					'option' => [
-						'7'=>[
-							'name' => 'o7'
-						],
-						'8'=>[
-							'name' => 'o8'
-						]
-					]
-				]
-			]
-		]
-	]
-];
+// $tree1 = [
+// 	'category'=> [
+// 		'1'=>[
+// 			'name' => 'c1',
+// 			'attribute'=>[
+// 				'1' => [
+// 					'name'=>'a1',
+// 					'option' => [
+// 						'1'=>[
+// 							'name' => 'o1'
+// 						],
+// 						'2'=>[
+// 							'name' => 'o2'
+// 						]
+// 					]
+// 				],
+// 				'2' => [
+// 					'name'=>'a2',
+// 					'option' => [
+// 						'3'=>[
+// 							'name' => 'o3'
+// 						],
+// 						'4'=>[
+// 							'name' => 'o4'
+// 						]
+// 					]
+// 				]
+// 			]
+// 		],
+// 		'2'=>[
+// 			'name' => 'c2',
+// 			'attribute'=>[
+// 				'3' => [
+// 					'name'=>'a3',
+// 					'option' => [
+// 						'5'=>[
+// 							'name' => 'o5'
+// 						],
+// 						'6'=>[
+// 							'name' => 'o6'
+// 						]
+// 					]
+// 				],
+// 				'4' => [
+// 					'name'=>'a4',
+// 					'option' => [
+// 						'7'=>[
+// 							'name' => 'o7'
+// 						],
+// 						'8'=>[
+// 							'name' => 'o8'
+// 						]
+// 					]
+// 				]
+// 			]
+// 		]
+// 	]
+// ];
 
 function tree_to_table($tree) {
     $table = [];
@@ -148,5 +146,9 @@ function helper(&$root, &$table, $prev_k, $record, $new=false) {
     }
 }
 
-$result = tree_to_table($tree);
-print_r($result);
+
+$tree = table_to_tree($table);
+print_r($tree);
+
+$result_table = tree_to_table($tree);
+print_r($result_table);
