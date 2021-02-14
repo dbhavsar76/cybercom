@@ -1,0 +1,4 @@
+php arrays practice
+arrays -
+    table view to tree view of data
+    tree view to table view of data
