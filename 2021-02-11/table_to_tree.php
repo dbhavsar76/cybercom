@@ -1,8 +1,5 @@
 <?php
 echo '<pre>';
-$result = strpos('category', null) === 0;
-var_dump($result);
-die();
 $data = [
 	['category'=>1,'attribute'=>1,'option'=>1],
 	['category'=>1,'attribute'=>1,'option'=>2],
