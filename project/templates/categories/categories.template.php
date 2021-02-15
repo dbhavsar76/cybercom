@@ -2,7 +2,7 @@
 <div class="container-fluid">
     <div class="d-flex align-items-center justify-content-between mb-3">
         <p class="h2 d-inline">Categories</p>
-        <a href="" class="btn btn-success">Create Category</a>
+        <a href="<?= BASE_URL ?>categories/addCategory.php" class="btn btn-success">Create Category</a>
     </div>
     <table class="table table-striped">
         <thead>
@@ -19,9 +19,9 @@
                 <td>1</td>
                 <td>Food</td>
                 <td class="text-success">Enabled</td>
-                <td></td>
+                <td>Some category description</td>
                 <td>
-                    <a href="" class="btn btn-primary"><i class="fas fa-edit fa-fw"></i></a>
+                    <a href="<?= BASE_URL ?>categories/updateCategory.php" class="btn btn-primary"><i class="fas fa-edit fa-fw"></i></a>
                     <a href="" class="btn btn-danger"><i class="fas fa-trash fa-fw"></i></a>
                 </td>
             </tr>

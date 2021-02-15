@@ -2,7 +2,7 @@
 <div class="container-fluid">
     <div class="d-flex align-items-center justify-content-between mb-3">
         <p class="h2 d-inline">Products</p>
-        <a href="" class="btn btn-success">Create Product</a>
+        <a href="<?= BASE_URL ?>products/addProduct.php" class="btn btn-success">Create Product</a>
     </div>
     <table class="table table-striped">
         <thead>
@@ -33,7 +33,7 @@
                 <td>12-12-1212 12:12:12 AM</td>
                 <td>12-12-1212 12:12:12 AM</td>
                 <td>
-                    <a href="" class="btn btn-primary"><i class="fas fa-edit fa-fw"></i></a>
+                    <a href="<?= BASE_URL ?>products/updateProduct.php" class="btn btn-primary"><i class="fas fa-edit fa-fw"></i></a>
                     <a href="" class="btn btn-danger"><i class="fas fa-trash fa-fw"></i></a>
                 </td>
             </tr>

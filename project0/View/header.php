@@ -14,10 +14,10 @@
     <div class="container-fluid">
         <a href="" class="navbar-brand">App</a>
         <ul class="navbar-nav">
-            <li class="nav-item"><a href="<?= BASE_URL ?>index.php" class="nav-link active">Home</a></li>
-            <li class="nav-item"><a href="<?= BASE_URL ?>customers.php" class="nav-link">Customers</a></li>
-            <li class="nav-item"><a href="<?= BASE_URL ?>products.php" class="nav-link">Products</a></li>
-            <li class="nav-item"><a href="<?= BASE_URL ?>categories.php" class="nav-link">Categories</a></li>
+            <li class="nav-item"><a href="<?= $this->getUrl('dashboard', 'dashboard') ?>" class="nav-link active">Home</a></li>
+            <li class="nav-item"><a href="<?= $this->getUrl('list', 'product') ?>" class="nav-link">Products</a></li>
+            <li class="nav-item"><a href="<?= $this->getUrl('list', 'customer') ?>" class="nav-link">Customers</a></li>
+            <li class="nav-item"><a href="<?= $this->getUrl('list', 'category') ?>" class="nav-link">Categories</a></li>
         </ul>
     </div>
     </nav>

@@ -1,6 +1,6 @@
 <?php
 
-class DB {
+class DBAdapter {
     // default configuration
     private $config = [
         'host' => 'localhost',
@@ -8,15 +8,13 @@ class DB {
         'pass' => 'q1w2e3r4',
         'dbname' => 'project0'
     ];
-    private mysqli $con;
+    private ?mysqli $con = null;
 
-    public function isConnected() {
+    private function isConnected() {
         return $this->con && !$this->con->connect_errno;
     }
 
-    
-
-    public function getConnection() {
+    private function getConnection() {
         if (!$this->isConnected()) {
             $this->con = new mysqli(
                 $this->config['host'],
@@ -26,15 +24,6 @@ class DB {
             );
         }
         return $this->con;
-    }
-
-    public function setConfig(array $config) {
-        if (!array_key_exists('host', $config) || !array_key_exists('user', $config) || !array_key_exists('pass', $config) || !array_key_exists('dbname', $config)) {
-            return false;
-        }
-
-        $this->config = $config;
-        return true;
     }
 
     public function fetchRow($sql) {
@@ -53,7 +42,7 @@ class DB {
         }
 
         $result = $this->con->query($sql);
-        if (!$result || $result->num_rows === 0) return false;
+        if (!$result) return false;
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
@@ -63,19 +52,31 @@ class DB {
         }
 
         $result = $this->con->query($sql);
-        if ($result) return $this->con->insert_id;
-        return false;
+        if (!$result) return false;
+        return $this->con->insert_id;
     }
 
     public function update($sql) {
-        return $this->insert($sql);
-    }
-
-    public function delete($sql) {
         if (!$this->con || $this->con->connect_errno) {
             $this->getConnection();
         }
 
         return $this->con->query($sql);
+    }
+
+    public function delete($sql) {
+        if (!$this->isConnected()) {
+            $this->getConnection();
+        }
+
+        return $this->con->query($sql);
+    }
+
+    public function getEscapedString($str) {
+        if (!$this->isConnected()) {
+            $this->getConnection();
+        }
+
+        return $this->con->real_escape_string($str);
     }
 }

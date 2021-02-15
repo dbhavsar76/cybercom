@@ -1,10 +1,10 @@
 <?php
 
-$root = 'D:\\xampp\\htdocs\\cybercom\\project\\';
+define('ROOT', 'D:\\xampp\\htdocs\\cybercom\\project\\');
+define('BASE_URL', 'http://localhost/cybercom/project/');
 
 function classAutoloader($classname) {
-    global $root;
-    $target = $root . 'classes\\' .str_replace('\\', DIRECTORY_SEPARATOR, $classname) . '.class.php';
+    $target = ROOT . 'classes\\' .str_replace('\\', DIRECTORY_SEPARATOR, $classname) . '.class.php';
 
     if (!file_exists($target)) {
         return false;
@@ -13,5 +13,4 @@ function classAutoloader($classname) {
     include $target;
     return true;
 }
-
 spl_autoload_register('classAutoloader');
