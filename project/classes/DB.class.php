@@ -1,6 +1,7 @@
 <?php
 
 class DB {
+    // default configuration
     private $config = [
         'host' => 'localhost',
         'user' => 'dhrv',
@@ -9,21 +10,16 @@ class DB {
     ];
     private mysqli $con;
 
-    public function __construct() {
-        $this->setNewConnection();
-    }
-
     public function getConnection() {
+        if (!$this->con || $this->con->connect_errno) {
+            $this->con = new mysqli(
+                $this->config['host'],
+                $this->config['user'],
+                $this->config['pass'],
+                $this->config['dbname']
+            );
+        }
         return $this->con;
-    }
-
-    public function setNewConnection() {
-        $this->con = new mysqli(
-            $this->config['host'],
-            $this->config['user'],
-            $this->config['pass'],
-            $this->config['dbname']
-        );
     }
 
     public function setConfig(array $config) {
@@ -36,8 +32,8 @@ class DB {
     }
 
     public function fetchRow($sql) {
-        if (!$this->con || $this->con->connect_errno === 0) {
-            $this->setNewConnection();
+        if (!$this->con || $this->con->connect_errno) {
+            $this->getConnection();
         }
 
         $result = $this->con->query($sql);
@@ -46,8 +42,8 @@ class DB {
     }
 
     public function fetchAll($sql) {
-        if (!$this->con || $this->con->connect_errno === 0) {
-            $this->setNewConnection();
+        if (!$this->con || $this->con->connect_errno) {
+            $this->getConnection();
         }
 
         $result = $this->con->query($sql);
@@ -56,8 +52,8 @@ class DB {
     }
 
     public function insert($sql) {
-        if (!$this->con || $this->con->connect_errno === 0) {
-            $this->setNewConnection();
+        if (!$this->con || $this->con->connect_errno) {
+            $this->getConnection();
         }
 
         $result = $this->con->query($sql);
@@ -70,8 +66,8 @@ class DB {
     }
 
     public function delete($sql) {
-        if (!$this->con || $this->con->connect_errno === 0) {
-            $this->setNewConnection();
+        if (!$this->con || $this->con->connect_errno) {
+            $this->getConnection();
         }
 
         return $this->con->query($sql);
