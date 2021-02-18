@@ -22,23 +22,24 @@
         </thead>
         <tbody>
 <?php foreach ($products as $product) {
-    $status = $product['status'] ? 'Enabled' : 'Disabled';
-    $statusClass = $product['status'] ? 'text-success' : 'text-danger';
+    $id = $product->{$product->getPrimaryKey()};
+    $status = $product->status ? 'Enabled' : 'Disabled';
+    $statusClass = $product->status ? 'btn-success' : 'btn-danger';
 ?>
             <tr>
-                <td><?= $product['id'] ?></td>
-                <td><?= $product['sku'] ?></td>
-                <td><?= $product['name'] ?></td>
-                <td><?= $product['price'] ?></td>
-                <td><?= $product['discount'] ?></td>
-                <td><?= $product['quantity'] ?></td>
-                <td><?= $product['description'] ?></td>
-                <td class="<?= $statusClass ?>"><?= $status ?></td>
-                <td><?= $product['createdDate'] ?></td>
-                <td><?= $product['updatedDate'] ?></td>
+                <td><?= $id ?></td>
+                <td><?= $product->sku ?></td>
+                <td><?= $product->name ?></td>
+                <td><?= $product->price ?></td>
+                <td><?= $product->discount ?></td>
+                <td><?= $product->quantity ?></td>
+                <td><?= $product->description ?></td>
+                <td><a class="btn <?= $statusClass ?>" href="<?= $this->getUrl('toggleStatus', null, [$product->getPrimaryKey() => $id]) ?>"><?= $status ?></a></td>
+                <td><?= $product->createdDate ?></td>
+                <td><?= $product->updatedDate ?></td>
                 <td>
-                    <a href="<?= $this->getUrl('update', NULL, ['id'=> $product['id']]) ?>" class="btn btn-primary"><i class="fas fa-edit fa-fw"></i></a>
-                    <a href="<?= $this->getUrl('delete', NULL, ['id'=> $product['id']]) ?>" class="btn btn-danger"><i class="fas fa-trash fa-fw"></i></a>
+                    <a href="<?= $this->getUrl('update', NULL, [$product->getPrimaryKey() => $id]) ?>" class="btn btn-primary"><i class="fas fa-edit fa-fw"></i></a>
+                    <a href="<?= $this->getUrl('delete', NULL, [$product->getPrimaryKey() => $id]) ?>" class="btn btn-danger"><i class="fas fa-trash fa-fw"></i></a>
                 </td>
             </tr>
 <?php } ?>

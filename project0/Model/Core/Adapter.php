@@ -1,6 +1,6 @@
 <?php
 
-class DBAdapter {
+class Adapter {
     // default configuration
     private $config = [
         'host' => 'localhost',
@@ -22,6 +22,7 @@ class DBAdapter {
                 $this->config['pass'],
                 $this->config['dbname']
             );
+            if (!$this->isConnected()) throw new Exception("Database Connection Error.");
         }
         return $this->con;
     }
