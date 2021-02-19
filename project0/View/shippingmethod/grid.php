@@ -39,7 +39,7 @@ $shippingMethods = $this->shippingMethods;
                 <td><a class="btn <?= $statusClass ?>" href="<?= $this->getUrl('toggleStatus', null, [$shippingMethod->getPrimaryKey() => $id]) ?>"><?= $status ?></a></td>
                 <td><?= $shippingMethod->createdDate ?></td>
                 <td>
-                    <a href="<?= $this->getUrl('update', NULL, [$shippingMethod->getPrimaryKey() => $id]) ?>" class="btn btn-primary"><i class="fas fa-edit fa-fw"></i></a>
+                    <a href="<?= $this->getUrl('edit', NULL, [$shippingMethod->getPrimaryKey() => $id]) ?>" class="btn btn-primary"><i class="fas fa-edit fa-fw"></i></a>
                     <a href="<?= $this->getUrl('delete', NULL, [$shippingMethod->getPrimaryKey() => $id]) ?>" class="btn btn-danger"><i class="fas fa-trash fa-fw"></i></a>
                 </td>
             </tr>

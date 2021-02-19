@@ -1,5 +1,6 @@
 <?php
 require_once ROOT.'\\Controller\\Core\\Base.php';
+require_once ROOT.'\\Model\\ShippingMethod.php';
 require_once ROOT.'\\Block\\Header.php';
 require_once ROOT.'\\Block\\Footer.php';
 
@@ -8,11 +9,14 @@ class Controller_ShippingMethod extends Controller_Core_Base {
     public function gridAction() {
         try {
             require_once ROOT.'\\Block\\ShippingMethod\\Grid.php';
-            $headerBlock = new Block_Header();
-            $gridBlock = new Block_ShippingMethod_Grid();
-            $footerBlock = new Block_Footer();
-
+            $headerBlock = new Block_Header($this);
+            $gridBlock = new Block_ShippingMethod_Grid($this);
+            $footerBlock = new Block_Footer($this);
             
+            $headerBlock->render();
+            $gridBlock->render();
+            $footerBlock->render();
+
         } catch (Exception $e) {
             echo $e->getMessage().' in '.__METHOD__;
         }
@@ -20,38 +24,39 @@ class Controller_ShippingMethod extends Controller_Core_Base {
 
     public function addAction() {
         try {
-            $req = $this->getRequest();
-            $shippingMethod = new Model_ShippingMethod();
-        
-            $status = ($shippingMethod->status == Model_ShippingMethod::STATUS_DISABLED) ? '' : 'checked';
-            $formMode = 'Add';
-            $formAction = $this->getUrl('save', null, null, true);
-    
-            include ROOT.'\\view\\header.php';
-            include ROOT.'\\view\\shippingmethod\\addUpdateForm.php';
-            include ROOT.'\\view\\footer.php';
+            require_once ROOT.'\\Block\\ShippingMethod\\Form.php';
+
+            $headerBlock = new Block_Header($this);
+            $formBlock = new Block_ShippingMethod_Form($this);
+            $footerBlock = new Block_Footer($this);
+            
+            $headerBlock->render();
+            $formBlock->render();
+            $footerBlock->render();
+
         } catch (Exception $e) {
             echo $e->getMessage().' in '.__METHOD__;
         }
     }
 
-    public function updateAction() {
+    public function editAction() {
         try {
             $req = $this->getRequest();
-            $shippingMethod = new Model_ShippingMethod();
-            $id = $req->getGet($shippingMethod->getPrimaryKey());
+            $id = $req->getGet((new Model_ShippingMethod)->getPrimaryKey());
+            if (!$id) {
+                throw new Exception('Invalid Request.');
+            }
 
-            if (!$id) $this->redirect('grid', null, null, true);
+            require_once ROOT.'\\Block\\ShippingMethod\\Form.php';
+
+            $headerBlock = new Block_Header($this);
+            $formBlock = new Block_ShippingMethod_Form($this, (int)$id);
+            $footerBlock = new Block_Footer($this);
             
-            $shippingMethod->load($id);
+            $headerBlock->render();
+            $formBlock->render();
+            $footerBlock->render();
 
-            $status = $shippingMethod->status == Model_ShippingMethod::STATUS_DISABLED ? '' : 'checked';
-            $formMode = 'Update';
-            $formAction = $this->getUrl('save', NULL, ['id'=>$id]);
-    
-            include ROOT.'\\view\\header.php';
-            include ROOT.'\\view\\shippingmethod\\addUpdateForm.php';
-            include ROOT.'\\view\\footer.php';
         } catch (Exception $e) {
             echo $e->getMessage().' in '.__METHOD__;
         }

@@ -22,6 +22,7 @@ abstract class Controller_Core_Base {
     }
 
     public function getRequest() {
+        if (!$this->req) $this->req = new Request();
         return $this->req;
     }
 

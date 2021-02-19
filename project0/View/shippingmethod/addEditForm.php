@@ -1,7 +1,7 @@
 <?php
-$shippingMethod = $this->shippingMethod;
-$formAction = $this->formAction;
 $formMode = $this->formMode;
+$formAction = $this->formAction;
+$shippingMethod = $this->shippingMethod;
 $statusState = $this->statusState;
 ?>
 
