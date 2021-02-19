@@ -2,23 +2,25 @@
 
 require_once ROOT.'\\Model\\Core\\Adapter.php';
 
-abstract class Model_Table {
+abstract class Model_Core_Table {
     protected $tableName = null;
     protected $primaryKey = null;
+    protected $adapter = null;
     protected $data = [];
 
-    protected function __construct() {}
+    protected function __construct() {
+        $this->setAdapter();
+    }
 
     public function save() {
-        $db = new Adapter();
-        if (!array_key_exists($this->getPrimaryKey(), $this->getData())) {
+        if (!array_key_exists($this->primaryKey, $this->data)) {
             // insert
             $sql = $this->buildQuery('insert');
-            return $db->insert($sql);
+            return $this->adapter->insert($sql);
         } else {
             // update
             $sql = $this->buildQuery('update');
-            return $db->update($sql);
+            return $this->adapter->update($sql);
         }
     }
 
@@ -33,8 +35,7 @@ abstract class Model_Table {
     }
 
     public function fetchRow($sql) {
-        $db = new Adapter();
-        $result = $db->fetchRow($sql);
+        $result = $this->adapter->fetchRow($sql);
         if (!$result) {
             throw new Exception("Data Load Failed.");
         }
@@ -43,19 +44,17 @@ abstract class Model_Table {
     }
 
     public function fetchAll($sql) {
-        $db = new Adapter();
-        $reslutSet = [];
-        $result = $db->fetchAll($sql);
-        foreach ($result as $record) {
-            $reslutSet[] = (new $this())->setData($record);
+        $result = $this->adapter->fetchAll($sql);
+
+        foreach ($result as &$record) {
+            $record = (new $this())->setData($record);
         }
-        return $reslutSet;
+        return $result;
     }
 
     public function delete() {
-        $db = new Adapter();
         $sql = $this->buildQuery('delete');
-        return $db->delete($sql);
+        return $this->adapter->delete($sql);
     }
 
     public function buildQuery($type, $id=null) {
@@ -128,13 +127,28 @@ abstract class Model_Table {
 
     public function setData(array $data) {
         $this->data = array_merge($this->data, $data);
-        if (array_key_exists($this->getPrimaryKey(), $this->data))
-            $this->{$this->getPrimaryKey()} = (int)$this->{$this->getPrimaryKey()};
+        if (array_key_exists($this->primaryKey, $this->data))
+            $this->{$this->primaryKey} = (int)($this->{$this->primaryKey});
         return $this;
     }
 
     public function getData() {
         return $this->data;
+    }
+
+    public function setAdapter($adapter = null) {
+        if (!$adapter) {
+            $adapter = new Model_Core_Adapter();
+        }
+        $this->adapter = $adapter;
+        return $this;
+    }
+
+    public function getAdapter() {
+        if (!$this->adapter) {
+            $this->setAdapter();
+        }
+        return $this->adapter;
     }
 
     public function __set($key, $value)

@@ -1,3 +1,10 @@
+<?php
+$statuses = [
+    Model_PaymentMethod::STATUS_DISABLED => ['Disabled', 'btn-danger'],
+    Model_PaymentMethod::STATUS_ENABLED  => ['Enabled', 'btn-success']
+];
+?>
+
 <section class="my-3">
 <div class="container-fluid">
     <div class="d-flex align-items-center justify-content-between mb-3">
@@ -19,8 +26,7 @@
         <tbody>
 <?php foreach ($paymentMethods as $paymentMethod) { 
         $id = $paymentMethod->{$paymentMethod->getPrimaryKey()};
-        $status = $paymentMethod->status ? 'Enabled' : 'Disabled';
-        $statusClass = $paymentMethod->status ? 'btn-success' : 'btn-danger';
+        [$status,$statusClass] = $statuses[$paymentMethod->status];
 ?>
             <tr>
                 <td><?= $id ?></td>

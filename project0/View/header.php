@@ -14,12 +14,12 @@
     <div class="container-fluid">
         <a href="" class="navbar-brand">App</a>
         <ul class="navbar-nav">
-            <li class="nav-item"><a href="<?= $this->getUrl('dashboard', 'dashboard') ?>" class="nav-link active">Home</a></li>
-            <li class="nav-item"><a href="<?= $this->getUrl('list', 'customer') ?>" class="nav-link">Customers</a></li>
-            <li class="nav-item"><a href="<?= $this->getUrl('list', 'product') ?>" class="nav-link">Products</a></li>
-            <li class="nav-item"><a href="<?= $this->getUrl('list', 'category') ?>" class="nav-link">Categories</a></li>
-            <li class="nav-item"><a href="<?= $this->getUrl('list', 'paymentMethod') ?>" class="nav-link">Patment Methods</a></li>
-            <li class="nav-item"><a href="<?= $this->getUrl('list', 'shippingMethod') ?>" class="nav-link">Shipping Methods</a></li>
+            <li class="nav-item"><a href="<?= $this->getUrl('dashboard', 'dashboard', null, true) ?>" class="nav-link active">Home</a></li>
+            <li class="nav-item"><a href="<?= $this->getUrl('grid', 'customer', null, true) ?>" class="nav-link">Customers</a></li>
+            <li class="nav-item"><a href="<?= $this->getUrl('grid', 'product', null, true) ?>" class="nav-link">Products</a></li>
+            <li class="nav-item"><a href="<?= $this->getUrl('grid', 'category', null, true) ?>" class="nav-link">Categories</a></li>
+            <li class="nav-item"><a href="<?= $this->getUrl('grid', 'paymentMethod', null, true) ?>" class="nav-link">Patment Methods</a></li>
+            <li class="nav-item"><a href="<?= $this->getUrl('grid', 'shippingMethod', null, true) ?>" class="nav-link">Shipping Methods</a></li>
         </ul>
     </div>
     </nav>

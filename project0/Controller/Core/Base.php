@@ -1,11 +1,24 @@
 <?php
 
-abstract class Base {
+abstract class Controller_Core_Base {
 
     private $req = null;
+    private $context = [];
 
     function __construct() {
         $this->req = new Request();
+    }
+
+    public function __set($key, $value)
+    {
+        $this->context[$key] = $value;
+        return $this;
+    }
+
+    public function __get($key)
+    {
+        if (!array_key_exists($key, $this->context)) return null;
+        return $this->context[$key];
     }
 
     public function getRequest() {
@@ -30,4 +43,5 @@ abstract class Base {
         header('location:' . $this->getUrl($actionName, $controllerName, $additionalParams, $reset));
         exit(0);
     }
+
 }

@@ -1,15 +1,15 @@
 <?php
 require_once ROOT.'\\Controller\\Core\\Base.php';
-require_once ROOT.'\\Model\\Model_PaymentMethod.php';
+require_once ROOT.'\\Model\\PaymentMethod.php';
 
-class Controller_PaymentMethod extends Base {
+class Controller_PaymentMethod extends Controller_Core_Base {
 
-    public function listAction() {
+    public function gridAction() {
         try {
             $paymentMethods = (new Model_PaymentMethod)->load();
     
             include ROOT.'\\view\\header.php';
-            include ROOT.'\\view\\paymentmethod\\list.php';
+            include ROOT.'\\view\\paymentmethod\\grid.php';
             include ROOT.'\\view\\footer.php';
         } catch (Exception $e) {
             echo $e->getMessage().' in '.__METHOD__;
@@ -20,18 +20,11 @@ class Controller_PaymentMethod extends Base {
         try {
             $req = $this->getRequest();
             $paymentMethod = new Model_PaymentMethod();
-    
-            if ($req->isPost()) {
-                $paymentMethod->setData($req->getPost('paymentMethod', []));
-                $paymentMethod->status = $paymentMethod->status ? 1 : 0;
-                $result = $paymentMethod->save();
-                if ($result) $this->redirect('list', null, null, true);
-            }
-    
-            $status = ($paymentMethod->status == '0') ? '' : 'checked';
+        
+            $status = ($paymentMethod->status == Model_PaymentMethod::STATUS_DISABLED) ? '' : 'checked';
             $formMode = 'Add';
-            $formAction = $this->getUrl('add', null, null, true);
-    
+            $formAction = $this->getUrl('save', null, null, true);
+
             include ROOT.'\\view\\header.php';
             include ROOT.'\\view\\paymentmethod\\addUpdateForm.php';
             include ROOT.'\\view\\footer.php';
@@ -46,24 +39,43 @@ class Controller_PaymentMethod extends Base {
             $paymentMethod = new Model_PaymentMethod();
             $id = $req->getGet($paymentMethod->getPrimaryKey());
 
-            if (!$id) $this->redirect('list', null, null, true);
+            if (!$id) $this->redirect('grid', null, null, true);
             
             $paymentMethod->load($id);
 
-            if ($req->isPost()) {
-                $paymentMethod->setData($req->getPost('paymentMethod'));
-                $paymentMethod->status = $paymentMethod->status ? 1 : 0;
-                $result = $paymentMethod->save();
-                if ($result) $this->redirect('list', null, null, true);
-            }
-
-            $status = $paymentMethod->status === 0 ? '' : 'checked';    
+            $status = $paymentMethod->status == Model_PaymentMethod::STATUS_DISABLED ? '' : 'checked';
             $formMode = 'Update';
-            $formAction = $this->getUrl('update', NULL, [$paymentMethod->getPrimaryKey() => $id]);
+            $formAction = $this->getUrl('save', NULL, [$paymentMethod->getPrimaryKey() => $id]);
     
             include ROOT.'\\view\\header.php';
             include ROOT.'\\view\\paymentmethod\\addUpdateForm.php';
             include ROOT.'\\view\\footer.php';
+        } catch (Exception $e) {
+            echo $e->getMessage().' in '.__METHOD__;
+        }
+    }
+
+    public function saveAction() {
+        try {
+            $req = $this->getRequest();
+            if (!$req->isPost() || empty($_SERVER['HTTP_REFERER'])) {
+                throw new Exception("Invalid Request");
+            }
+            $paymentMethod = new Model_PaymentMethod();
+            $id = $req->getGet($paymentMethod->getPrimaryKey());
+
+            if ($id) {
+                $paymentMethod->{$paymentMethod->getPrimaryKey()} = $id;
+            }
+
+            $paymentMethod->setData($req->getPost('paymentMethod'));
+            $paymentMethod->status = $paymentMethod->status ? Model_PaymentMethod::STATUS_ENABLED : Model_PaymentMethod::STATUS_DISABLED;
+            $result = $paymentMethod->save();
+            if (!$result) {
+                header('location:'.$_SERVER['HTTP_REFERER']);
+                exit(0);
+            }
+            $this->redirect('grid', null, null, true);
         } catch (Exception $e) {
             echo $e->getMessage().' in '.__METHOD__;
         }
@@ -75,10 +87,10 @@ class Controller_PaymentMethod extends Base {
             $paymentMethod = new Model_PaymentMethod();
 
             $id = $req->getGet($paymentMethod->getPrimaryKey());
-            if (!$id) $this->redirect('list', null, null, true);
+            if (!$id) $this->redirect('grid', null, null, true);
 
             $paymentMethod->load($id)->delete();
-            $this->redirect('list', null, null, true);
+            $this->redirect('grid', null, null, true);
         } catch (Exception $e) {
             echo $e->getMessage().' in '.__METHOD__;
         }
@@ -90,10 +102,10 @@ class Controller_PaymentMethod extends Base {
             $paymentMethod = new Model_PaymentMethod();
     
             $id = $req->getGet($paymentMethod->getPrimaryKey());
-            if (!$id) $this->redirect('list', null, null, true);
+            if (!$id) $this->redirect('grid', null, null, true);
     
             $paymentMethod->load($id)->setData(['status' => (1 - $paymentMethod->status)])->save();
-            $this->redirect('list', null, null, true);    
+            $this->redirect('grid', null, null, true);    
         } catch (Exception $e) {
             echo $e->getMessage().' in '.__METHOD__;
         }

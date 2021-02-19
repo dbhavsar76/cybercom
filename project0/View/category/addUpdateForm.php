@@ -19,7 +19,7 @@
         </div>
         <div class="from-group">
             <button type="submit" id="submit-btn" class="btn btn-primary small"><?= $formMode ?> Category</button>
-            <a href="<?= $this->getUrl('list',null, null, true) ?>" class="btn btn-secondary ml-2">Cancel</a>
+            <a href="<?= $this->getUrl('grid',null, null, true) ?>" class="btn btn-secondary ml-2">Cancel</a>
         </div>
     </form>
 </div>

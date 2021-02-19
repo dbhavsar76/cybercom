@@ -1,3 +1,11 @@
+<?php
+$statuses = [
+    Model_Customer::STATUS_DISABLED => ['Disabled', 'btn-danger'],
+    Model_Customer::STATUS_ENABLED  => ['Enabled', 'btn-success']
+];
+
+?>
+
 <section class="my-3">
 <div class="container-fluid">
     <div class="d-flex align-items-center justify-content-between mb-3">
@@ -20,8 +28,7 @@
         <tbody>
 <?php foreach ($customers as $customer) {
     $id = $customer->{$customer->getPrimaryKey()};
-    $status = $customer->status ? 'Active' : 'Inactive';
-    $statusClass = $customer->status ? 'btn-success' : 'btn-danger';
+    [$status, $statusClass] = $statuses[$customer->status];
 ?>
             <tr>
                 <td><?= $id ?></td>

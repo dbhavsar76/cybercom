@@ -1,15 +1,15 @@
 <?php
 require_once ROOT.'\\Controller\\Core\\Base.php';
-require_once ROOT.'\\Model\\Model_Category.php';
+require_once ROOT.'\\Model\\Category.php';
 
-class Controller_Category extends Base {
+class Controller_Category extends Controller_Core_Base {
 
-    public function listAction() {
+    public function gridAction() {
         
         $categories = (new Model_Category)->load();
 
         include ROOT.'\\view\\header.php';
-        include ROOT.'\\view\\category\\list.php';
+        include ROOT.'\\view\\category\\grid.php';
         include ROOT.'\\view\\footer.php';
     }
 
@@ -18,16 +18,9 @@ class Controller_Category extends Base {
             $req = $this->getRequest();
             $category = new Model_Category();
 
-            if ($req->isPost()) {
-                $category->setData($req->getPost('category', []));
-                $category->status = $category->status ? 1 : 0;
-                $result = $category->save();
-                if ($result) $this->redirect('list', null, null, true);
-            }
-
-            $status = ($category->status === 0) ? '' : 'checked';
+            $status = 'checked';
             $formMode = 'Add';
-            $formAction = $this->getUrl('add', null, null, true);
+            $formAction = $this->getUrl('save', null, null, true);
 
             include ROOT.'\\view\\header.php';
             include ROOT.'\\view\\category\\addUpdateForm.php';
@@ -43,25 +36,41 @@ class Controller_Category extends Base {
             $category = new Model_Category();
             $id = $req->getGet($category->getPrimaryKey());
 
-            if (!$id) $this->redirect('list', null, null, true);
-            
+            if (!$id) $this->redirect('grid', null, null, true);
+
             $category->load($id);
 
-            if ($req->isPost()) {
-                $category->setData($req->getPost('category'));
-                $category->status = $category->status ? 1 : 0;
-                
-                $result = $category->save();
-                if ($result) $this->redirect('list', null, null, true);
-            }
-
-            $status = $category->status === 0 ? '' : 'checked';    
+            $status = $category->status == Model_Category::STATUS_DISABLED ? '' : 'checked';    
             $formMode = 'Update';
-            $formAction = $this->getUrl('update', null, ['id'=>$id]);
+            $formAction = $this->getUrl('save', null, ['id'=>$id]);
     
             include ROOT.'\\view\\header.php';
             include ROOT.'\\view\\category\\addUpdateForm.php';
             include ROOT.'\\view\\footer.php';
+        } catch (Exception $e) {
+            echo $e->getMessage().' in '.__METHOD__;
+        }
+    }
+
+    public function saveAction() {
+        try {
+            $req = $this->getRequest();
+            if (!$req->isPost() || empty($_SERVER['HTTP_REFERER'])) {
+                throw new Exception("Invalid Request.");
+            }
+            $category = new Model_Category();
+            $id = $req->getGet($category->getPrimaryKey());
+            if ($id) $category->{$category->getPrimaryKey()} = $id;
+
+            $category->setData($req->getPost('category', []));
+            $category->status = $category->status ? Model_Category::STATUS_ENABLED : Model_Category::STATUS_DISABLED;
+            
+            $result = $category->save();
+            if (!$result) {
+                header('location:'.$_SERVER['HTTP_REFERER']);
+                exit(0);
+            }
+            $this->redirect('grid', null, null, true);
         } catch (Exception $e) {
             echo $e->getMessage().' in '.__METHOD__;
         }
@@ -73,10 +82,10 @@ class Controller_Category extends Base {
             $category = new Model_Category();
 
             $id = $req->getGet($category->getPrimaryKey());
-            if (!$id) $this->redirect('list', null, null, true);
+            if (!$id) $this->redirect('grid', null, null, true);
 
             $category->load($id)->delete();
-            $this->redirect('list', null, null, true);
+            $this->redirect('grid', null, null, true);
         } catch (Exception $e) {
             echo $e->getMessage().' in '.__METHOD__;
         }
@@ -88,10 +97,10 @@ class Controller_Category extends Base {
             $category = new Model_Category();
     
             $id = $req->getGet($category->getPrimaryKey());
-            if (!$id) $this->redirect('list');
+            if (!$id) $this->redirect('grid');
     
             $category->load($id)->setData(['status' => (1 - $category->status)])->save();
-            $this->redirect('list', null, null, true);    
+            $this->redirect('grid', null, null, true);    
         } catch (Exception $e) {
             echo $e->getMessage().' in '.__METHOD__;
         }

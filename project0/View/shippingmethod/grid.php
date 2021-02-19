@@ -1,8 +1,16 @@
+<?php
+$statuses = [
+    Model_ShippingMethod::STATUS_DISABLED => ['Disabled', 'btn-danger'],
+    Model_ShippingMethod::STATUS_ENABLED  => ['Enabled', 'btn-success']
+];
+$shippingMethods = $this->shippingMethods;
+?>
+
 <section class="my-3">
 <div class="container-fluid">
     <div class="d-flex align-items-center justify-content-between mb-3">
         <p class="h2 d-inline">Shipping Methods</p>
-        <a href="<?= $this->getUrl('add') ?>" class="btn btn-success">Create Shipping Method</a>
+        <a href="<?= $this->getUrl('add', null, null, true) ?>" class="btn btn-success">Create Shipping Method</a>
     </div>
     <table class="table table-striped">
         <thead>
@@ -20,8 +28,7 @@
         <tbody>
 <?php foreach ($shippingMethods as $shippingMethod) { 
         $id = $shippingMethod->{$shippingMethod->getPrimaryKey()};
-        $status = $shippingMethod->status ? 'Enabled' : 'Disabled';
-        $statusClass = $shippingMethod->status ? 'btn-success' : 'btn-danger';
+        [$status,$statusClass] = $statuses[$shippingMethod->status];
 ?>
             <tr>
                 <td><?= $id ?></td>

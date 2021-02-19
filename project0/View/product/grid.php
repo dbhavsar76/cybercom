@@ -1,3 +1,10 @@
+<?php
+$statuses = [
+    Model_Product::STATUS_DISABLED => ['Disabled', 'btn-danger'],
+    Model_Product::STATUS_ENABLED  => ['Enabled', 'btn-success']
+];
+?>
+
 <section class="my-3">
 <div class="container-fluid">
     <div class="d-flex align-items-center justify-content-between mb-3">
@@ -23,8 +30,7 @@
         <tbody>
 <?php foreach ($products as $product) {
     $id = $product->{$product->getPrimaryKey()};
-    $status = $product->status ? 'Enabled' : 'Disabled';
-    $statusClass = $product->status ? 'btn-success' : 'btn-danger';
+    [$status,$statusClass] = $statuses[$product->status];
 ?>
             <tr>
                 <td><?= $id ?></td>

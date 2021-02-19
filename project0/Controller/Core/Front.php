@@ -9,7 +9,7 @@ class Front {
             $controllerName = ucfirst($req->getGet('c', 'dashboard'));
             $actionName = $req->getGet('a','dashboard') . 'Action';
     
-            require_once ROOT."\\Controller\\Controller_{$controllerName}.php";
+            require_once ROOT."\\Controller\\{$controllerName}.php";
             $controllerName = 'Controller_'.$controllerName;
             $controller = new $controllerName();
             $controller->$actionName();

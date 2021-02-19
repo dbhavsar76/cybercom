@@ -1,15 +1,15 @@
 <?php
 require_once ROOT.'\\Controller\\Core\\Base.php';
-require_once ROOT.'\\Model\\Model_Product.php';
+require_once ROOT.'\\Model\\Product.php';
 
-class Controller_Product extends Base {
+class Controller_Product extends Controller_Core_Base {
 
-    public function listAction() {
+    public function gridAction() {
         try {
             $products = (new Model_Product)->load();
     
             include ROOT.'\\view\\header.php';
-            include ROOT.'\\view\\product\\list.php';
+            include ROOT.'\\view\\product\\grid.php';
             include ROOT.'\\view\\footer.php';
         } catch (Exception $e) {
             echo $e->getMessage().' in '.__METHOD__;
@@ -21,16 +21,9 @@ class Controller_Product extends Base {
             $req = $this->getRequest();
             $product = new Model_Product();
     
-            if ($req->isPost()) {
-                $product->setData($req->getPost('product', []));
-                $product->status = $product->status ? 1 : 0;
-                $result = $product->save();
-                if ($result) $this->redirect('list', null, null, true);
-            }
-    
-            $status = ($product->status === 0) ? '' : 'checked';
+            $status = ($product->status == Model_Product::STATUS_DISABLED) ? '' : 'checked';
             $formMode = 'Add';
-            $formAction = $this->getUrl('add', null, null, true);
+            $formAction = $this->getUrl('save', null, null, true);
     
             include ROOT.'\\view\\header.php';
             include ROOT.'\\view\\product\\addUpdateForm.php';
@@ -46,25 +39,44 @@ class Controller_Product extends Base {
             $product = new Model_Product();
             $id = $req->getGet($product->getPrimaryKey());
 
-            if (!$id) $this->redirect('list', null, null, true);
+            if (!$id) $this->redirect('grid', null, null, true);
             
             $product->load($id);
 
-            if ($req->isPost()) {
-                $product->setData($req->getPost('product'));
-                $product->status = $product->status ? 1 : 0;
-                $product->updatedDate = null;
-                $result = $product->save();
-                if ($result) $this->redirect('list', null, null, true);
-            }
-
-            $status = $product->status === 0 ? '' : 'checked';    
+            $status = $product->status == Model_Product::STATUS_DISABLED ? '' : 'checked';
             $formMode = 'Update';
-            $formAction = $this->getUrl('update', NULL, ['id'=>$id]);
+            $formAction = $this->getUrl('save', NULL, ['id'=>$id]);
     
             include ROOT.'\\view\\header.php';
             include ROOT.'\\view\\product\\addUpdateForm.php';
             include ROOT.'\\view\\footer.php';
+        } catch (Exception $e) {
+            echo $e->getMessage().' in '.__METHOD__;
+        }
+    }
+
+    public function saveAction() {
+        try {
+            $req = $this->getRequest();
+            if (!$req->isPost() || empty($_SERVER['HTTP_REFERER'])) {
+                throw new Exception('Invalid Request.');
+            }
+            $product = new Model_Product();
+            $id = $req->getGet($product->getPrimaryKey());
+
+            if ($id) {
+                $product->{$product->getPrimaryKey()} = $id;
+            }
+
+            $product->setData($req->getPost('product'));
+            $product->status = $product->status ? Model_Product::STATUS_ENABLED : Model_Product::STATUS_DISABLED;
+            $product->updatedDate = null;
+            $result = $product->save();
+            if (!$result) {
+                header('location:'.$_SERVER['HTTP_REFERER']);
+                exit(0);
+            }
+            $this->redirect('grid', null, null, true);
         } catch (Exception $e) {
             echo $e->getMessage().' in '.__METHOD__;
         }
@@ -76,10 +88,10 @@ class Controller_Product extends Base {
             $product = new Model_Product();
 
             $id = $req->getGet($product->getPrimaryKey());
-            if (!$id) $this->redirect('list', null, null, true);
+            if (!$id) $this->redirect('grid', null, null, true);
 
             $product->load($id)->delete();
-            $this->redirect('list', null, null, true);
+            $this->redirect('grid', null, null, true);
         } catch (Exception $e) {
             echo $e->getMessage().' in '.__METHOD__;
         }
@@ -91,10 +103,10 @@ class Controller_Product extends Base {
             $product = new Model_Product();
     
             $id = $req->getGet($product->getPrimaryKey());
-            if (!$id) $this->redirect('list', null, null, true);
+            if (!$id) throw new Exception('Invalid Request.');
     
             $product->load($id)->setData(['status' => (1 - $product->status), 'updatedDate'=>null])->save();
-            $this->redirect('list', null, null, true);    
+            $this->redirect('grid', null, null, true);    
         } catch (Exception $e) {
             echo $e->getMessage().' in '.__METHOD__;
         }

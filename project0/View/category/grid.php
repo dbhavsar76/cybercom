@@ -1,3 +1,10 @@
+<?php
+$statuses = [
+    Model_Category::STATUS_DISABLED => ['Disabled', 'btn-danger'],
+    Model_Category::STATUS_ENABLED  => ['Enabled', 'btn-success']
+];
+?>
+
 <section class="my-3">
 <div class="container-fluid">
     <div class="d-flex align-items-center justify-content-between mb-3">
@@ -17,8 +24,7 @@
         <tbody>
 <?php foreach ($categories as $category) {
     $id = $category->{$category->getPrimaryKey()};
-    $status = $category->status ? 'Enabled' : 'Disabled';
-    $statusClass = $category->status ? 'btn-success' : 'btn-danger';
+    [$status, $statusClass] = $statuses[$category->status];
 ?>
             <tr>
                 <td><?= $id ?></td>

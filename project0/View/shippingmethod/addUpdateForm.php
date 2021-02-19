@@ -1,3 +1,10 @@
+<?php
+$shippingMethod = $this->shippingMethod;
+$formAction = $this->formAction;
+$formMode = $this->formMode;
+$statusState = $this->statusState;
+?>
+
 <section>
 <div class="container-fluid">
     <p class="h2 mt-3"><?= $formMode ?> Shipping Method</p>
@@ -21,13 +28,13 @@
         </div>
         <div class="form-group">
             <div class="form-check">
-                <input type="checkbox" name="shippingMethod[status]" id="status" class="form-check-input" <?= $status ?>>
+                <input type="checkbox" name="shippingMethod[status]" id="status" class="form-check-input" <?= $statusState ?>>
                 <label for="status">Enabled</label>
             </div>
         </div>
         <div class="from-group">
             <button type="submit" id="submit-btn" class="btn btn-primary small"><?= $formMode ?> Shipping Method</button>
-            <a href="<?= $this->getUrl('list',null, null, true) ?>" class="btn btn-secondary ml-2">Cancel</a>
+            <a href="<?= $this->getUrl('grid',null, null, true) ?>" class="btn btn-secondary ml-2">Cancel</a>
         </div>
     </form>
 </div>
