@@ -1,3 +1,10 @@
+<?php
+$formMode = $this->formMode;
+$formAction = $this->formAction;
+$paymentMethod = $this->paymentMethod;
+$statusState = $this->statusState;
+?>
+
 <section>
 <div class="container-fluid">
     <p class="h2 mt-3"><?= $formMode ?> Payment Method</p>
@@ -17,12 +24,12 @@
         </div>
         <div class="form-group">
             <div class="form-check">
-                <input type="checkbox" name="paymentMethod[status]" id="status" class="form-check-input" <?= $status ?>>
+                <input type="checkbox" name="paymentMethod[status]" id="status" class="form-check-input" <?= $statusState ?>>
                 <label for="status">Enabled</label>
             </div>
         </div>
         <div class="from-group">
-            <button type="submit" id="submit-btn" class="btn btn-primary small"><?= $formMode ?> Payment Method</button>
+            <button type="submit" id="submit-btn" class="btn btn-primary small">Save</button>
             <a href="<?= $this->getUrl('grid',null, null, true) ?>" class="btn btn-secondary ml-2">Cancel</a>
         </div>
     </form>

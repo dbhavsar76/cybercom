@@ -3,6 +3,7 @@ $statuses = [
     Model_PaymentMethod::STATUS_DISABLED => ['Disabled', 'btn-danger'],
     Model_PaymentMethod::STATUS_ENABLED  => ['Enabled', 'btn-success']
 ];
+$paymentMethods = $this->paymentMethods;
 ?>
 
 <section class="my-3">
@@ -36,7 +37,7 @@ $statuses = [
                 <td><a class="btn <?= $statusClass ?>" href="<?= $this->getUrl('toggleStatus', null, [$paymentMethod->getPrimaryKey() => $id]) ?>"><?= $status ?></a></td>
                 <td><?= $paymentMethod->createdDate ?></td>
                 <td>
-                    <a href="<?= $this->getUrl('update', NULL, [$paymentMethod->getPrimaryKey() => $id]) ?>" class="btn btn-primary"><i class="fas fa-edit fa-fw"></i></a>
+                    <a href="<?= $this->getUrl('edit', NULL, [$paymentMethod->getPrimaryKey() => $id]) ?>" class="btn btn-primary"><i class="fas fa-edit fa-fw"></i></a>
                     <a href="<?= $this->getUrl('delete', NULL, [$paymentMethod->getPrimaryKey() => $id]) ?>" class="btn btn-danger"><i class="fas fa-trash fa-fw"></i></a>
                 </td>
             </tr>

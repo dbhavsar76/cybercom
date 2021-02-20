@@ -1,16 +1,23 @@
 <?php
 require_once ROOT.'\\Controller\\Core\\Base.php';
 require_once ROOT.'\\Model\\PaymentMethod.php';
+require_once ROOT.'\\Block\\Header.php';
+require_once ROOT.'\\Block\\Footer.php';
 
 class Controller_PaymentMethod extends Controller_Core_Base {
 
     public function gridAction() {
         try {
-            $paymentMethods = (new Model_PaymentMethod)->load();
-    
-            include ROOT.'\\view\\header.php';
-            include ROOT.'\\view\\paymentmethod\\grid.php';
-            include ROOT.'\\view\\footer.php';
+            require_once ROOT.'\\Block\\PaymentMethod\\Grid.php';
+
+            $headerBlock = new Block_Header($this);
+            $gridBlock = new Block_PaymentMethod_Grid($this);
+            $footerBlock = new Block_Footer($this);
+
+            $headerBlock->render();
+            $gridBlock->render();
+            $footerBlock->render();
+
         } catch (Exception $e) {
             echo $e->getMessage().' in '.__METHOD__;
         }
@@ -18,38 +25,37 @@ class Controller_PaymentMethod extends Controller_Core_Base {
 
     public function addAction() {
         try {
-            $req = $this->getRequest();
-            $paymentMethod = new Model_PaymentMethod();
-        
-            $status = ($paymentMethod->status == Model_PaymentMethod::STATUS_DISABLED) ? '' : 'checked';
-            $formMode = 'Add';
-            $formAction = $this->getUrl('save', null, null, true);
+            require_once ROOT.'\\Block\\PaymentMethod\\Form.php';
 
-            include ROOT.'\\view\\header.php';
-            include ROOT.'\\view\\paymentmethod\\addUpdateForm.php';
-            include ROOT.'\\view\\footer.php';
+            $headerBlock = new Block_Header($this);
+            $formBlock = new Block_PaymentMethod_Form($this);
+            $footerBlock = new Block_Footer($this);
+
+            $headerBlock->render();
+            $formBlock->render();
+            $footerBlock->render();
+
         } catch (Exception $e) {
             echo $e->getMessage().' in '.__METHOD__;
         }
     }
 
-    public function updateAction() {
+    public function editAction() {
         try {
             $req = $this->getRequest();
-            $paymentMethod = new Model_PaymentMethod();
-            $id = $req->getGet($paymentMethod->getPrimaryKey());
-
+            $id = $req->getGet((new Model_PaymentMethod)->getPrimaryKey());
             if (!$id) $this->redirect('grid', null, null, true);
-            
-            $paymentMethod->load($id);
 
-            $status = $paymentMethod->status == Model_PaymentMethod::STATUS_DISABLED ? '' : 'checked';
-            $formMode = 'Update';
-            $formAction = $this->getUrl('save', NULL, [$paymentMethod->getPrimaryKey() => $id]);
-    
-            include ROOT.'\\view\\header.php';
-            include ROOT.'\\view\\paymentmethod\\addUpdateForm.php';
-            include ROOT.'\\view\\footer.php';
+            require_once ROOT.'\\Block\\PaymentMethod\\Form.php';
+
+            $headerBlock = new Block_Header($this);
+            $formBlock = new Block_PaymentMethod_Form($this, (int)$id);
+            $footerBlock = new Block_Footer($this);
+
+            $headerBlock->render();
+            $formBlock->render();
+            $footerBlock->render();
+
         } catch (Exception $e) {
             echo $e->getMessage().' in '.__METHOD__;
         }

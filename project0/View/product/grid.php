@@ -3,6 +3,7 @@ $statuses = [
     Model_Product::STATUS_DISABLED => ['Disabled', 'btn-danger'],
     Model_Product::STATUS_ENABLED  => ['Enabled', 'btn-success']
 ];
+$products = $this->products;
 ?>
 
 <section class="my-3">
@@ -44,7 +45,7 @@ $statuses = [
                 <td><?= $product->createdDate ?></td>
                 <td><?= $product->updatedDate ?></td>
                 <td>
-                    <a href="<?= $this->getUrl('update', NULL, [$product->getPrimaryKey() => $id]) ?>" class="btn btn-primary"><i class="fas fa-edit fa-fw"></i></a>
+                    <a href="<?= $this->getUrl('edit', NULL, [$product->getPrimaryKey() => $id]) ?>" class="btn btn-primary"><i class="fas fa-edit fa-fw"></i></a>
                     <a href="<?= $this->getUrl('delete', NULL, [$product->getPrimaryKey() => $id]) ?>" class="btn btn-danger"><i class="fas fa-trash fa-fw"></i></a>
                 </td>
             </tr>

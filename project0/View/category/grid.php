@@ -3,6 +3,7 @@ $statuses = [
     Model_Category::STATUS_DISABLED => ['Disabled', 'btn-danger'],
     Model_Category::STATUS_ENABLED  => ['Enabled', 'btn-success']
 ];
+$categories = $this->categories;
 ?>
 
 <section class="my-3">
@@ -32,7 +33,7 @@ $statuses = [
                 <td> <a class="btn <?= $statusClass ?>" href="<?= $this->getUrl('toggleStatus', null, ['id'=>$category->id]) ?>"><?= $status ?></a></td>
                 <td><?= $category->description ?></td>
                 <td>
-                    <a href="<?= $this->getUrl('update', null, [$category->getPrimaryKey() => $id]) ?>" class="btn btn-primary"><i class="fas fa-edit fa-fw"></i></a>
+                    <a href="<?= $this->getUrl('edit', null, [$category->getPrimaryKey() => $id]) ?>" class="btn btn-primary"><i class="fas fa-edit fa-fw"></i></a>
                     <a href="<?= $this->getUrl('delete', null, [$category->getPrimaryKey() => $id]) ?>" class="btn btn-danger"><i class="fas fa-trash fa-fw"></i></a>
                 </td>
             </tr>

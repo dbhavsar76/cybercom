@@ -33,7 +33,7 @@ $statusState = $this->statusState;
             </div>
         </div>
         <div class="from-group">
-            <button type="submit" id="submit-btn" class="btn btn-primary small"><?= $formMode ?> Shipping Method</button>
+            <button type="submit" id="submit-btn" class="btn btn-primary small">Save</button>
             <a href="<?= $this->getUrl('grid',null, null, true) ?>" class="btn btn-secondary ml-2">Cancel</a>
         </div>
     </form>

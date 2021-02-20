@@ -1,18 +1,12 @@
 <?php
+require_once ROOT.'\\Block\\Core\\Base.php';
+require_once ROOT.'\\Model\\Product.php';
 
-class Block_Product_Grid {
-    private $template;
+class Block_Product_Grid extends Block_Core_Base {
+    public function __construct(Controller_Core_Base $controller) {
+        $this->setTemplate(ROOT.'\\View\\Product\\grid.php');
+        $this->setController($controller);
 
-    public function setTemplate($template) {
-        $this->template = $template;
-        return $this;
-    }
-
-    public function getTemplate() {
-        return $this->template;
-    }
-
-    public function render() {
-        include $this->template;
+        $this->products = (new Model_Product)->load();
     }
 }

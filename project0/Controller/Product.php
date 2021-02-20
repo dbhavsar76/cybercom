@@ -1,16 +1,23 @@
 <?php
 require_once ROOT.'\\Controller\\Core\\Base.php';
 require_once ROOT.'\\Model\\Product.php';
+require_once ROOT.'\\Block\\Header.php';
+require_once ROOT.'\\Block\\Footer.php';
 
 class Controller_Product extends Controller_Core_Base {
 
     public function gridAction() {
         try {
-            $products = (new Model_Product)->load();
-    
-            include ROOT.'\\view\\header.php';
-            include ROOT.'\\view\\product\\grid.php';
-            include ROOT.'\\view\\footer.php';
+            require_once ROOT.'\\Block\\Product\\Grid.php';
+
+            $headerBlock = new Block_Header($this);
+            $gridBlock = new Block_Product_Grid($this);
+            $footerBlock = new Block_Footer($this);
+
+            $headerBlock->render();
+            $gridBlock->render();
+            $footerBlock->render();
+
         } catch (Exception $e) {
             echo $e->getMessage().' in '.__METHOD__;
         }
@@ -18,38 +25,36 @@ class Controller_Product extends Controller_Core_Base {
 
     public function addAction() {
         try {
-            $req = $this->getRequest();
-            $product = new Model_Product();
-    
-            $status = ($product->status == Model_Product::STATUS_DISABLED) ? '' : 'checked';
-            $formMode = 'Add';
-            $formAction = $this->getUrl('save', null, null, true);
-    
-            include ROOT.'\\view\\header.php';
-            include ROOT.'\\view\\product\\addUpdateForm.php';
-            include ROOT.'\\view\\footer.php';
+            require_once ROOT.'\\Block\\Product\\Form.php';
+
+            $headerBlock = new Block_Header($this);
+            $formBlock = new Block_Product_Form($this);
+            $footerBlock = new Block_Footer($this);
+
+            $headerBlock->render();
+            $formBlock->render();
+            $footerBlock->render();
         } catch (Exception $e) {
             echo $e->getMessage().' in '.__METHOD__;
         }
     }
 
-    public function updateAction() {
+    public function editAction() {
         try {
             $req = $this->getRequest();
-            $product = new Model_Product();
-            $id = $req->getGet($product->getPrimaryKey());
-
+            $id = $req->getGet((new Model_Product)->getPrimaryKey());
             if (!$id) $this->redirect('grid', null, null, true);
             
-            $product->load($id);
+            require_once ROOT.'\\Block\\Product\\Form.php';
 
-            $status = $product->status == Model_Product::STATUS_DISABLED ? '' : 'checked';
-            $formMode = 'Update';
-            $formAction = $this->getUrl('save', NULL, ['id'=>$id]);
-    
-            include ROOT.'\\view\\header.php';
-            include ROOT.'\\view\\product\\addUpdateForm.php';
-            include ROOT.'\\view\\footer.php';
+            $headerBlock = new Block_Header($this);
+            $formBlock = new Block_Product_Form($this, (int)$id);
+            $footerBlock = new Block_Footer($this);
+
+            $headerBlock->render();
+            $formBlock->render();
+            $footerBlock->render();
+
         } catch (Exception $e) {
             echo $e->getMessage().' in '.__METHOD__;
         }
@@ -66,11 +71,10 @@ class Controller_Product extends Controller_Core_Base {
 
             if ($id) {
                 $product->{$product->getPrimaryKey()} = $id;
+                $product->updatedDate = null;
             }
-
             $product->setData($req->getPost('product'));
             $product->status = $product->status ? Model_Product::STATUS_ENABLED : Model_Product::STATUS_DISABLED;
-            $product->updatedDate = null;
             $result = $product->save();
             if (!$result) {
                 header('location:'.$_SERVER['HTTP_REFERER']);

@@ -1,3 +1,9 @@
+<?php
+$formMode = $this->formMode;
+$formAction = $this->formAction;
+$product = $this->product;
+$statusState = $this->statusState;
+?>
 
 <section>
 <div class="container-fluid">
@@ -20,12 +26,12 @@
         </div>
         <div class="form-group">
             <div class="form-check">
-                <input type="checkbox" name="product[status]" id="status" class="form-check-input" <?= $status ?>>
+                <input type="checkbox" name="product[status]" id="status" class="form-check-input" <?= $statusState ?>>
                 <label for="status">Enabled</label>
             </div>
         </div>
         <div class="from-group">
-            <button type="submit" id="submit-btn" class="btn btn-primary"><?= $formMode ?> Product</button>
+            <button type="submit" id="submit-btn" class="btn btn-primary">Save</button>
             <a href="<?= $this->getUrl('grid', null, null, true) ?>" class="btn btn-secondary ml-2">Cancel</a>
         </div>
     </div>
