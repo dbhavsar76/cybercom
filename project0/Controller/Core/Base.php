@@ -6,7 +6,7 @@ abstract class Controller_Core_Base {
     private $context = [];
 
     function __construct() {
-        $this->req = new Request();
+        $this->req = new Model_Core_Request();
     }
 
     public function __set($key, $value)
@@ -22,7 +22,7 @@ abstract class Controller_Core_Base {
     }
 
     public function getRequest() {
-        if (!$this->req) $this->req = new Request();
+        if (!$this->req) $this->req = new Model_Core_Request();
         return $this->req;
     }
 

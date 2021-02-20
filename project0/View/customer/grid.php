@@ -3,7 +3,7 @@ $statuses = [
     Model_Customer::STATUS_DISABLED => ['Disabled', 'btn-danger'],
     Model_Customer::STATUS_ENABLED  => ['Enabled', 'btn-success']
 ];
-
+$customers = $this->customers;
 ?>
 
 <section class="my-3">
@@ -39,7 +39,7 @@ $statuses = [
                 <td><?= $customer->createdDate ?></td>
                 <td><?= $customer->updatedDate ?></td>
                 <td>
-                    <a href="<?= $this->getUrl('update', NULL, [$customer->getPrimaryKey() => $id]) ?>" class="btn btn-primary"><i class="fas fa-edit fa-fw"></i></a>
+                    <a href="<?= $this->getUrl('edit', NULL, [$customer->getPrimaryKey() => $id]) ?>" class="btn btn-primary"><i class="fas fa-edit fa-fw"></i></a>
                     <a href="<?= $this->getUrl('delete', NULL, [$customer->getPrimaryKey() => $id]) ?>" class="btn btn-danger"><i class="fas fa-trash fa-fw"></i></a>
                 </td>
             </tr>

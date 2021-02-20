@@ -1,16 +1,23 @@
 <?php
 require_once ROOT.'\\Controller\\Core\\Base.php';
 require_once ROOT.'\\Model\\Customer.php';
+require_once ROOT.'\\Block\\Header.php';
+require_once ROOT.'\\Block\\Footer.php';
 
 class Controller_Customer extends Controller_Core_Base {
 
     public function gridAction() {
         try {
-            $customers = (new Model_Customer)->load();
-    
-            include ROOT.'\\view\\header.php';
-            include ROOT.'\\view\\customer\\grid.php';
-            include ROOT.'\\view\\footer.php';
+            require_once ROOT.'\\Block\\Customer\\Grid.php';
+
+            $headerBlock = new Block_Header($this);
+            $gridBlock = new Block_Customer_Grid($this);
+            $footerBlock = new Block_Footer($this);
+
+            $headerBlock->render();
+            $gridBlock->render();
+            $footerBlock->render();
+
         } catch (Exception $e) {
             echo $e->getMessage().' in '.__METHOD__;
         }
@@ -18,38 +25,36 @@ class Controller_Customer extends Controller_Core_Base {
 
     public function addAction() {
         try {
-            $req = $this->getRequest();
-            $customer = new Model_Customer();
-        
-            $status = ($customer->status == Model_Customer::STATUS_DISABLED) ? '' : 'checked';
-            $formMode = 'Add';
-            $formAction = $this->getUrl('save', null, null, true);
-    
-            include ROOT.'\\view\\header.php';
-            include ROOT.'\\view\\customer\\addUpdateForm.php';
-            include ROOT.'\\view\\footer.php';
+            require_once ROOT.'\\Block\\Customer\\Form.php';
+
+            $headerBlock = new Block_Header($this);
+            $formBlock = new Block_Customer_Form($this);
+            $footerBlock = new Block_Footer($this);
+
+            $headerBlock->render();
+            $formBlock->render();
+            $footerBlock->render();
+
         } catch (Exception $e) {
             echo $e->getMessage().' in '.__METHOD__;
         }
     }
 
-    public function updateAction() {
+    public function editAction() {
         try {
-            $req = $this->getRequest();
-            $customer = new Model_Customer();
-            $id = $req->getGet($customer->getPrimaryKey());
-
+            $id = $this->getRequest()->getGet((new Model_Customer)->getPrimaryKey());
             if (!$id) $this->redirect('grid', null, null, true);
 
-            $customer->load($id);
-                
-            $status = ($customer->status == Model_Customer::STATUS_DISABLED) ? '' : 'checked';
-            $formMode = 'Update';
-            $formAction = $this->getUrl('save', NULL, ['id'=>$id]);
-    
-            include ROOT.'\\view\\header.php';
-            include ROOT.'\\view\\customer\\addUpdateForm.php';
-            include ROOT.'\\view\\footer.php';
+            require_once ROOT.'\\Block\\Customer\\Form.php';
+
+            $headerBlock = new Block_Header($this);
+            $formBlock = new Block_Customer_Form($this, (int)$id);
+            $footerBlock = new Block_Footer($this);
+
+            $headerBlock->render();
+            $formBlock->render();
+            $footerBlock->render();
+
         } catch (Exception $e) {
             echo $e->getMessage().' in '.__METHOD__;
         }
@@ -67,7 +72,10 @@ class Controller_Customer extends Controller_Core_Base {
 
             $customerData = $req->getPost('customer',[]);
             if (array_key_exists('password', $customerData)){
-                $customerData['password'] = md5($customerData['password']);
+                if (!empty($customerData['password']))
+                    $customerData['password'] = md5($customerData['password']);
+                else
+                    unset($customerData['password']);
             }
             if (array_key_exists('password2', $customerData)) {
                 unset($customerData['password2']);

@@ -1,3 +1,10 @@
+<?php
+$formMode = $this->formMode;
+$formAction = $this->formAction;
+$customer = $this->customer;
+$statusState = $this->statusState;
+?>
+
 <section>
 <div class="container-fluid">
     <p class="h2 mt-3"><?= $formMode ?>Customer</p>
@@ -29,8 +36,14 @@
             <label for="password2">Confirm Password</label>
             <input type="password" name="customer[password2]" id="password2" class="form-control">
         </div>
+        <div class="form-group">
+            <div class="form-check">
+                <input type="checkbox" name="customer[status]" id="status" class="form-check-input" <?= $statusState ?>>
+                <label for="status">Enabled</label>
+            </div>
+        </div>
         <div class="from-group">
-            <button type="submit" id="submit-btn" class="btn btn-primary"><?= $formMode ?> Customer</button>
+            <button type="submit" id="submit-btn" class="btn btn-primary">Save</button>
             <a href="<?= $this->getUrl('grid', null, null, true) ?>" class="btn btn-secondary text-white ml-2">Cancel</a>
         </div>
     </form>

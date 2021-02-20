@@ -1,6 +1,6 @@
 <?php
 
-class Request {
+class Model_Core_Request {
     public function isPost() {
         return $_SERVER['REQUEST_METHOD'] === 'POST';
     }

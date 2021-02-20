@@ -7,7 +7,7 @@ require_once ROOT.'\\Controller\\Core\\Front.php';
 class Mage {
     public static function init() {
         try {
-            Front::init();
+            Controller_Core_Front::init();
         } catch (Exception $e) {
             echo $e->getMessage();
         }

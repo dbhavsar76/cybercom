@@ -1,11 +1,11 @@
 <?php
 
-require_once ROOT.'\\Model\\Request.php';
+require_once ROOT.'\\Model\\Core\\Request.php';
 
-class Front {
+class Controller_Core_Front {
     public static function init() {
         try {
-            $req = new Request();
+            $req = new Model_Core_Request();
             $controllerName = ucfirst($req->getGet('c', 'dashboard'));
             $actionName = $req->getGet('a','dashboard') . 'Action';
     
