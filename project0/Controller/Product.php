@@ -1,14 +1,14 @@
 <?php
-require_once ROOT.'\\Controller\\Core\\Base.php';
-require_once ROOT.'\\Model\\Product.php';
-require_once ROOT.'\\Block\\Header.php';
-require_once ROOT.'\\Block\\Footer.php';
+// require_once ROOT.'\\Controller\\Core\\Base.php';
+// require_once ROOT.'\\Model\\Product.php';
+// require_once ROOT.'\\Block\\Header.php';
+// require_once ROOT.'\\Block\\Footer.php';
 
 class Controller_Product extends Controller_Core_Base {
 
     public function gridAction() {
         try {
-            require_once ROOT.'\\Block\\Product\\Grid.php';
+            // require_once ROOT.'\\Block\\Product\\Grid.php';
 
             $headerBlock = new Block_Header($this);
             $gridBlock = new Block_Product_Grid($this);
@@ -25,7 +25,7 @@ class Controller_Product extends Controller_Core_Base {
 
     public function addAction() {
         try {
-            require_once ROOT.'\\Block\\Product\\Form.php';
+            // require_once ROOT.'\\Block\\Product\\Form.php';
 
             $headerBlock = new Block_Header($this);
             $formBlock = new Block_Product_Form($this);
@@ -45,7 +45,7 @@ class Controller_Product extends Controller_Core_Base {
             $id = $req->getGet((new Model_Product)->getPrimaryKey());
             if (!$id) $this->redirect('grid', null, null, true);
             
-            require_once ROOT.'\\Block\\Product\\Form.php';
+            // require_once ROOT.'\\Block\\Product\\Form.php';
 
             $headerBlock = new Block_Header($this);
             $formBlock = new Block_Product_Form($this, (int)$id);

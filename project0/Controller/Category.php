@@ -1,13 +1,13 @@
 <?php
-require_once ROOT.'\\Controller\\Core\\Base.php';
-require_once ROOT.'\\Model\\Category.php';
-require_once ROOT.'\\Block\\Header.php';
-require_once ROOT.'\\Block\\Footer.php';
+// require_once ROOT.'\\Controller\\Core\\Base.php';
+// require_once ROOT.'\\Model\\Category.php';
+// require_once ROOT.'\\Block\\Header.php';
+// require_once ROOT.'\\Block\\Footer.php';
 
 class Controller_Category extends Controller_Core_Base {
 
     public function gridAction() {
-        require_once ROOT.'\\Block\\Category\\Grid.php';
+        // require_once ROOT.'\\Block\\Category\\Grid.php';
         
         $headerBlock = new Block_Header($this);
         $gridBlock = new Block_Category_Grid($this);
@@ -21,7 +21,7 @@ class Controller_Category extends Controller_Core_Base {
 
     public function addAction() {
         try {
-            require_once ROOT.'\\Block\\Category\\Form.php';
+            // require_once ROOT.'\\Block\\Category\\Form.php';
         
             $headerBlock = new Block_Header($this);
             $formBlock = new Block_Category_Form($this);
@@ -42,7 +42,7 @@ class Controller_Category extends Controller_Core_Base {
             $id = $req->getGet((new Model_Category)->getPrimaryKey());
             if (!$id) $this->redirect('grid', null, null, true);
 
-            require_once ROOT.'\\Block\\Category\\Form.php';
+            // require_once ROOT.'\\Block\\Category\\Form.php';
         
             $headerBlock = new Block_Header($this);
             $formBlock = new Block_Category_Form($this, (int)$id);

@@ -1,10 +1,10 @@
 <?php
-require_once ROOT.'\\Block\\Core\\Base.php';
-require_once ROOT.'\\Model\\PaymentMethod.php';
+// require_once ROOT.'\\Block\\Core\\Base.php';
+// require_once ROOT.'\\Model\\PaymentMethod.php';
 
 class Block_PaymentMethod_Form extends Block_Core_Base {
     public function __construct(Controller_Core_Base $controller, int $id = null) {
-        $this->setTemplate(ROOT.'\\View\\PaymentMethod\\addEditForm.php');
+        $this->setTemplate(ROOT.'\\View\\paymentmethod\\addEditForm.php');
         $this->setController($controller);
 
         $paymentMethod = new Model_PaymentMethod();

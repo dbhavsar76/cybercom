@@ -1,11 +1,11 @@
 <?php
-require_once ROOT.'\\Block\\Core\\Base.php';
-require_once ROOT.'\\Model\\ShippingMethod.php';
+// require_once ROOT.'\\Block\\Core\\Base.php';
+// require_once ROOT.'\\Model\\ShippingMethod.php';
 
 class Block_ShippingMethod_Form extends Block_Core_Base {
     public function __construct(Controller_Core_Base $controller, $id = null) {
         parent::__construct();
-        $this->setTemplate(ROOT.'\\View\\ShippingMethod\\addEditForm.php');
+        $this->setTemplate(ROOT.'\\View\\shippingmethod\\addEditForm.php');
         $this->setController($controller);
 
         $model = new Model_ShippingMethod();

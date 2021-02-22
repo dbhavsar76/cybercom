@@ -1,14 +1,14 @@
 <?php
-require_once ROOT.'\\Controller\\Core\\Base.php';
-require_once ROOT.'\\Model\\ShippingMethod.php';
-require_once ROOT.'\\Block\\Header.php';
-require_once ROOT.'\\Block\\Footer.php';
+// require_once ROOT.'\\Controller\\Core\\Base.php';
+// require_once ROOT.'\\Model\\ShippingMethod.php';
+// require_once ROOT.'\\Block\\Header.php';
+// require_once ROOT.'\\Block\\Footer.php';
 
 class Controller_ShippingMethod extends Controller_Core_Base {
 
     public function gridAction() {
         try {
-            require_once ROOT.'\\Block\\ShippingMethod\\Grid.php';
+            // require_once ROOT.'\\Block\\ShippingMethod\\Grid.php';
             $headerBlock = new Block_Header($this);
             $gridBlock = new Block_ShippingMethod_Grid($this);
             $footerBlock = new Block_Footer($this);
@@ -24,7 +24,7 @@ class Controller_ShippingMethod extends Controller_Core_Base {
 
     public function addAction() {
         try {
-            require_once ROOT.'\\Block\\ShippingMethod\\Form.php';
+            // require_once ROOT.'\\Block\\ShippingMethod\\Form.php';
 
             $headerBlock = new Block_Header($this);
             $formBlock = new Block_ShippingMethod_Form($this);
@@ -47,7 +47,7 @@ class Controller_ShippingMethod extends Controller_Core_Base {
                 throw new Exception('Invalid Request.');
             }
 
-            require_once ROOT.'\\Block\\ShippingMethod\\Form.php';
+            // require_once ROOT.'\\Block\\ShippingMethod\\Form.php';
 
             $headerBlock = new Block_Header($this);
             $formBlock = new Block_ShippingMethod_Form($this, (int)$id);

@@ -1,9 +1,9 @@
 <?php
 // require_once ROOT.'\\Block\\Core\\Base.php';
 
-class Block_Footer extends Block_Core_Base {
+class Block_Dashboard_Dashboard extends Block_Core_Base {
     public function __construct(Controller_Core_Base $controller) {
-        $this->setTemplate(ROOT.'\\View\\footer.php');
+        $this->setTemplate(ROOT.'\\View\\dashboard\\dashboard.php');
         $this->setController($controller);
     }
 }

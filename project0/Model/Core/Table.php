@@ -1,6 +1,6 @@
 <?php
 
-require_once ROOT.'\\Model\\Core\\Adapter.php';
+// require_once ROOT.'\\Model\\Core\\Adapter.php';
 
 abstract class Model_Core_Table {
     protected $tableName = null;

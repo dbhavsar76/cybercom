@@ -1,14 +1,14 @@
 <?php
-require_once ROOT.'\\Controller\\Core\\Base.php';
-require_once ROOT.'\\Model\\PaymentMethod.php';
-require_once ROOT.'\\Block\\Header.php';
-require_once ROOT.'\\Block\\Footer.php';
+// require_once ROOT.'\\Controller\\Core\\Base.php';
+// require_once ROOT.'\\Model\\PaymentMethod.php';
+// require_once ROOT.'\\Block\\Header.php';
+// require_once ROOT.'\\Block\\Footer.php';
 
 class Controller_PaymentMethod extends Controller_Core_Base {
 
     public function gridAction() {
         try {
-            require_once ROOT.'\\Block\\PaymentMethod\\Grid.php';
+            // require_once ROOT.'\\Block\\PaymentMethod\\Grid.php';
 
             $headerBlock = new Block_Header($this);
             $gridBlock = new Block_PaymentMethod_Grid($this);
@@ -25,7 +25,7 @@ class Controller_PaymentMethod extends Controller_Core_Base {
 
     public function addAction() {
         try {
-            require_once ROOT.'\\Block\\PaymentMethod\\Form.php';
+            // require_once ROOT.'\\Block\\PaymentMethod\\Form.php';
 
             $headerBlock = new Block_Header($this);
             $formBlock = new Block_PaymentMethod_Form($this);
@@ -46,7 +46,7 @@ class Controller_PaymentMethod extends Controller_Core_Base {
             $id = $req->getGet((new Model_PaymentMethod)->getPrimaryKey());
             if (!$id) $this->redirect('grid', null, null, true);
 
-            require_once ROOT.'\\Block\\PaymentMethod\\Form.php';
+            // require_once ROOT.'\\Block\\PaymentMethod\\Form.php';
 
             $headerBlock = new Block_Header($this);
             $formBlock = new Block_PaymentMethod_Form($this, (int)$id);

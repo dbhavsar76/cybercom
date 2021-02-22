@@ -1,10 +1,10 @@
 <?php
-require_once ROOT.'\\Block\\Core\\Base.php';
-require_once ROOT.'\\Model\\Category.php';
+// require_once ROOT.'\\Block\\Core\\Base.php';
+// require_once ROOT.'\\Model\\Category.php';
 
 class Block_Category_Form extends Block_Core_Base {
     public function __construct(Controller_Core_Base $controller, int $id = null) {
-        $this->setTemplate(ROOT.'\\View\\Category\\addEditForm.php');
+        $this->setTemplate(ROOT.'\\View\\category\\addEditForm.php');
         $this->setController($controller);
 
         $category = new Model_Category();

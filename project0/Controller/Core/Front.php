@@ -1,6 +1,6 @@
 <?php
 
-require_once ROOT.'\\Model\\Core\\Request.php';
+// require_once ROOT.'\\Model\\Core\\Request.php';
 
 class Controller_Core_Front {
     public static function init() {
@@ -9,7 +9,7 @@ class Controller_Core_Front {
             $controllerName = ucfirst($req->getGet('c', 'dashboard'));
             $actionName = $req->getGet('a','dashboard') . 'Action';
     
-            require_once ROOT."\\Controller\\{$controllerName}.php";
+            // require_once ROOT."\\Controller\\{$controllerName}.php";
             $controllerName = 'Controller_'.$controllerName;
             $controller = new $controllerName();
             $controller->$actionName();
