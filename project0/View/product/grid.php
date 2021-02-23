@@ -10,7 +10,7 @@ $products = $this->products;
 <div class="container-fluid">
     <div class="d-flex align-items-center justify-content-between mb-3">
         <p class="h2 d-inline">Products</p>
-        <a href="<?= $this->getUrl('add') ?>" class="btn btn-success">Create Product</a>
+        <a href="<?= Model_Core_UrlManager::getUrl('add') ?>" class="btn btn-success">Create Product</a>
     </div>
     <table class="table table-striped">
         <thead>
@@ -41,12 +41,12 @@ $products = $this->products;
                 <td><?= $product->discount ?></td>
                 <td><?= $product->quantity ?></td>
                 <td><?= $product->description ?></td>
-                <td><a class="btn <?= $statusClass ?>" href="<?= $this->getUrl('toggleStatus', null, [$product->getPrimaryKey() => $id]) ?>"><?= $status ?></a></td>
+                <td><a class="btn <?= $statusClass ?>" href="<?= Model_Core_UrlManager::getUrl('toggleStatus', null, [$product->getPrimaryKey() => $id]) ?>"><?= $status ?></a></td>
                 <td><?= $product->createdDate ?></td>
                 <td><?= $product->updatedDate ?></td>
                 <td>
-                    <a href="<?= $this->getUrl('edit', NULL, [$product->getPrimaryKey() => $id]) ?>" class="btn btn-primary"><i class="fas fa-edit fa-fw"></i></a>
-                    <a href="<?= $this->getUrl('delete', NULL, [$product->getPrimaryKey() => $id]) ?>" class="btn btn-danger"><i class="fas fa-trash fa-fw"></i></a>
+                    <a href="<?= Model_Core_UrlManager::getUrl('edit', NULL, [$product->getPrimaryKey() => $id]) ?>" class="btn btn-primary"><i class="fas fa-edit fa-fw"></i></a>
+                    <a href="<?= Model_Core_UrlManager::getUrl('delete', NULL, [$product->getPrimaryKey() => $id]) ?>" class="btn btn-danger"><i class="fas fa-trash fa-fw"></i></a>
                 </td>
             </tr>
 <?php } ?>

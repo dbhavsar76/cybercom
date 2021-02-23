@@ -1,12 +1,25 @@
 <?php
 
 abstract class Controller_Core_Base {
-
-    private $req = null;
+    protected $layout = null;
+    private $request = null;
     private $context = [];
 
     function __construct() {
-        $this->req = new Model_Core_Request();
+        $this->request = new Model_Core_Request();
+        $this->setLayout();
+    }
+
+    public function setLayout(Block_Core_Layout $layout = null) {
+        if (!$layout) {
+            $layout  = new Block_Core_Layout();
+        }
+        $this->layout = $layout;
+        return $this;
+    }
+
+    public function getLayout() {
+        return $this->layout;
     }
 
     public function __set($key, $value)
@@ -22,27 +35,7 @@ abstract class Controller_Core_Base {
     }
 
     public function getRequest() {
-        if (!$this->req) $this->req = new Model_Core_Request();
-        return $this->req;
+        if (!$this->request) $this->request = new Model_Core_Request();
+        return $this->request;
     }
-
-    public function getUrl($actionName = NULL, $controllerName = NULL, array $additionalParams = null, $reset = false) {
-        $params = $reset ? [] : $_GET;
-
-        if (!$actionName) $actionName = $_GET['a'];
-        if (!$controllerName) $controllerName = ucfirst($_GET['c']);
-        $params['a'] = $actionName;
-        $params['c'] = $controllerName;
-        if ($additionalParams)
-            $params = array_merge($params, $additionalParams);
-        $queryString = http_build_query($params);
-        unset($params);
-        return  BASE_URL."\index.php?".$queryString;
-    }
-
-    public function redirect($actionName = NULL, $controllerName = NULL, array $additionalParams = null, $reset = false) {
-        header('location:' . $this->getUrl($actionName, $controllerName, $additionalParams, $reset));
-        exit(0);
-    }
-
 }

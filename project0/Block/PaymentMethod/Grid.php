@@ -1,13 +1,10 @@
 <?php
-// require_once ROOT.'\\Block\\Core\\Base.php';
-// require_once ROOT.'\\Model\\PaymentMethod.php';
 
-class Block_PaymentMethod_Grid extends Block_Core_Base {
-    public function __construct(Controller_Core_Base $controller) {
+class Block_PaymentMethod_Grid extends Block_Core_Template {
+    public function __construct() {
         parent::__construct();
-        $this->setTemplate(ROOT.'\\View\\paymentmethod\\grid.php');
-        $this->setController($controller);
+        $this->setTemplate('/paymentmethod/grid.php');
 
-        $this->paymentMethods = (new Model_PaymentMethod)->load();
+        $this->paymentMethods = (new Model_PaymentMethod)->loadAll();
     }
 }

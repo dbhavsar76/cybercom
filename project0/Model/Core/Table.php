@@ -1,7 +1,5 @@
 <?php
 
-// require_once ROOT.'\\Model\\Core\\Adapter.php';
-
 abstract class Model_Core_Table {
     protected $tableName = null;
     protected $primaryKey = null;
@@ -25,11 +23,19 @@ abstract class Model_Core_Table {
     }
 
     public function load($id = null) {
-        if ($id) {
-            $id = (int)$id;
-            $sql = $this->buildQuery('select', $id);
-            return $this->fetchRow($sql);
+        if (!$id) {
+            if ($this->id) {
+                $id = $this->id;
+            } else {
+                return false;
+            }
         }
+        $id = (int)$id;
+        $sql = $this->buildQuery('select', $id);
+        return $this->fetchRow($sql);
+    }
+
+    public function loadAll() {
         $sql = $this->buildQuery('selectAll');
         return $this->fetchAll($sql);
     }
@@ -60,15 +66,15 @@ abstract class Model_Core_Table {
     public function buildQuery($type, $id=null) {
         switch (strtolower($type)) {
             case 'select':
-                return "SELECT * FROM `{$this->getTableName()}` WHERE `{$this->getPrimaryKey()}`={$id}";
+                return "SELECT * FROM `{$this->tableName}` WHERE `{$this->primaryKey}`={$id}";
                 break;
 
             case 'selectall':
-                return "SELECT * FROM `{$this->getTableName()}`";
+                return "SELECT * FROM `{$this->tableName}`";
                 break;
 
             case 'insert':
-                $sql1 = "INSERT INTO `{$this->getTableName()}`(";
+                $sql1 = "INSERT INTO `{$this->tableName}`(";
                 $sql2 = 'VALUES (';
                 $first = true;
                 foreach ($this->getData() as $key => $value) {
@@ -84,7 +90,7 @@ abstract class Model_Core_Table {
                 break;
 
             case 'update':
-                $sql = "UPDATE `{$this->getTableName()}` SET ";
+                $sql = "UPDATE `{$this->tableName}` SET ";
                 $first = true;
                 foreach ($this->getData() as $key => $value) {
                     if ($key === $this->getPrimaryKey()) {
@@ -93,18 +99,19 @@ abstract class Model_Core_Table {
                     if (!$first) {
                         $sql .= ', ';
                     }
-                    if ($value === null)
+                    if ($value === null) {
                         $sql .= "`{$key}`=null";
-                    else
+                    } else {
                         $sql .= "`{$key}`='{$value}'";
+                    }
                     $first = false;
                 }
-                $sql .= " WHERE `{$this->getPrimaryKey()}`={$this->{$this->getPrimaryKey()}}";
+                $sql .= " WHERE `{$this->primaryKey}`={$this->{$this->primaryKey}}";
                 return $sql;
                 break;
 
             case 'delete':
-                return "DELETE FROM `{$this->getTableName()}` WHERE `{$this->getPrimaryKey()}`={$this->{$this->getPrimaryKey()}}";
+                return "DELETE FROM `{$this->tableName}` WHERE `{$this->primaryKey}`={$this->{$this->primaryKey}}";
                 break;
         } 
     }
@@ -127,8 +134,9 @@ abstract class Model_Core_Table {
 
     public function setData(array $data) {
         $this->data = array_merge($this->data, $data);
-        if (array_key_exists($this->primaryKey, $this->data))
+        if (array_key_exists($this->primaryKey, $this->data)) {
             $this->{$this->primaryKey} = (int)($this->{$this->primaryKey});
+        }
         return $this;
     }
 
@@ -159,7 +167,9 @@ abstract class Model_Core_Table {
 
     public function __get($key)
     {
-        if (!array_key_exists($key, $this->getData())) return null;
+        if (!array_key_exists($key, $this->data)) {
+            return null;
+        }
         return $this->data[$key];
     }
 

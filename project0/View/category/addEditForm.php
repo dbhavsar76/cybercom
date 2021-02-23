@@ -26,7 +26,7 @@ $statusState = $this->statusState;
         </div>
         <div class="from-group">
             <button type="submit" id="submit-btn" class="btn btn-primary small">Save</button>
-            <a href="<?= $this->getUrl('grid',null, null, true) ?>" class="btn btn-secondary ml-2">Cancel</a>
+            <a href="<?= Model_Core_UrlManager::getUrl('grid',null, null, true) ?>" class="btn btn-secondary ml-2">Cancel</a>
         </div>
     </form>
 </div>

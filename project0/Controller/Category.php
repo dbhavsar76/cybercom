@@ -1,36 +1,30 @@
 <?php
-// require_once ROOT.'\\Controller\\Core\\Base.php';
-// require_once ROOT.'\\Model\\Category.php';
-// require_once ROOT.'\\Block\\Header.php';
-// require_once ROOT.'\\Block\\Footer.php';
 
 class Controller_Category extends Controller_Core_Base {
 
     public function gridAction() {
-        // require_once ROOT.'\\Block\\Category\\Grid.php';
-        
-        $headerBlock = new Block_Header($this);
-        $gridBlock = new Block_Category_Grid($this);
-        $footerBlock = new Block_Footer($this);
+        try {
+            $layout = $this->getLayout();
+            $layout->prepareChildren(Block_Core_Layout::LAYOUT_ONE_COLUMN);
+            $layout->getChild('header')->addChild(new Block_Header);
+            $layout->getChild('content')->addChild(new Block_Category_Grid);
+            $layout->getChild('footer')->addChild(new Block_Footer);
 
-        $headerBlock->render();
-        $gridBlock->render();
-        $footerBlock->render();
-
+            $layout->render();
+        } catch (Exception $e) {
+            echo $e->getMessage().' in '.__METHOD__;
+        }
     }
 
     public function addAction() {
         try {
-            // require_once ROOT.'\\Block\\Category\\Form.php';
-        
-            $headerBlock = new Block_Header($this);
-            $formBlock = new Block_Category_Form($this);
-            $footerBlock = new Block_Footer($this);
-    
-            $headerBlock->render();
-            $formBlock->render();
-            $footerBlock->render();
-        
+            $layout = $this->getLayout();
+            $layout->prepareChildren(Block_Core_Layout::LAYOUT_ONE_COLUMN);
+            $layout->getChild('header')->addChild(new Block_Header);
+            $layout->getChild('content')->addChild(new Block_Category_Form);
+            $layout->getChild('footer')->addChild(new Block_Footer);
+
+            $layout->render();
         } catch (Exception $e) {
             echo $e->getMessage().' in '.__METHOD__;
         }
@@ -38,19 +32,16 @@ class Controller_Category extends Controller_Core_Base {
 
     public function editAction() {
         try {
-            $req = $this->getRequest();
-            $id = $req->getGet((new Model_Category)->getPrimaryKey());
-            if (!$id) $this->redirect('grid', null, null, true);
-
-            // require_once ROOT.'\\Block\\Category\\Form.php';
+            $id = $this->getRequest()->getGet((new Model_Category)->getPrimaryKey());
+            if (!$id) Model_Core_UrlManager::redirect('grid', null, null, true);
         
-            $headerBlock = new Block_Header($this);
-            $formBlock = new Block_Category_Form($this, (int)$id);
-            $footerBlock = new Block_Footer($this);
-    
-            $headerBlock->render();
-            $formBlock->render();
-            $footerBlock->render();
+            $layout = $this->getLayout();
+            $layout->prepareChildren(Block_Core_Layout::LAYOUT_ONE_COLUMN);
+            $layout->getChild('header')->addChild(new Block_Header);
+            $layout->getChild('content')->addChild(new Block_Category_Form((int)$id));
+            $layout->getChild('footer')->addChild(new Block_Footer);
+
+            $layout->render();
         } catch (Exception $e) {
             echo $e->getMessage().' in '.__METHOD__;
         }
@@ -58,15 +49,15 @@ class Controller_Category extends Controller_Core_Base {
 
     public function saveAction() {
         try {
-            $req = $this->getRequest();
-            if (!$req->isPost() || empty($_SERVER['HTTP_REFERER'])) {
+            $request = $this->getRequest();
+            if (!$request->isPost() || empty($_SERVER['HTTP_REFERER'])) {
                 throw new Exception("Invalid Request.");
             }
             $category = new Model_Category();
-            $id = $req->getGet($category->getPrimaryKey());
+            $id = $request->getGet($category->getPrimaryKey());
             if ($id) $category->{$category->getPrimaryKey()} = $id;
 
-            $category->setData($req->getPost('category', []));
+            $category->setData($request->getPost('category', []));
             $category->status = $category->status ? Model_Category::STATUS_ENABLED : Model_Category::STATUS_DISABLED;
             
             $result = $category->save();
@@ -74,7 +65,7 @@ class Controller_Category extends Controller_Core_Base {
                 header('location:'.$_SERVER['HTTP_REFERER']);
                 exit(0);
             }
-            $this->redirect('grid', null, null, true);
+            Model_Core_UrlManager::redirect('grid', null, null, true);
         } catch (Exception $e) {
             echo $e->getMessage().' in '.__METHOD__;
         }
@@ -82,14 +73,14 @@ class Controller_Category extends Controller_Core_Base {
     
     public function deleteAction() {
         try {
-            $req = $this->getRequest();
+            $request = $this->getRequest();
             $category = new Model_Category();
 
-            $id = $req->getGet($category->getPrimaryKey());
-            if (!$id) $this->redirect('grid', null, null, true);
+            $id = $request->getGet($category->getPrimaryKey());
+            if (!$id) Model_Core_UrlManager::redirect('grid', null, null, true);
 
             $category->load($id)->delete();
-            $this->redirect('grid', null, null, true);
+            Model_Core_UrlManager::redirect('grid', null, null, true);
         } catch (Exception $e) {
             echo $e->getMessage().' in '.__METHOD__;
         }
@@ -101,10 +92,10 @@ class Controller_Category extends Controller_Core_Base {
             $category = new Model_Category();
     
             $id = $req->getGet($category->getPrimaryKey());
-            if (!$id) $this->redirect('grid');
+            if (!$id) Model_Core_UrlManager::redirect('grid');
     
             $category->load($id)->setData(['status' => (1 - $category->status)])->save();
-            $this->redirect('grid', null, null, true);    
+            Model_Core_UrlManager::redirect('grid', null, null, true);    
         } catch (Exception $e) {
             echo $e->getMessage().' in '.__METHOD__;
         }

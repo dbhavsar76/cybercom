@@ -10,7 +10,7 @@ $customers = $this->customers;
 <div class="container-fluid">
     <div class="d-flex align-items-center justify-content-between mb-3">
         <p class="h2 d-inline">Customers</p>
-        <a href="<?= $this->getUrl('add', null, null, true) ?>" class="btn btn-success">Add Customer</a>
+        <a href="<?= Model_Core_UrlManager::getUrl('add', null, null, true) ?>" class="btn btn-success">Add Customer</a>
     </div>
     <table class="table table-striped">
         <thead>
@@ -35,12 +35,12 @@ $customers = $this->customers;
                 <td><?= $customer->firstName ?></td>
                 <td><?= $customer->lastName ?></td>
                 <td><?= $customer->email ?></td>
-                <td><a class="btn <?= $statusClass ?>" href="<?= $this->getUrl('toggleStatus', NULL, ['id'=>$customer->id]) ?>"><?= $status ?></a></td>
+                <td><a class="btn <?= $statusClass ?>" href="<?= Model_Core_UrlManager::getUrl('toggleStatus', NULL, ['id'=>$customer->id]) ?>"><?= $status ?></a></td>
                 <td><?= $customer->createdDate ?></td>
                 <td><?= $customer->updatedDate ?></td>
                 <td>
-                    <a href="<?= $this->getUrl('edit', NULL, [$customer->getPrimaryKey() => $id]) ?>" class="btn btn-primary"><i class="fas fa-edit fa-fw"></i></a>
-                    <a href="<?= $this->getUrl('delete', NULL, [$customer->getPrimaryKey() => $id]) ?>" class="btn btn-danger"><i class="fas fa-trash fa-fw"></i></a>
+                    <a href="<?= Model_Core_UrlManager::getUrl('edit', NULL, [$customer->getPrimaryKey() => $id]) ?>" class="btn btn-primary"><i class="fas fa-edit fa-fw"></i></a>
+                    <a href="<?= Model_Core_UrlManager::getUrl('delete', NULL, [$customer->getPrimaryKey() => $id]) ?>" class="btn btn-danger"><i class="fas fa-trash fa-fw"></i></a>
                 </td>
             </tr>
 <?php } ?>

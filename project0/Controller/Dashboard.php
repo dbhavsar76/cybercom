@@ -1,17 +1,17 @@
 <?php
-// require_once ROOT.'\\Controller\\Core\\Base.php';
-// require_once ROOT.'\\Block\\Header.php';
-// require_once ROOT.'\\Block\\Footer.php';
-// require_once ROOT.'\\Block\\Dashboard\\Dashboard.php';
 
 class Controller_Dashboard extends Controller_Core_Base {
     public function dashboardAction() {
-        $headerBlock = new Block_Header($this);
-        $dashboardBlock = new Block_Dashboard_Dashboard($this);
-        $footerBlock = new Block_Footer($this);
+        try {
+            $layout = $this->getLayout();
+            $layout->prepareChildren(Block_Core_Layout::LAYOUT_ONE_COLUMN);
+            $layout->getChild('header')->addChild(new Block_Header);
+            $layout->getChild('content')->addChild(new Block_Dashboard_Dashboard);
+            $layout->getChild('footer')->addChild(new Block_Footer);
 
-        $headerBlock->render();
-        $dashboardBlock->render();
-        $footerBlock->render();
+            $layout->render();
+        } catch (Exception $e) {
+            echo $e->getMessage().' in '.__METHOD__;
+        }
     }
 }

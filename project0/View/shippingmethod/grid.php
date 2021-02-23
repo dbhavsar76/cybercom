@@ -10,7 +10,7 @@ $shippingMethods = $this->shippingMethods;
 <div class="container-fluid">
     <div class="d-flex align-items-center justify-content-between mb-3">
         <p class="h2 d-inline">Shipping Methods</p>
-        <a href="<?= $this->getUrl('add', null, null, true) ?>" class="btn btn-success">Create Shipping Method</a>
+        <a href="<?= Model_Core_UrlManager::getUrl('add', null, null, true) ?>" class="btn btn-success">Create Shipping Method</a>
     </div>
     <table class="table table-striped">
         <thead>
@@ -36,11 +36,11 @@ $shippingMethods = $this->shippingMethods;
                 <td><?= $shippingMethod->code ?></td>
                 <td><?= $shippingMethod->amount ?></td>
                 <td><?= $shippingMethod->description ?></td>
-                <td><a class="btn <?= $statusClass ?>" href="<?= $this->getUrl('toggleStatus', null, [$shippingMethod->getPrimaryKey() => $id]) ?>"><?= $status ?></a></td>
+                <td><a class="btn <?= $statusClass ?>" href="<?= Model_Core_UrlManager::getUrl('toggleStatus', null, [$shippingMethod->getPrimaryKey() => $id]) ?>"><?= $status ?></a></td>
                 <td><?= $shippingMethod->createdDate ?></td>
                 <td>
-                    <a href="<?= $this->getUrl('edit', NULL, [$shippingMethod->getPrimaryKey() => $id]) ?>" class="btn btn-primary"><i class="fas fa-edit fa-fw"></i></a>
-                    <a href="<?= $this->getUrl('delete', NULL, [$shippingMethod->getPrimaryKey() => $id]) ?>" class="btn btn-danger"><i class="fas fa-trash fa-fw"></i></a>
+                    <a href="<?= Model_Core_UrlManager::getUrl('edit', NULL, [$shippingMethod->getPrimaryKey() => $id]) ?>" class="btn btn-primary"><i class="fas fa-edit fa-fw"></i></a>
+                    <a href="<?= Model_Core_UrlManager::getUrl('delete', NULL, [$shippingMethod->getPrimaryKey() => $id]) ?>" class="btn btn-danger"><i class="fas fa-trash fa-fw"></i></a>
                 </td>
             </tr>
 <?php } ?>

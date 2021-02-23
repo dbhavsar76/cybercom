@@ -1,5 +1,4 @@
 <?php
-// require_once ROOT.'\\Model\\Core\\Table.php';
 
 class Model_Product extends Model_Core_Table {
     public const STATUS_ENABLED = 1;

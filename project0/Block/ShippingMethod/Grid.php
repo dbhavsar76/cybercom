@@ -1,13 +1,10 @@
 <?php
-// require_once ROOT.'\\Block\\Core\\Base.php';
-// require_once ROOT.'\\Model\\ShippingMethod.php';
 
-class Block_ShippingMethod_Grid extends Block_Core_Base {
-    public function __construct(Controller_Core_Base $controller) {
+class Block_ShippingMethod_Grid extends Block_Core_Template {
+    public function __construct() {
         parent::__construct();
-        $this->setTemplate(ROOT.'\\View\\shippingmethod\\grid.php');
-        $this->setController($controller);
+        $this->setTemplate('/shippingmethod/grid.php');
 
-        $this->shippingMethods = (new Model_ShippingMethod)->load();
+        $this->shippingMethods = (new Model_ShippingMethod)->loadAll();
     }
 }

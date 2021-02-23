@@ -1,23 +1,16 @@
 <?php
-// require_once ROOT.'\\Controller\\Core\\Base.php';
-// require_once ROOT.'\\Model\\Product.php';
-// require_once ROOT.'\\Block\\Header.php';
-// require_once ROOT.'\\Block\\Footer.php';
 
 class Controller_Product extends Controller_Core_Base {
 
     public function gridAction() {
         try {
-            // require_once ROOT.'\\Block\\Product\\Grid.php';
+            $layout = $this->getLayout();
+            $layout->prepareChildren(Block_Core_Layout::LAYOUT_ONE_COLUMN);
+            $layout->getChild('header')->addChild(new Block_Header);
+            $layout->getChild('content')->addChild(new Block_Product_Grid);
+            $layout->getChild('footer')->addChild(new Block_Footer);
 
-            $headerBlock = new Block_Header($this);
-            $gridBlock = new Block_Product_Grid($this);
-            $footerBlock = new Block_Footer($this);
-
-            $headerBlock->render();
-            $gridBlock->render();
-            $footerBlock->render();
-
+            $layout->render();
         } catch (Exception $e) {
             echo $e->getMessage().' in '.__METHOD__;
         }
@@ -25,15 +18,13 @@ class Controller_Product extends Controller_Core_Base {
 
     public function addAction() {
         try {
-            // require_once ROOT.'\\Block\\Product\\Form.php';
+            $layout = $this->getLayout();
+            $layout->prepareChildren(Block_Core_Layout::LAYOUT_ONE_COLUMN);
+            $layout->getChild('header')->addChild(new Block_Header);
+            $layout->getChild('content')->addChild(new Block_Product_Form);
+            $layout->getChild('footer')->addChild(new Block_Footer);
 
-            $headerBlock = new Block_Header($this);
-            $formBlock = new Block_Product_Form($this);
-            $footerBlock = new Block_Footer($this);
-
-            $headerBlock->render();
-            $formBlock->render();
-            $footerBlock->render();
+            $layout->render();
         } catch (Exception $e) {
             echo $e->getMessage().' in '.__METHOD__;
         }
@@ -41,20 +32,16 @@ class Controller_Product extends Controller_Core_Base {
 
     public function editAction() {
         try {
-            $req = $this->getRequest();
-            $id = $req->getGet((new Model_Product)->getPrimaryKey());
-            if (!$id) $this->redirect('grid', null, null, true);
-            
-            // require_once ROOT.'\\Block\\Product\\Form.php';
+            $id = $this->getRequest()->getGet((new Model_Product)->getPrimaryKey());
+            if (!$id) Model_Core_UrlManager::redirect('grid', null, null, true);
 
-            $headerBlock = new Block_Header($this);
-            $formBlock = new Block_Product_Form($this, (int)$id);
-            $footerBlock = new Block_Footer($this);
+            $layout = $this->getLayout();
+            $layout->prepareChildren(Block_Core_Layout::LAYOUT_ONE_COLUMN);
+            $layout->getChild('header')->addChild(new Block_Header);
+            $layout->getChild('content')->addChild(new Block_Product_Form((int)$id));
+            $layout->getChild('footer')->addChild(new Block_Footer);
 
-            $headerBlock->render();
-            $formBlock->render();
-            $footerBlock->render();
-
+            $layout->render();
         } catch (Exception $e) {
             echo $e->getMessage().' in '.__METHOD__;
         }
@@ -80,7 +67,7 @@ class Controller_Product extends Controller_Core_Base {
                 header('location:'.$_SERVER['HTTP_REFERER']);
                 exit(0);
             }
-            $this->redirect('grid', null, null, true);
+            Model_Core_UrlManager::redirect('grid', null, null, true);
         } catch (Exception $e) {
             echo $e->getMessage().' in '.__METHOD__;
         }
@@ -92,10 +79,10 @@ class Controller_Product extends Controller_Core_Base {
             $product = new Model_Product();
 
             $id = $req->getGet($product->getPrimaryKey());
-            if (!$id) $this->redirect('grid', null, null, true);
+            if (!$id) Model_Core_UrlManager::redirect('grid', null, null, true);
 
             $product->load($id)->delete();
-            $this->redirect('grid', null, null, true);
+            Model_Core_UrlManager::redirect('grid', null, null, true);
         } catch (Exception $e) {
             echo $e->getMessage().' in '.__METHOD__;
         }
@@ -110,7 +97,7 @@ class Controller_Product extends Controller_Core_Base {
             if (!$id) throw new Exception('Invalid Request.');
     
             $product->load($id)->setData(['status' => (1 - $product->status), 'updatedDate'=>null])->save();
-            $this->redirect('grid', null, null, true);    
+            Model_Core_UrlManager::redirect('grid', null, null, true);    
         } catch (Exception $e) {
             echo $e->getMessage().' in '.__METHOD__;
         }

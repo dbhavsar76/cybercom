@@ -1,23 +1,16 @@
 <?php
-// require_once ROOT.'\\Controller\\Core\\Base.php';
-// require_once ROOT.'\\Model\\PaymentMethod.php';
-// require_once ROOT.'\\Block\\Header.php';
-// require_once ROOT.'\\Block\\Footer.php';
 
 class Controller_PaymentMethod extends Controller_Core_Base {
 
     public function gridAction() {
         try {
-            // require_once ROOT.'\\Block\\PaymentMethod\\Grid.php';
+            $layout = $this->getLayout();
+            $layout->prepareChildren(Block_Core_Layout::LAYOUT_ONE_COLUMN);
+            $layout->getChild('header')->addChild(new Block_Header);
+            $layout->getChild('content')->addChild(new Block_PaymentMethod_Grid);
+            $layout->getChild('footer')->addChild(new Block_Footer);
 
-            $headerBlock = new Block_Header($this);
-            $gridBlock = new Block_PaymentMethod_Grid($this);
-            $footerBlock = new Block_Footer($this);
-
-            $headerBlock->render();
-            $gridBlock->render();
-            $footerBlock->render();
-
+            $layout->render();
         } catch (Exception $e) {
             echo $e->getMessage().' in '.__METHOD__;
         }
@@ -25,16 +18,13 @@ class Controller_PaymentMethod extends Controller_Core_Base {
 
     public function addAction() {
         try {
-            // require_once ROOT.'\\Block\\PaymentMethod\\Form.php';
+            $layout = $this->getLayout();
+            $layout->prepareChildren(Block_Core_Layout::LAYOUT_ONE_COLUMN);
+            $layout->getChild('header')->addChild(new Block_Header);
+            $layout->getChild('content')->addChild(new Block_PaymentMethod_Form);
+            $layout->getChild('footer')->addChild(new Block_Footer);
 
-            $headerBlock = new Block_Header($this);
-            $formBlock = new Block_PaymentMethod_Form($this);
-            $footerBlock = new Block_Footer($this);
-
-            $headerBlock->render();
-            $formBlock->render();
-            $footerBlock->render();
-
+            $layout->render();
         } catch (Exception $e) {
             echo $e->getMessage().' in '.__METHOD__;
         }
@@ -42,20 +32,16 @@ class Controller_PaymentMethod extends Controller_Core_Base {
 
     public function editAction() {
         try {
-            $req = $this->getRequest();
-            $id = $req->getGet((new Model_PaymentMethod)->getPrimaryKey());
-            if (!$id) $this->redirect('grid', null, null, true);
+            $id = $this->getRequest()->getGet((new Model_PaymentMethod)->getPrimaryKey());
+            if (!$id) Model_Core_UrlManager::redirect('grid', null, null, true);
 
-            // require_once ROOT.'\\Block\\PaymentMethod\\Form.php';
+            $layout = $this->getLayout();
+            $layout->prepareChildren(Block_Core_Layout::LAYOUT_ONE_COLUMN);
+            $layout->getChild('header')->addChild(new Block_Header);
+            $layout->getChild('content')->addChild(new Block_PaymentMethod_Form((int)$id));
+            $layout->getChild('footer')->addChild(new Block_Footer);
 
-            $headerBlock = new Block_Header($this);
-            $formBlock = new Block_PaymentMethod_Form($this, (int)$id);
-            $footerBlock = new Block_Footer($this);
-
-            $headerBlock->render();
-            $formBlock->render();
-            $footerBlock->render();
-
+            $layout->render();
         } catch (Exception $e) {
             echo $e->getMessage().' in '.__METHOD__;
         }
@@ -81,7 +67,7 @@ class Controller_PaymentMethod extends Controller_Core_Base {
                 header('location:'.$_SERVER['HTTP_REFERER']);
                 exit(0);
             }
-            $this->redirect('grid', null, null, true);
+            Model_Core_UrlManager::redirect('grid', null, null, true);
         } catch (Exception $e) {
             echo $e->getMessage().' in '.__METHOD__;
         }
@@ -93,10 +79,10 @@ class Controller_PaymentMethod extends Controller_Core_Base {
             $paymentMethod = new Model_PaymentMethod();
 
             $id = $req->getGet($paymentMethod->getPrimaryKey());
-            if (!$id) $this->redirect('grid', null, null, true);
+            if (!$id) Model_Core_UrlManager::redirect('grid', null, null, true);
 
             $paymentMethod->load($id)->delete();
-            $this->redirect('grid', null, null, true);
+            Model_Core_UrlManager::redirect('grid', null, null, true);
         } catch (Exception $e) {
             echo $e->getMessage().' in '.__METHOD__;
         }
@@ -108,10 +94,10 @@ class Controller_PaymentMethod extends Controller_Core_Base {
             $paymentMethod = new Model_PaymentMethod();
     
             $id = $req->getGet($paymentMethod->getPrimaryKey());
-            if (!$id) $this->redirect('grid', null, null, true);
+            if (!$id) Model_Core_UrlManager::redirect('grid', null, null, true);
     
             $paymentMethod->load($id)->setData(['status' => (1 - $paymentMethod->status)])->save();
-            $this->redirect('grid', null, null, true);    
+            Model_Core_UrlManager::redirect('grid', null, null, true);    
         } catch (Exception $e) {
             echo $e->getMessage().' in '.__METHOD__;
         }
