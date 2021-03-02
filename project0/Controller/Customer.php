@@ -1,49 +1,59 @@
 <?php
 
 class Controller_Customer extends Controller_Core_Base {
+    public function __construct() {
+        parent::__construct();
+        $this->setMessageService(new Model_Admin_Message);
+    }
 
     public function gridAction() {
         try {
             $layout = $this->getLayout();
             $layout->prepareChildren(Block_Core_Layout::LAYOUT_ONE_COLUMN);
-            $layout->getChild('header')->addChild(new Block_Header);
-            $layout->getChild('content')->addChild(new Block_Customer_Grid);
-            $layout->getChild('footer')->addChild(new Block_footer);
+            $layout->getHeader()->addChild(new Block_Header);            
+            $layout->getContent()->addChild(new Block_Customer_Grid);
+            $layout->getFooter()->addChild(new Block_footer);
 
-            $layout->render();
+            echo $layout->render();
         } catch (Exception $e) {
-            echo $e->getMessage().' in '.__METHOD__;
+            $this->getMessageService()->setFailure($e->getMessage());
+            Model_Core_UrlManager::redirect('grid', null, null, true);
         }
     }
 
     public function addAction() {
         try {
             $layout = $this->getLayout();
-            $layout->prepareChildren(Block_Core_Layout::LAYOUT_ONE_COLUMN);
-            $layout->getChild('header')->addChild(new Block_Header);
-            $layout->getChild('content')->addChild(new Block_Customer_Form);
-            $layout->getChild('footer')->addChild(new Block_footer);
+            $layout->prepareChildren(Block_Core_Layout::LAYOUT_TWO_COLUMNS_WITH_LEFT_SIDEBAR);
+            $layout->getHeader()->addChild(new Block_Header);
+            $layout->getLeft()->addChild(new Block_Customer_Form_Tabs);
+            $layout->getContent()->addChild(new Block_Customer_Form);
+            $layout->getFooter()->addChild(new Block_footer);
 
-            $layout->render();
+            echo $layout->render();
         } catch (Exception $e) {
-            echo $e->getMessage().' in '.__METHOD__;
+            $this->getMessageService()->setFailure($e->getMessage());
+            Model_Core_UrlManager::redirect('grid', null, null, true);
         }
     }
 
     public function editAction() {
         try {
             $id = $this->getRequest()->getGet((new Model_Customer)->getPrimaryKey());
-            if (!$id) Model_Core_UrlManager::redirect('grid', null, null, true);
-
+            if (!$id) {
+                throw new Exception('Invalid Action.');
+            }
             $layout = $this->getLayout();
-            $layout->prepareChildren(Block_Core_Layout::LAYOUT_ONE_COLUMN);
-            $layout->getChild('header')->addChild(new Block_Header);
-            $layout->getChild('content')->addChild(new Block_Customer_Form((int)$id));
-            $layout->getChild('footer')->addChild(new Block_footer);
+            $layout->prepareChildren(Block_Core_Layout::LAYOUT_TWO_COLUMNS_WITH_LEFT_SIDEBAR);
+            $layout->getHeader()->addChild(new Block_Header);
+            $layout->getLeft()->addChild(new Block_Customer_Form_Tabs);
+            $layout->getContent()->addChild(new Block_Customer_Form((int)$id));
+            $layout->getFooter()->addChild(new Block_footer);
 
-            $layout->render();
+            echo $layout->render();
         } catch (Exception $e) {
-            echo $e->getMessage().' in '.__METHOD__;
+            $this->getMessageService()->setFailure($e->getMessage());
+            Model_Core_UrlManager::redirect('grid', null, null, true);
         }
     }
 
@@ -55,58 +65,99 @@ class Controller_Customer extends Controller_Core_Base {
             }
             $customer = new Model_Customer();
             $id = $request->getGet($customer->getPrimaryKey());
-            if ($id) $customer->{$customer->getPrimaryKey()} = $id;
-
-            $customerData = $request->getPost('customer',[]);
-            if (array_key_exists('password', $customerData)){
-                if (!empty($customerData['password']))
-                    $customerData['password'] = md5($customerData['password']);
-                else
-                    unset($customerData['password']);
+            if ($id) {
+                $customer->{$customer->getPrimaryKey()} = $id;
             }
-            if (array_key_exists('password2', $customerData)) {
-                unset($customerData['password2']);
+            $tab = $request->getGet('tab', Block_Customer_Form_Tabs::getDefaultTab());
+            if ($tab == 'information') {
+                $customerData = $request->getPost('customer',[]);
+                if (array_key_exists('password', $customerData)){
+                    if (!empty($customerData['password'])) {
+                        $customerData['password'] = md5($customerData['password']);
+                    } else {
+                        unset($customerData['password']);
+                    }
+                }
+                if (array_key_exists('password2', $customerData)) {
+                    unset($customerData['password2']);
+                }
+                $customer->setData($customerData);
+                $customer->status = $customer->status ? Model_Customer::STATUS_ENABLED : Model_Customer::STATUS_DISABLED;
+                $result = $customer->save();
+                $addresIds = explode(',', $customer->addressIds);
+            } else if ($tab == 'address') {
+                if (!$id) {
+                    throw new Exception('Id not found.');
+                }
+                $billingAddress = (new Model_CustomerAddress)->setData($request->getPost('billingAddress', []));
+                if ($request->getPost('copyAddress')) {
+                    $shippingAddress = (new Model_CustomerAddress)->setData($request->getPost('billingAddress', []));
+                    $shippingAddress->setData(['type' => 'shipping']);
+                } else {
+                    $shippingAddress = (new Model_CustomerAddress)->setData($request->getPost('shippingAddress', []));
+                }
+                $billingAddress->setData(['customerId' => $id]);
+                $shippingAddress->setData(['customerId' => $id]);
+                $result = $billingAddress->save() && $shippingAddress->save();
             }
-            $customer->setData($customerData);
-            $customer->status = $customer->status ? Model_Customer::STATUS_ENABLED : Model_Customer::STATUS_DISABLED;
-            $result = $customer->save();
             if (!$result) {
-                header('location'.$_SERVER['HTTP_REFERER']);
-                exit(0);
+                throw new Exception('Something went wrong. Could not save data.');
             }
-            Model_Core_UrlManager::redirect('grid', null, null, true);
+            $this->getMessageService()->setSuccess('Record saved successfully.');
+            if ($tab == 'information') {
+                Model_Core_UrlManager::redirect('edit', null, [$customer->getPrimaryKey() => $id ?? $result, 'billingAddressId' => $addresIds[0] ?? '', 'shippingAddressId' => $addresIds[1] ?? '', 'tab'=>'address']);
+            } else if ($tab == 'address') {
+                Model_Core_UrlManager::redirect('grid', null, null, true);
+            }
         } catch (Exception $e) {
-            echo $e->getMessage().' in '.__METHOD__;
+            $this->getMessageService()->setFailure($e->getMessage());
+            Model_Core_UrlManager::redirect(-1);
         }
     }
     
     public function deleteAction() {
         try {
-            $request = $this->getRequest();
             $customer = new Model_Customer();
 
-            $id = $request->getGet($customer->getPrimaryKey());
-            if (!$id) Model_Core_UrlManager::redirect('grid', null, null, true);
-
-            $customer->load($id)->delete();
-            Model_Core_UrlManager::redirect('grid', null, null, true);
+            $id = $this->getRequest()->getGet($customer->getPrimaryKey());
+            if (!$id) {
+                throw new Exception('Invalid Action. Id not found.');
+            }
+            if (!$customer->load($id)) {
+                throw new Exception('Could not load data.');
+            }
+            if (!$customer->delete()) {
+                throw new Exception('Could not delete record.');
+            }
+            $this->getMessageService()->setSuccess('Record deleted successfully.');
         } catch (Exception $e) {
-            echo $e->getMessage().' in '.__METHOD__;
+            $this->getMessageService()->setFailure($e->getMessage());
+        } finally {
+            Model_Core_UrlManager::redirect('grid', null, null, true);
         }
     }
 
     public function toggleStatusAction() {
         try {
-            $request = $this->getRequest();
             $customer = new Model_Customer();
     
-            $id = $request->getGet($customer->getPrimaryKey());
-            if (!$id) Model_Core_UrlManager::redirect('grid', null, null, true);
-    
-            $customer->load($id)->setData(['status' => (1 - $customer->status), 'updatedDate'=>null])->save();
-            Model_Core_UrlManager::redirect('grid', null, null, true);    
+            $id = $this->getRequest()->getGet($customer->getPrimaryKey());
+            if (!$id) {
+                throw new Exception('Invalid Action. Could not find ID.');
+            }
+            if (!$customer->load($id)) {
+                throw new Exception('Could not load data.');
+            }
+            $status = $customer->status;
+            $result = $customer->resetData()->setData([$customer->getPrimaryKey() => $id, 'status' => (1 - $status), 'updatedDate' => null])->save();
+            if (!$result) {
+                throw new Exception('Something went wrong. Could not save data.');
+            }
+            $this->getMessageService()->setSuccess('Status changed successfully.');
         } catch (Exception $e) {
-            echo $e->getMessage().' in '.__METHOD__;
+            $this->getMessageService()->setFailure($e->getMessage());
+        } finally {
+            Model_Core_UrlManager::redirect('grid', null, null, true);
         }
     }
 }

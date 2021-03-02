@@ -1,16 +1,8 @@
 <?php
-$formMode = $this->formMode;
-$formAction = $this->formAction;
 $product = $this->product;
 $statusState = $this->statusState;
 ?>
-
-<section>
-<div class="container-fluid">
-    <p class="h2 mt-3"><?= $formMode ?> Product</p>
-    <hr class="hr-dark">
-    <form action="<?= $formAction ?>" method="post">
-    <div class="row">
+<div class="row">
     <div class="col-5">
         <div class="form-group">
             <label for="name">Name</label>
@@ -49,7 +41,4 @@ $statusState = $this->statusState;
             <input type="number" name="product[discount]" id="discount" class="form-control" value="<?= $product->discount ?>">
         </div>
     </div>
-    </div>
-    </form>
 </div>
-</section>

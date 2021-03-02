@@ -4,11 +4,16 @@ class Block_Core_Template {
     protected $template = null;
     protected $context = [];
     protected $children = [];
+    protected $messageService = null;
 
-    function __construct() {}
+    function __construct() {
+        #empty
+    }
 
     public function render() {
+        ob_start();
         include $this->template;
+        return ob_get_clean();
     }
 
     public function setTemplate($template) {
@@ -25,7 +30,9 @@ class Block_Core_Template {
     }
 
     public function __get($key) {
-        if (!array_key_exists($key, $this->context)) return null;
+        if (!array_key_exists($key, $this->context)) {
+            return null;
+        }
         return $this->context[$key];
     }
 
@@ -62,6 +69,20 @@ class Block_Core_Template {
 
     public function createBlock($className) {
         return new $className();
+    }
+
+    public function setMessageService($messageService = null) {
+        if (!$messageService) {
+            $messageService = new Model_Admin_Message();
+        }
+        $this->messageService = $messageService;
+    }
+
+    public function getMessageService() {
+        if (!$this->messageService) {
+            $this->setMessageService();
+        }
+        return $this->messageService;
     }
 
 }

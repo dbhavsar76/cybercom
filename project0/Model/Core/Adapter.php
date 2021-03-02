@@ -22,26 +22,34 @@ class Model_Core_Adapter {
                 $this->config['pass'],
                 $this->config['dbname']
             );
-            if (!$this->isConnected()) throw new Exception("Database Connection Error.");
+            if (!$this->isConnected()) {
+                throw new Exception("Database Connection Error.");
+            }
         }
         return $this->con;
     }
 
     public function fetchRow($sql) {
         $result = $this->getConnection()->query($sql);
-        if (!$result || $result->num_rows === 0) return false;
+        if (!$result) {
+            return $result;
+        }
         return $result->fetch_assoc();
     }
 
     public function fetchAll($sql) {
         $result = $this->getConnection()->query($sql);
-        if (!$result) return false;
+        if (!$result) {
+            return $result;
+        }
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
     public function insert($sql) {
         $result = $this->getConnection()->query($sql);
-        if (!$result) return false;
+        if (!$result) {
+            return $result;
+        }
         return $this->con->insert_id;
     }
 

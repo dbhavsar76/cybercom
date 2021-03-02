@@ -6,15 +6,12 @@ class Block_Core_Layout extends Block_Core_Template {
     public const LAYOUT_TWO_COLUMNS_WITH_LEFT_SIDEBAR = 2;
     public const LAYOUT_THREE_COLUMN = 3;
 
-    public function __construct() {}
+    public function __construct() {
+        # empty
+    }
 
     public function prepareChildren($type) {
         switch ($type) {
-            case self::LAYOUT_EMPTY:
-                $this->setTemplate('/core/layout/empty.php');
-                $this->addChild(new Block_Core_Layout_Content, 'content');
-                break;
-
             case self::LAYOUT_ONE_COLUMN:
                 $this->setTemplate('/core/layout/one_column.php');
                 $this->addChild(new Block_Core_Layout_Header, 'header');
@@ -38,6 +35,33 @@ class Block_Core_Layout extends Block_Core_Template {
                 $this->addChild(new Block_Core_Layout_Right, 'right');
                 $this->addChild(new Block_Core_Layout_Footer, 'footer');
                 break;
+ 
+            case self::LAYOUT_EMPTY:
+            default:
+                $this->setTemplate('/core/layout/empty.php');
+                $this->addChild(new Block_Core_Layout_Content, 'content');
+                break;
+    
         }
+    }
+
+    public function getHeader() {
+        return $this->getChild('header');
+    }
+
+    public function getFooter() {
+        return $this->getChild('footer');
+    }
+
+    public function getContent() {
+        return $this->getChild('content');
+    }
+
+    public function getLeft() {
+        return $this->getChild('left');
+    }
+
+    public function getRight() {
+        return $this->getChild('right');
     }
 }

@@ -29,7 +29,7 @@ $categories = $this->categories;
             <tr>
                 <td><?= $id ?></td>
                 <td><?= $category->name ?></td>
-                <td> <a class="btn <?= $statusClass ?>" href="<?= Model_Core_UrlManager::getUrl('toggleStatus', null, ['id'=>$category->id]) ?>"><?= $status ?></a></td>
+                <td> <a class="btn <?= $statusClass ?>" href="<?= Model_Core_UrlManager::getUrl('toggleStatus', null, [$category->getPrimaryKey() => $id]) ?>"><?= $status ?></a></td>
                 <td><?= $category->description ?></td>
                 <td>
                     <a href="<?= Model_Core_UrlManager::getUrl('edit', null, [$category->getPrimaryKey() => $id]) ?>" class="btn btn-primary"><i class="fas fa-edit fa-fw"></i></a>

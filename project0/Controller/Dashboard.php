@@ -1,6 +1,11 @@
 <?php
 
 class Controller_Dashboard extends Controller_Core_Base {
+    public function __construct() {
+        parent::__construct();
+        $this->setMessageService(new Model_Admin_Message);
+    }
+
     public function dashboardAction() {
         try {
             $layout = $this->getLayout();
@@ -9,9 +14,10 @@ class Controller_Dashboard extends Controller_Core_Base {
             $layout->getChild('content')->addChild(new Block_Dashboard_Dashboard);
             $layout->getChild('footer')->addChild(new Block_Footer);
 
-            $layout->render();
+            echo $layout->render();
         } catch (Exception $e) {
-            echo $e->getMessage().' in '.__METHOD__;
+            $this->getMessageService()->setFailure($e->getMessage());
+            Model_Core_UrlManager::redirect('dashboard', null, null, true);
         }
     }
 }

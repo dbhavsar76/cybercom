@@ -6,7 +6,6 @@ $statuses = [
 $shippingMethods = $this->shippingMethods;
 ?>
 
-<section class="my-3">
 <div class="container-fluid">
     <div class="d-flex align-items-center justify-content-between mb-3">
         <p class="h2 d-inline">Shipping Methods</p>
@@ -47,4 +46,3 @@ $shippingMethods = $this->shippingMethods;
         </tbody>
     </table>
 </div>
-</section>

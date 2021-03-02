@@ -1,6 +1,6 @@
 <header>
 <?php foreach ($this->getChildren() as $child) {
-    $child->render();
+    echo $child->render();
 }
 ?>
 </header>

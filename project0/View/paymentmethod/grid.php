@@ -6,7 +6,6 @@ $statuses = [
 $paymentMethods = $this->paymentMethods;
 ?>
 
-<section class="my-3">
 <div class="container-fluid">
     <div class="d-flex align-items-center justify-content-between mb-3">
         <p class="h2 d-inline">Payment Methods</p>
@@ -45,4 +44,3 @@ $paymentMethods = $this->paymentMethods;
         </tbody>
     </table>
 </div>
-</section>

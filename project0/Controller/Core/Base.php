@@ -2,12 +2,24 @@
 
 abstract class Controller_Core_Base {
     protected $layout = null;
-    private $request = null;
-    private $context = [];
+    protected $request = null;
+    protected $messageService = null;
 
     function __construct() {
-        $this->request = new Model_Core_Request();
+        $this->setRequest();
         $this->setLayout();
+    }
+
+    public function setMessageService($messageService = null) {
+        if (!$messageService) {
+            $messageService = new Model_Core_Message();
+        }
+        $this->messageService = $messageService;
+        return $this;
+    }
+
+    public function getMessageService() {
+        return $this->messageService;
     }
 
     public function setLayout(Block_Core_Layout $layout = null) {
@@ -30,12 +42,25 @@ abstract class Controller_Core_Base {
 
     public function __get($key)
     {
-        if (!array_key_exists($key, $this->context)) return null;
+        if (!array_key_exists($key, $this->context)) {
+            return null;
+        }
         return $this->context[$key];
     }
 
     public function getRequest() {
-        if (!$this->request) $this->request = new Model_Core_Request();
+        if (!$this->request) {
+            $this->setRequest();
+        }
         return $this->request;
     }
+
+    public function setRequest(Model_Core_Request $request = null) {
+        if (!$request) {
+            $request = new Model_Core_Request();            
+        }
+        $this->request = $request;
+        return $this;
+    }
+
 }

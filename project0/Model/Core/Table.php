@@ -14,12 +14,16 @@ abstract class Model_Core_Table {
         if (!array_key_exists($this->primaryKey, $this->data)) {
             // insert
             $sql = $this->buildQuery('insert');
-            return $this->adapter->insert($sql);
+            $result = $this->adapter->insert($sql);
         } else {
             // update
             $sql = $this->buildQuery('update');
-            return $this->adapter->update($sql);
+            $result = $this->adapter->update($sql);
         }
+        if (!$result) {
+            return false;
+        }
+        return $result;
     }
 
     public function load($id = null) {
@@ -43,7 +47,7 @@ abstract class Model_Core_Table {
     public function fetchRow($sql) {
         $result = $this->adapter->fetchRow($sql);
         if (!$result) {
-            throw new Exception("Data Load Failed.");
+            return false;
         }
         $this->setData($result);
         return $this;
@@ -51,11 +55,11 @@ abstract class Model_Core_Table {
 
     public function fetchAll($sql) {
         $result = $this->adapter->fetchAll($sql);
-
-        foreach ($result as &$record) {
-            $record = (new $this())->setData($record);
+        if ($result === false) {
+            return false;
         }
-        return $result;
+        $collectionName = str_replace('_', '_Collection_', get_class($this));
+        return (new $collectionName($result));
     }
 
     public function delete() {
@@ -92,8 +96,8 @@ abstract class Model_Core_Table {
             case 'update':
                 $sql = "UPDATE `{$this->tableName}` SET ";
                 $first = true;
-                foreach ($this->getData() as $key => $value) {
-                    if ($key === $this->getPrimaryKey()) {
+                foreach ($this->data as $key => $value) {
+                    if ($key === $this->primaryKey) {
                         continue;
                     }
                     if (!$first) {
@@ -137,6 +141,11 @@ abstract class Model_Core_Table {
         if (array_key_exists($this->primaryKey, $this->data)) {
             $this->{$this->primaryKey} = (int)($this->{$this->primaryKey});
         }
+        return $this;
+    }
+
+    public function resetData() {
+        $this->data = [];
         return $this;
     }
 

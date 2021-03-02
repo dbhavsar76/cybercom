@@ -6,7 +6,6 @@ $statuses = [
 $products = $this->products;
 ?>
 
-<section class="my-3">
 <div class="container-fluid">
     <div class="d-flex align-items-center justify-content-between mb-3">
         <p class="h2 d-inline">Products</p>
@@ -53,4 +52,3 @@ $products = $this->products;
         </tbody>
     </table>
 </div>
-</section>
