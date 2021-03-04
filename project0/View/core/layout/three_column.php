@@ -2,23 +2,20 @@
 include ROOT.'/View/core/start.php';
 echo $this->getChild('header')->render();
 ?>
-<div class="row mx-0">
-    <div class="col-2">
+<div class="row mx-0 my-3">
+    <section id="left" class="col-2">
         <?= $this->getChild('left')->render() ?>
+    </section>
+    <div id="mid" class="col-8">
+        <section id="message">
+        </section>
+        <section id="content">
+            <?= $this->getChild('content')->render() ?>
+        </section>
     </div>
-    <div class="col-8">
-        <?php
-            $message = $this->getMessageService()->getMessage();
-            if ($message) {
-                echo (new Block_Core_Message($message))->render();
-                $this->getMessageService()->clearMessage();
-            }
-        ?>
-        <?= $this->getChild('content')->render() ?>
-    </div>
-    <div class="col-2">
+    <section id="right" class="col-2">
         <?= $this->getChild('right')->render() ?>
-    </div>
+    </section>
 </div>
 <?php
 echo $this->getChild('footer')->render();

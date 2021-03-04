@@ -13,6 +13,6 @@ $isDefault = $customerGroup->default == Model_CustomerGroup::DEFAULT ? 'checked 
     </div>
 </div>
 <div class="from-group">
-    <button type="submit" id="submit-btn" class="btn btn-primary small">Save</button>
-    <a href="<?= Model_Core_UrlManager::getUrl('grid',null, null, true) ?>" class="btn btn-secondary ml-2">Cancel</a>
+    <a href="#" onclick="mage.setForm('#editForm').load()" id="submit-btn" class="btn btn-primary">Save</a>
+    <a href="#" onclick="mage.setUrl('<?= Model_Core_UrlManager::getUrl('grid', null, null, true) ?>').resetParams().load()" class="btn btn-secondary text-white ml-2">Cancel</a>
 </div>

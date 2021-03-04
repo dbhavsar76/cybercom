@@ -9,7 +9,7 @@ $admins = $this->admins;
 <div class="container-fluid">
     <div class="d-flex align-items-center justify-content-between mb-3">
         <p class="h2 d-inline">Admins</p>
-        <a href="<?= Model_Core_UrlManager::getUrl('add', null, null, true) ?>" class="btn btn-success">Add Admin</a>
+        <a href="#" onclick="mage.setUrl('<?= Model_Core_UrlManager::getUrl('add', null, null, true) ?>').resetParams().load()" class="btn btn-success">Add Admin</a>
     </div>
     <table class="table table-striped">
         <thead>
@@ -32,12 +32,12 @@ $admins = $this->admins;
                 <td><?= $id ?></td>
                 <td><?= $admin->name ?></td>
                 <td><?= $admin->email ?></td>
-                <td><a class="btn <?= $statusClass ?>" href="<?= Model_Core_UrlManager::getUrl('toggleStatus', NULL, [$admin->getPrimaryKey() => $id]) ?>"><?= $status ?></a></td>
+                <td><a class="btn <?= $statusClass ?>" href="#" onclick="mage.setUrl('<?= Model_Core_UrlManager::getUrl('toggleStatus', NULL, [$admin->getPrimaryKey() => $id]) ?>').resetParams().load()"><?= $status ?></a></td>
                 <td><?= $admin->createdDate ?></td>
                 <td><?= $admin->updatedDate ?></td>
                 <td>
-                    <a href="<?= Model_Core_UrlManager::getUrl('edit', NULL, [$admin->getPrimaryKey() => $id]) ?>" class="btn btn-primary"><i class="fas fa-edit fa-fw"></i></a>
-                    <a href="<?= Model_Core_UrlManager::getUrl('delete', NULL, [$admin->getPrimaryKey() => $id]) ?>" class="btn btn-danger"><i class="fas fa-trash fa-fw"></i></a>
+                    <a href="#" onclick="mage.setUrl('<?= Model_Core_UrlManager::getUrl('edit', NULL, [$admin->getPrimaryKey() => $id]) ?>').resetParams().load()" class="btn btn-primary"><i class="fas fa-edit fa-fw"></i></a>
+                    <a href="#" onclick="mage.setUrl('<?= Model_Core_UrlManager::getUrl('delete', NULL, [$admin->getPrimaryKey() => $id]) ?>').resetParams().load()" class="btn btn-danger"><i class="fas fa-trash fa-fw"></i></a>
                 </td>
             </tr>
 <?php } ?>

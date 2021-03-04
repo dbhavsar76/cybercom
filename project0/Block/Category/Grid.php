@@ -5,6 +5,6 @@ class Block_Category_Grid extends Block_Core_Template {
         parent::__construct();
         $this->setTemplate('/category/grid.php');
         
-        $this->categories = (new Model_Category)->loadAll();
+        $this->categories = (new Model_Category)->loadAllTree();
     } 
 }

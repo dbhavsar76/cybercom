@@ -1,10 +1,10 @@
 <?php
 
 class Block_Core_Layout extends Block_Core_Template {
-    public const LAYOUT_EMPTY = 0;
-    public const LAYOUT_ONE_COLUMN = 1;
-    public const LAYOUT_TWO_COLUMNS_WITH_LEFT_SIDEBAR = 2;
-    public const LAYOUT_THREE_COLUMN = 3;
+    public const LAYOUT_EMPTY = 'empty';
+    public const LAYOUT_ONE_COLUMN = 'oneColumn';
+    public const LAYOUT_TWO_COLUMNS_WITH_LEFT_SIDEBAR = 'twoColumnWithLeftSidebar';
+    public const LAYOUT_THREE_COLUMN = 'threeColumn';
 
     public function __construct() {
         # empty

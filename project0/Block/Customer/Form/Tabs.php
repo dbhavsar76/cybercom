@@ -5,8 +5,8 @@ class Block_Customer_Form_Tabs extends Block_Core_Tabs {
 
     public function __construct() {
         $tabs = [
-            'information',
-            'address'
+            ['name' => 'information'],
+            ['name' => 'address']
         ];
         parent::__construct($tabs, self::VERTICAL);
     }

@@ -1,22 +1,34 @@
+$.ajaxSetup({
+    cache: true
+});
+
 const Base = function() {};
 
 Base.prototype = {
-    alert: function(message = null) {
-        alert(message);
-    },
     url: null,
     params: {},
     method: 'post',
+    form: null,
 
     load: function() {
+        let self = this;
         $.ajax({
             method: this.getMethod(),
             url: this.getUrl(),
             data: this.getParams(),
-            success: function(response, status) {
-                $.each(response.element, function (i, element) {
-                    $(element.selector).html(element.html);
-                });
+            contentType: false,
+            cache: false,
+            processData:false,
+            success: function(response) {
+                if (typeof response.layout !== 'undefined') {
+                    changeLayout(response.layout);
+                }
+                if (typeof response.element !== 'undefined') {
+                    self.handleHtml(response.element);
+                }
+                if (typeof response.scripts !== 'undefined') {
+                    self.handleScripts(response.scripts);
+                }
             },
         });
     },
@@ -55,7 +67,11 @@ Base.prototype = {
         return this.params[key];
     },
     addParam: function(key, value) {
-        this.params[key] = value;
+        if (typeof this.params === 'string') {
+            this.params = this.params.concat(`&${key}=${value}`);
+        } else {
+            this.params[key] = value;
+        }
         return this;
     },
     removeParam: function(key) {
@@ -63,7 +79,48 @@ Base.prototype = {
             delete this.params[key];
         }
         return this;
+    },
+
+    setForm: function(formId) {
+        this.form = $(formId);
+        this.setUrl(this.form.attr('action'));
+        this.setParams(new FormData(this.form.get(0)));
+        return this;
+    },
+
+    handleHtml: function(element) {
+        if (Array.isArray(element)) {
+            $(element).each(function(i, e) {
+                $(e.selector).html(e.html);
+            });
+        } else {
+            $(element.selector).html(element.html);
+        }
+    },
+
+    handleScripts: function(scripts) {
+        $(scripts).each(function(i, scriptUrl) {
+            $.getScript(scriptUrl);
+        });
     }
 };
 
-let object = new Base();
+function changeLayout(layout) {
+    if (document.layout === layout) return;
+    
+    if (layout === 'oneColumn') {
+        $('#left').addClass('d-none').html('');
+        $('#mid').removeClass('col-8 col-10').addClass('col-12');
+        $('#right').addClass('d-none').html('');
+    } else if (layout === 'twoColumnWithLeftSidebar') {
+        $('#left').removeClass('d-none');
+        $('#mid').removeClass('col-8 col-12').addClass('col-10');
+        $('#right').addClass('d-none').html('');
+    } else if (layout === 'threeColumn') {
+        $('#left').removeClass('d-none');
+        $('#mid').removeClass('col-10 col-12').addClass('col-8');
+        $('#right').removeClass('d-none');
+    }
+
+    document.layout = layout;
+}

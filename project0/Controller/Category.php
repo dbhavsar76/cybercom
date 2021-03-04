@@ -8,32 +8,68 @@ class Controller_Category extends Controller_Core_Base {
 
     public function gridAction() {
         try {
-            $layout = $this->getLayout();
-            $layout->prepareChildren(Block_Core_Layout::LAYOUT_ONE_COLUMN);
-            $layout->getChild('header')->addChild(new Block_Header);
-            $layout->getChild('content')->addChild(new Block_Category_Grid);
-            $layout->getChild('footer')->addChild(new Block_Footer);
-
-            echo $layout->render();
+            $gridHtml = (new Block_Category_Grid)->render();
         } catch (Exception $e) {
             $this->getMessageService()->setFailure($e->getMessage());
-            Model_Core_UrlManager::redirect('grid', null, null, true);
+        } finally {
+            $response = [
+                'status' => 'success',
+                'layout' => Block_Core_Layout::LAYOUT_ONE_COLUMN,
+                'element' => [
+                    [
+                        'selector' => '#content',
+                        'html' => $gridHtml
+                    ],
+                ]
+            ];
+
+            $message = $this->getMessageService()->getMessage();
+            if ($message) {
+                $response['element'][] = [
+                    'selector' => '#message',
+                    'html' => (new Block_Core_Message($message))->render()
+                ];
+                $this->getMessageService()->clearMessage();
+            }
+
+            header("Content-type: application/json; charset=utf-8");
+            echo json_encode($response);
         }
     }
 
     public function addAction() {
         try {
-            $layout = $this->getLayout();
-            $layout->prepareChildren(Block_Core_Layout::LAYOUT_TWO_COLUMNS_WITH_LEFT_SIDEBAR);
-            $layout->getHeader()->addChild(new Block_Header);
-            $layout->getLeft()->addChild(new Block_Category_Form_Tabs);
-            $layout->getContent()->addChild(new Block_Category_Form);
-            $layout->getFooter()->addChild(new Block_Footer);
-
-            echo $layout->render();
+            $tabsHtml = (new Block_Category_Form_Tabs)->render();
+            $formHtml = (new Block_Category_Form)->render();
         } catch (Exception $e) {
             $this->getMessageService()->setFailure($e->getMessage());
-            Model_Core_UrlManager::redirect('grid', null, null, true);
+        } finally {
+            $response = [
+                'status' => 'success',
+                'layout' => Block_Core_Layout::LAYOUT_TWO_COLUMNS_WITH_LEFT_SIDEBAR,
+                'element' => [
+                    [
+                        'selector' => '#left',
+                        'html' => $tabsHtml
+                    ],
+                    [
+                        'selector' => '#content',
+                        'html' => $formHtml
+                    ],
+                ]
+            ];
+
+            $message = $this->getMessageService()->getMessage();
+            if ($message) {
+                $response['element'][] = [
+                    'selector' => '#message',
+                    'html' => (new Block_Core_Message($message))->render()
+                ];
+                $this->getMessageService()->clearMessage();
+            }
+
+            header("Content-type: application/json; charset=utf-8");
+            echo json_encode($response);
         }
     }
 
@@ -43,17 +79,38 @@ class Controller_Category extends Controller_Core_Base {
             if (!$id) {
                 throw new Exception('Invalid Action. Id not found.');
             }
-            $layout = $this->getLayout();
-            $layout->prepareChildren(Block_Core_Layout::LAYOUT_TWO_COLUMNS_WITH_LEFT_SIDEBAR);
-            $layout->getChild('header')->addChild(new Block_Header);
-            $layout->getLeft()->addChild(new Block_Category_Form_Tabs);
-            $layout->getChild('content')->addChild(new Block_Category_Form((int)$id));
-            $layout->getChild('footer')->addChild(new Block_Footer);
 
-            echo $layout->render();
+            $tabsHtml = (new Block_Category_Form_Tabs)->render();
+            $formHtml = (new Block_Category_Form((int)$id))->render();
         } catch (Exception $e) {
             $this->getMessageService()->setFailure($e->getMessage());
-            Model_Core_UrlManager::redirect('grid', null, null, true);
+        } finally {
+            $response = [
+                'status' => 'success',
+                'layout' => Block_Core_Layout::LAYOUT_TWO_COLUMNS_WITH_LEFT_SIDEBAR,
+                'element' => [
+                    [
+                        'selector' => '#left',
+                        'html' => $tabsHtml
+                    ],
+                    [
+                        'selector' => '#content',
+                        'html' => $formHtml
+                    ],
+                ]
+            ];
+
+            $message = $this->getMessageService()->getMessage();
+            if ($message) {
+                $response['element'][] = [
+                    'selector' => '#message',
+                    'html' => (new Block_Core_Message($message))->render()
+                ];
+                $this->getMessageService()->clearMessage();
+            }
+
+            header("Content-type: application/json; charset=utf-8");
+            echo json_encode($response);
         }
     }
 
@@ -76,10 +133,10 @@ class Controller_Category extends Controller_Core_Base {
                 throw new Exception('Something went wrong. Could not save data.');
             }
             $this->getMessageService()->setSuccess('Record saved successfully.');
-            Model_Core_UrlManager::redirect('grid', null, null, true);
         } catch (Exception $e) {
             $this->getMessageService()->setFailure($e->getMessage());
-            Model_Core_UrlManager::redirect(-1);
+        } finally {
+            $this->gridAction();
         }
     }
     
@@ -101,7 +158,7 @@ class Controller_Category extends Controller_Core_Base {
         } catch (Exception $e) {
             $this->getMessageService()->setFailure($e->getMessage());
         } finally {
-            Model_Core_UrlManager::redirect('grid', null, null, true);
+            $this->gridAction();
         }
     }
 
@@ -124,7 +181,7 @@ class Controller_Category extends Controller_Core_Base {
         } catch (Exception $e) {
             $this->getMessageService()->setFailure($e->getMessage());
         } finally {
-           Model_Core_UrlManager::redirect('grid', null, null, true);
-       }
+            $this->gridAction();
+        }
     }
 }

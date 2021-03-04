@@ -5,8 +5,8 @@ class Block_Admin_Form_Tabs extends Block_Core_Tabs {
 
     public function __construct() {
         $tabs = [
-            'information',
-            'permission'
+            ['name' => 'information'],
+            ['name' => 'permission']
         ];
         parent::__construct($tabs, self::VERTICAL);
     }

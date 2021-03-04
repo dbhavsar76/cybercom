@@ -27,12 +27,15 @@ class Model_Customer extends Model_Core_Table {
         return $this->fetchRow($sql);
     }
 
-    public function loadAll() {
+    public function loadAll($conditions = null) {
         $sql = "SELECT `c`.*, `cg`.`name` `groupName`, GROUP_CONCAT(`ca`.`addressId`) `addressIds`, `ca`.`zipcode` `zipcode`
                 FROM `customer` `c`
                 LEFT JOIN `customergroup` `cg` ON `c`.`groupId` = `cg`.`groupId`
                 LEFT JOIN `customer_address` `ca` ON `c`.`id` = `ca`.`customerId`
                 GROUP BY `c`.`id`";
+        if ($conditions) {
+            $sql .= " WHERE " . implode(" AND ", $conditions);
+        }
         return $this->fetchAll($sql);
     }
 

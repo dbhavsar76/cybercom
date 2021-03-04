@@ -39,8 +39,8 @@ abstract class Model_Core_Table {
         return $this->fetchRow($sql);
     }
 
-    public function loadAll() {
-        $sql = $this->buildQuery('selectAll');
+    public function loadAll($conditions = null) {
+        $sql = $this->buildQuery('selectAll', null, $conditions);
         return $this->fetchAll($sql);
     }
 
@@ -67,14 +67,18 @@ abstract class Model_Core_Table {
         return $this->adapter->delete($sql);
     }
 
-    public function buildQuery($type, $id=null) {
+    public function buildQuery($type, $id=null, $conditions = null) {
+        $sql = '';
         switch (strtolower($type)) {
             case 'select':
-                return "SELECT * FROM `{$this->tableName}` WHERE `{$this->primaryKey}`={$id}";
+                $sql = "SELECT * FROM `{$this->tableName}` WHERE `{$this->primaryKey}`={$id}";
                 break;
 
             case 'selectall':
-                return "SELECT * FROM `{$this->tableName}`";
+                $sql = "SELECT * FROM `{$this->tableName}`";
+                if (!empty($conditions)) {
+                    $sql .= " WHERE " . implode(" AND ", $conditions);
+                }
                 break;
 
             case 'insert':
@@ -90,7 +94,7 @@ abstract class Model_Core_Table {
                     $sql2 .= "'{$value}'";
                     $first = false;
                 }
-                return $sql1 . ') ' . $sql2 . ')';
+                $sql = $sql1 . ') ' . $sql2 . ')';
                 break;
 
             case 'update':
@@ -111,13 +115,15 @@ abstract class Model_Core_Table {
                     $first = false;
                 }
                 $sql .= " WHERE `{$this->primaryKey}`={$this->{$this->primaryKey}}";
-                return $sql;
                 break;
 
             case 'delete':
-                return "DELETE FROM `{$this->tableName}` WHERE `{$this->primaryKey}`={$this->{$this->primaryKey}}";
+                $sql = "DELETE FROM `{$this->tableName}` WHERE `{$this->primaryKey}`={$this->{$this->primaryKey}}";
                 break;
-        } 
+
+            default:
+        }
+        return $sql;
     }
 
     public function setPrimaryKey($keyname) {

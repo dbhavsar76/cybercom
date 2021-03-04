@@ -1,10 +1,32 @@
 <?php
 $category = $this->category;
 $statusState = $this->statusState;
+$categoryOptions = $this->categoryOptions;
+
+function printCategoryOptions($categories, $current, $prefix = '') {
+    $primaryKey = (new Model_Category)->getPrimaryKey();
+
+    foreach($categories as $category) {
+        $selected = $category->$primaryKey == $current->parentId ? 'selected' : '';
+?>
+    <option value="<?= $category->$primaryKey ?>" <?= $selected ?>><?= $prefix . $category->name ?></option>
+<?php
+    printCategoryOptions($category->getChildren(), $current, $prefix . "{$category->name} => ");
+   }
+}
+
+
 ?>
 <div class="form-group">
     <label for="name">Name</label>
     <input type="text" name="category[name]" id="name" class="form-control" value="<?= $category->name ?>">
+</div>
+<div class="form-group">
+    <label for="parent-category">Parent Category</label>
+    <select class="form-control" name="category[parentId]" id="parent-category">
+    <option value="0">---</option>
+    <?php printCategoryOptions($categoryOptions, $category); ?>
+    </select>
 </div>
 <div class="form-group">
     <label for="description">Description</label>
@@ -17,6 +39,6 @@ $statusState = $this->statusState;
     </div>
 </div>
 <div class="from-group">
-    <button type="submit" id="submit-btn" class="btn btn-primary small">Save</button>
-    <a href="<?= Model_Core_UrlManager::getUrl('grid',null, null, true) ?>" class="btn btn-secondary ml-2">Cancel</a>
+    <a href="#" onclick="mage.setForm('#editForm').load()" id="submit-btn" class="btn btn-primary">Save</a>
+    <a href="#" onclick="mage.setUrl('<?= Model_Core_UrlManager::getUrl('grid', null, null, true) ?>').resetParams().load()" class="btn btn-secondary text-white ml-2">Cancel</a>
 </div>

@@ -5,8 +5,8 @@ class Block_PaymentMethod_Form_Tabs extends Block_Core_Tabs {
 
     public function __construct() {
         $tabs = [
-            'information',
-            'dummy'
+            ['name' => 'information'],
+            ['name' => 'dummy']
         ];
         parent::__construct($tabs, self::VERTICAL);
     }

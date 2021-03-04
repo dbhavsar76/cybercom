@@ -5,8 +5,8 @@ class Block_Product_Form_Tabs extends Block_Core_Tabs {
 
     public function __construct() {
         $tabs = [
-            'information',
-            'media'
+            ['name' => 'information'],
+            ['name' => 'media', 'url' => Model_Core_UrlManager::getUrl('grid', 'product_media')]
         ];
         parent::__construct($tabs, self::VERTICAL);
     }

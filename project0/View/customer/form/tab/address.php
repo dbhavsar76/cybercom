@@ -58,7 +58,3 @@ $shippingAddress = $this->shippingAddress;
         <input type="hidden" name="shippingAddress[type]" value="shipping">
     </fieldset>
 </div>
-<div class="from-group">
-    <button type="submit" id="submit-btn" class="btn btn-primary">Save</button>
-    <a href="<?= Model_Core_UrlManager::getUrl('grid', null, null, true) ?>" class="btn btn-secondary text-white ml-2">Cancel</a>
-</div>

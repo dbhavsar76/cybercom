@@ -5,8 +5,8 @@ class Block_Category_Form_Tabs extends Block_Core_Tabs {
 
     public function __construct() {
         $tabs = [
-            'information',
-            'media'
+            ['name' => 'information'],
+            ['name' => 'media']
         ];
         parent::__construct($tabs, self::VERTICAL);
     }

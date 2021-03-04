@@ -8,32 +8,68 @@ class Controller_Customer extends Controller_Core_Base {
 
     public function gridAction() {
         try {
-            $layout = $this->getLayout();
-            $layout->prepareChildren(Block_Core_Layout::LAYOUT_ONE_COLUMN);
-            $layout->getHeader()->addChild(new Block_Header);            
-            $layout->getContent()->addChild(new Block_Customer_Grid);
-            $layout->getFooter()->addChild(new Block_footer);
-
-            echo $layout->render();
+            $gridHtml = (new Block_Customer_Grid)->render();
         } catch (Exception $e) {
             $this->getMessageService()->setFailure($e->getMessage());
-            Model_Core_UrlManager::redirect('grid', null, null, true);
+        } finally {
+            $response = [
+                'status' => 'success',
+                'layout' => Block_Core_Layout::LAYOUT_ONE_COLUMN,
+                'element' => [
+                    [
+                        'selector' => '#content',
+                        'html' => $gridHtml
+                    ],
+                ]
+            ];
+
+            $message = $this->getMessageService()->getMessage();
+            if ($message) {
+                $response['element'][] = [
+                    'selector' => '#message',
+                    'html' => (new Block_Core_Message($message))->render()
+                ];
+                $this->getMessageService()->clearMessage();
+            }
+
+            header("Content-type: application/json; charset=utf-8");
+            echo json_encode($response);
         }
     }
 
     public function addAction() {
         try {
-            $layout = $this->getLayout();
-            $layout->prepareChildren(Block_Core_Layout::LAYOUT_TWO_COLUMNS_WITH_LEFT_SIDEBAR);
-            $layout->getHeader()->addChild(new Block_Header);
-            $layout->getLeft()->addChild(new Block_Customer_Form_Tabs);
-            $layout->getContent()->addChild(new Block_Customer_Form);
-            $layout->getFooter()->addChild(new Block_footer);
-
-            echo $layout->render();
+            $tabsHtml = (new Block_Customer_Form_Tabs)->render();
+            $formHtml = (new Block_Customer_Form)->render();
         } catch (Exception $e) {
             $this->getMessageService()->setFailure($e->getMessage());
-            Model_Core_UrlManager::redirect('grid', null, null, true);
+        } finally {
+            $response = [
+                'status' => 'success',
+                'layout' => Block_Core_Layout::LAYOUT_TWO_COLUMNS_WITH_LEFT_SIDEBAR,
+                'element' => [
+                    [
+                        'selector' => '#left',
+                        'html' => $tabsHtml
+                    ],
+                    [
+                        'selector' => '#content',
+                        'html' => $formHtml
+                    ],
+                ]
+            ];
+
+            $message = $this->getMessageService()->getMessage();
+            if ($message) {
+                $response['element'][] = [
+                    'selector' => '#message',
+                    'html' => (new Block_Core_Message($message))->render()
+                ];
+                $this->getMessageService()->clearMessage();
+            }
+
+            header("Content-type: application/json; charset=utf-8");
+            echo json_encode($response);
         }
     }
 
@@ -41,19 +77,40 @@ class Controller_Customer extends Controller_Core_Base {
         try {
             $id = $this->getRequest()->getGet((new Model_Customer)->getPrimaryKey());
             if (!$id) {
-                throw new Exception('Invalid Action.');
+                throw new Exception('Invalid Action. Id not found.');
             }
-            $layout = $this->getLayout();
-            $layout->prepareChildren(Block_Core_Layout::LAYOUT_TWO_COLUMNS_WITH_LEFT_SIDEBAR);
-            $layout->getHeader()->addChild(new Block_Header);
-            $layout->getLeft()->addChild(new Block_Customer_Form_Tabs);
-            $layout->getContent()->addChild(new Block_Customer_Form((int)$id));
-            $layout->getFooter()->addChild(new Block_footer);
 
-            echo $layout->render();
+            $tabsHtml = (new Block_Customer_Form_Tabs)->render();
+            $formHtml = (new Block_Customer_Form((int)$id))->render();
         } catch (Exception $e) {
             $this->getMessageService()->setFailure($e->getMessage());
-            Model_Core_UrlManager::redirect('grid', null, null, true);
+        } finally {
+            $response = [
+                'status' => 'success',
+                'layout' => Block_Core_Layout::LAYOUT_TWO_COLUMNS_WITH_LEFT_SIDEBAR,
+                'element' => [
+                    [
+                        'selector' => '#left',
+                        'html' => $tabsHtml
+                    ],
+                    [
+                        'selector' => '#content',
+                        'html' => $formHtml
+                    ],
+                ]
+            ];
+
+            $message = $this->getMessageService()->getMessage();
+            if ($message) {
+                $response['element'][] = [
+                    'selector' => '#message',
+                    'html' => (new Block_Core_Message($message))->render()
+                ];
+                $this->getMessageService()->clearMessage();
+            }
+
+            header("Content-type: application/json; charset=utf-8");
+            echo json_encode($response);
         }
     }
 
@@ -89,12 +146,20 @@ class Controller_Customer extends Controller_Core_Base {
                 if (!$id) {
                     throw new Exception('Id not found.');
                 }
+                $billingAddressId = $request->getGet('billingAddressId');
+                $shippingAddressId = $request->getGet('shippingAddressId');
                 $billingAddress = (new Model_CustomerAddress)->setData($request->getPost('billingAddress', []));
                 if ($request->getPost('copyAddress')) {
                     $shippingAddress = (new Model_CustomerAddress)->setData($request->getPost('billingAddress', []));
                     $shippingAddress->setData(['type' => 'shipping']);
                 } else {
                     $shippingAddress = (new Model_CustomerAddress)->setData($request->getPost('shippingAddress', []));
+                }
+                if ($billingAddressId) {
+                    $billingAddress->{$billingAddress->getPrimaryKey()} = $billingAddressId;
+                }
+                if ($shippingAddressId) {
+                    $shippingAddress->{$shippingAddress->getPrimaryKey()} = $shippingAddressId;
                 }
                 $billingAddress->setData(['customerId' => $id]);
                 $shippingAddress->setData(['customerId' => $id]);
@@ -103,15 +168,16 @@ class Controller_Customer extends Controller_Core_Base {
             if (!$result) {
                 throw new Exception('Something went wrong. Could not save data.');
             }
-            $this->getMessageService()->setSuccess('Record saved successfully.');
+            $this->getMessageService()->setSuccess('Record saved successfully.'.$tab);
             if ($tab == 'information') {
-                Model_Core_UrlManager::redirect('edit', null, [$customer->getPrimaryKey() => $id ?? $result, 'billingAddressId' => $addresIds[0] ?? '', 'shippingAddressId' => $addresIds[1] ?? '', 'tab'=>'address']);
+                $_GET = array_merge($_GET, [$customer->getPrimaryKey() => $id ?? $result, 'billingAddressId' => $addresIds[0] ?? '', 'shippingAddressId' => $addresIds[1] ?? '', 'tab'=>'address']);
+                $this->editAction();
             } else if ($tab == 'address') {
-                Model_Core_UrlManager::redirect('grid', null, null, true);
+                $this->gridAction();
             }
         } catch (Exception $e) {
             $this->getMessageService()->setFailure($e->getMessage());
-            Model_Core_UrlManager::redirect(-1);
+            $this->gridAction();
         }
     }
     
@@ -133,7 +199,7 @@ class Controller_Customer extends Controller_Core_Base {
         } catch (Exception $e) {
             $this->getMessageService()->setFailure($e->getMessage());
         } finally {
-            Model_Core_UrlManager::redirect('grid', null, null, true);
+            $this->gridAction();
         }
     }
 
@@ -157,7 +223,7 @@ class Controller_Customer extends Controller_Core_Base {
         } catch (Exception $e) {
             $this->getMessageService()->setFailure($e->getMessage());
         } finally {
-            Model_Core_UrlManager::redirect('grid', null, null, true);
+            $this->gridAction();
         }
     }
 }

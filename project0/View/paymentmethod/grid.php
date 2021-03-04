@@ -9,7 +9,7 @@ $paymentMethods = $this->paymentMethods;
 <div class="container-fluid">
     <div class="d-flex align-items-center justify-content-between mb-3">
         <p class="h2 d-inline">Payment Methods</p>
-        <a href="<?= Model_Core_UrlManager::getUrl('add') ?>" class="btn btn-success">Create Payment Method</a>
+        <a href="#" onclick="mage.setUrl('<?= Model_Core_UrlManager::getUrl('add') ?>').resetParams().load()" class="btn btn-success">Create Payment Method</a>
     </div>
     <table class="table table-striped">
         <thead>
@@ -33,11 +33,11 @@ $paymentMethods = $this->paymentMethods;
                 <td><?= $paymentMethod->name ?></td>
                 <td><?= $paymentMethod->code ?></td>
                 <td><?= $paymentMethod->description ?></td>
-                <td><a class="btn <?= $statusClass ?>" href="<?= Model_Core_UrlManager::getUrl('toggleStatus', null, [$paymentMethod->getPrimaryKey() => $id]) ?>"><?= $status ?></a></td>
+                <td><a class="btn <?= $statusClass ?>" href="#" onclick="mage.setUrl('<?= Model_Core_UrlManager::getUrl('toggleStatus', null, [$paymentMethod->getPrimaryKey() => $id]) ?>').resetParams().load()"><?= $status ?></a></td>
                 <td><?= $paymentMethod->createdDate ?></td>
                 <td>
-                    <a href="<?= Model_Core_UrlManager::getUrl('edit', NULL, [$paymentMethod->getPrimaryKey() => $id]) ?>" class="btn btn-primary"><i class="fas fa-edit fa-fw"></i></a>
-                    <a href="<?= Model_Core_UrlManager::getUrl('delete', NULL, [$paymentMethod->getPrimaryKey() => $id]) ?>" class="btn btn-danger"><i class="fas fa-trash fa-fw"></i></a>
+                    <a href="#" onclick="mage.setUrl('<?= Model_Core_UrlManager::getUrl('edit', NULL, [$paymentMethod->getPrimaryKey() => $id]) ?>').resetParams().load()" class="btn btn-primary"><i class="fas fa-edit fa-fw"></i></a>
+                    <a href="#" onclick="mage.setUrl('<?= Model_Core_UrlManager::getUrl('delete', NULL, [$paymentMethod->getPrimaryKey() => $id]) ?>').resetParams().load()" class="btn btn-danger"><i class="fas fa-trash fa-fw"></i></a>
                 </td>
             </tr>
 <?php } ?>
