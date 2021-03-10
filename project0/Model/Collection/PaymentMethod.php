@@ -1,7 +1,8 @@
 <?php
+namespace Model\Collection;
 
-class Model_Collection_PaymentMethod extends Model_Core_Collection {
+class PaymentMethod extends \Model\Core\Collection {
     public function __construct(array $array = []) {
-        parent::__construct($array, 'Model_PaymentMethod');
+        parent::__construct($array, '\\Model\\PaymentMethod');
     }
 }

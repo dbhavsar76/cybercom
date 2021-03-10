@@ -1,7 +1,8 @@
 <?php
+namespace Model\Collection;
 
-class Model_Collection_ShippingMethod extends Model_Core_Collection {
+class ShippingMethod extends \Model\Core\Collection {
     public function __construct(array $array = []) {
-        parent::__construct($array, 'Model_ShippingMethod');
+        parent::__construct($array, '\\Model\\ShippingMethod');
     }
 }

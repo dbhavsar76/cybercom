@@ -1,6 +1,7 @@
 <?php
+namespace Block\Core;
 
-class Block_Core_Layout extends Block_Core_Template {
+class Layout extends Template {
     public const LAYOUT_EMPTY = 'empty';
     public const LAYOUT_ONE_COLUMN = 'oneColumn';
     public const LAYOUT_TWO_COLUMNS_WITH_LEFT_SIDEBAR = 'twoColumnWithLeftSidebar';
@@ -14,32 +15,32 @@ class Block_Core_Layout extends Block_Core_Template {
         switch ($type) {
             case self::LAYOUT_ONE_COLUMN:
                 $this->setTemplate('/core/layout/one_column.php');
-                $this->addChild(new Block_Core_Layout_Header, 'header');
-                $this->addChild(new Block_Core_Layout_Content, 'content');
-                $this->addChild(new Block_Core_Layout_Footer, 'footer');
+                $this->addChild(new Layout\Header, 'header');
+                $this->addChild(new Layout\Content, 'content');
+                $this->addChild(new Layout\Footer, 'footer');
                 break;
 
             case self::LAYOUT_TWO_COLUMNS_WITH_LEFT_SIDEBAR:
                 $this->setTemplate('/core/layout/two_columns_with_left_sidebar.php');
-                $this->addChild(new Block_Core_Layout_Header, 'header');
-                $this->addChild(new Block_Core_Layout_Left, 'left');
-                $this->addChild(new Block_Core_Layout_Content, 'content');
-                $this->addChild(new Block_Core_Layout_Footer, 'footer');
+                $this->addChild(new Layout\Header, 'header');
+                $this->addChild(new Layout\Left, 'left');
+                $this->addChild(new Layout\Content, 'content');
+                $this->addChild(new Layout\Footer, 'footer');
                 break;
 
             case self::LAYOUT_THREE_COLUMN:
                 $this->setTemplate('/core/layout/three_column.php');
-                $this->addChild(new Block_Core_Layout_Header, 'header');
-                $this->addChild(new Block_Core_Layout_Left, 'left');
-                $this->addChild(new Block_Core_Layout_Content, 'content');
-                $this->addChild(new Block_Core_Layout_Right, 'right');
-                $this->addChild(new Block_Core_Layout_Footer, 'footer');
+                $this->addChild(new Layout\Header, 'header');
+                $this->addChild(new Layout\Left, 'left');
+                $this->addChild(new Layout\Content, 'content');
+                $this->addChild(new Layout\Right, 'right');
+                $this->addChild(new Layout\Footer, 'footer');
                 break;
  
             case self::LAYOUT_EMPTY:
             default:
                 $this->setTemplate('/core/layout/empty.php');
-                $this->addChild(new Block_Core_Layout_Content, 'content');
+                $this->addChild(new Layout\Content, 'content');
                 break;
     
         }

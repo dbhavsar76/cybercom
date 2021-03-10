@@ -1,6 +1,7 @@
 <?php
+namespace Block\Core;
 
-class Block_Core_Tabs extends Block_Core_Template {
+class Tabs extends Template {
     public const HORIZONTAL = 'flex-row';
     public const VERTICAL = 'flex-column';
 
@@ -8,10 +9,11 @@ class Block_Core_Tabs extends Block_Core_Template {
     protected static $defaultTab = null;
     protected $alignment = self::HORIZONTAL;
 
-    public function __construct(array $tabs = [], $alignment = self::HORIZONTAL) {
+    public function __construct(array $tabs = [], $alignment = self::HORIZONTAL, $addMode = false) {
         $this->tabs = $tabs;
         $this->alignment = $alignment;
         $this->setTemplate('/core/tabs.php');
+        $this->addMode = $addMode;
     }
 
     public function setTabs(array $tabs) {
@@ -19,8 +21,18 @@ class Block_Core_Tabs extends Block_Core_Template {
         return $this;
     }
 
-    public function getTabs() {
-        return $this->tabs;
+    public function getTabs($all = false) {
+        if ($all) {
+            return $this->tabs;
+        }
+        $effectiveTabs = [];
+        foreach ($this->tabs as $tab) {
+            if (!empty($tab['hideOnAdd']) && $tab['hideOnAdd'] && $this->addMode) {
+                continue;
+            }
+            $effectiveTabs[] = $tab;
+        }
+        return $effectiveTabs;
     }
 
     public function setAlignment($alignment) {
@@ -40,4 +52,7 @@ class Block_Core_Tabs extends Block_Core_Template {
         return static::$defaultTab;
     }
 
+    public function prepareName($name) {
+        return str_replace(' ', '', ucwords($name));
+    }
 }

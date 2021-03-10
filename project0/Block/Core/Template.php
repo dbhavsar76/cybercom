@@ -1,6 +1,7 @@
 <?php
+namespace Block\Core;
 
-class Block_Core_Template {
+class Template {
     protected $template = null;
     protected $context = [];
     protected $children = [];
@@ -45,7 +46,7 @@ class Block_Core_Template {
         return $this->children;
     }
 
-    public function addChild(Block_Core_Template $child, $key = null) {
+    public function addChild(Template $child, $key = null) {
         if (!$key) {
             $key = get_class($child);
         }
@@ -73,7 +74,7 @@ class Block_Core_Template {
 
     public function setMessageService($messageService = null) {
         if (!$messageService) {
-            $messageService = new Model_Admin_Message();
+            $messageService = new \Model\Admin\Message();
         }
         $this->messageService = $messageService;
     }

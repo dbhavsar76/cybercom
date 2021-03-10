@@ -1,6 +1,7 @@
 <?php
+namespace Model;
 
-class Model_ShippingMethod extends Model_Core_Table {
+class ShippingMethod extends \Model\Core\Table {
     public const STATUS_ENABLED = 1;
     public const STATUS_DISABLED = 0;
 

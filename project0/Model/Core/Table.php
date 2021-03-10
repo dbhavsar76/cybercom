@@ -1,6 +1,7 @@
 <?php
+namespace Model\Core;
 
-abstract class Model_Core_Table {
+abstract class Table {
     protected $tableName = null;
     protected $primaryKey = null;
     protected $adapter = null;
@@ -36,30 +37,27 @@ abstract class Model_Core_Table {
         }
         $id = (int)$id;
         $sql = $this->buildQuery('select', $id);
-        return $this->fetchRow($sql);
-    }
-
-    public function loadAll($conditions = null) {
-        $sql = $this->buildQuery('selectAll', null, $conditions);
-        return $this->fetchAll($sql);
-    }
-
-    public function fetchRow($sql) {
-        $result = $this->adapter->fetchRow($sql);
-        if (!$result) {
+        $result = $this->fetchRow($sql);
+        if ($result === false) {
             return false;
         }
         $this->setData($result);
         return $this;
     }
 
+    public function loadAll($conditions = null, $orderBy = null) {
+        $sql = $this->buildQuery('selectAll', null, $conditions, $orderBy);
+        $modelClassName = get_class($this);
+        $collectionName = substr_replace($modelClassName, '\\Collection\\', strpos($modelClassName, '\\'), 1);
+        return (new $collectionName($this->fetchAll($sql)));
+    }
+
+    public function fetchRow($sql) {
+        return $this->adapter->fetchRow($sql);
+    }
+
     public function fetchAll($sql) {
-        $result = $this->adapter->fetchAll($sql);
-        if ($result === false) {
-            return false;
-        }
-        $collectionName = str_replace('_', '_Collection_', get_class($this));
-        return (new $collectionName($result));
+        return $this->adapter->fetchAll($sql);
     }
 
     public function delete() {
@@ -67,7 +65,7 @@ abstract class Model_Core_Table {
         return $this->adapter->delete($sql);
     }
 
-    public function buildQuery($type, $id=null, $conditions = null) {
+    public function buildQuery($type, $id=null, $conditions = null, $orderBy = null) {
         $sql = '';
         switch (strtolower($type)) {
             case 'select':
@@ -78,6 +76,9 @@ abstract class Model_Core_Table {
                 $sql = "SELECT * FROM `{$this->tableName}`";
                 if (!empty($conditions)) {
                     $sql .= " WHERE " . implode(" AND ", $conditions);
+                }
+                if (!empty($orderBy)) {
+                    $sql .= " ORDER BY " . implode(", ", $orderBy);
                 }
                 break;
 
@@ -144,9 +145,9 @@ abstract class Model_Core_Table {
 
     public function setData(array $data) {
         $this->data = array_merge($this->data, $data);
-        if (array_key_exists($this->primaryKey, $this->data)) {
-            $this->{$this->primaryKey} = (int)($this->{$this->primaryKey});
-        }
+        // if (array_key_exists($this->primaryKey, $this->data)) {
+        //     $this->{$this->primaryKey} = (int)($this->{$this->primaryKey});
+        // }
         return $this;
     }
 
@@ -161,7 +162,7 @@ abstract class Model_Core_Table {
 
     public function setAdapter($adapter = null) {
         if (!$adapter) {
-            $adapter = new Model_Core_Adapter();
+            $adapter = new Adapter();
         }
         $this->adapter = $adapter;
         return $this;

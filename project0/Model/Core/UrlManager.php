@@ -1,6 +1,7 @@
 <?php
+namespace Model\Core;
 
-class Model_Core_UrlManager {
+class UrlManager {
     public static function getUrl($actionName = NULL, $controllerName = NULL, array $additionalParams = null, $reset = false) {
         $params = $reset ? [] : $_GET;
 

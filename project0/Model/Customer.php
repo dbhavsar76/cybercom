@@ -1,6 +1,7 @@
 <?php
+namespace Model;
 
-class Model_Customer extends Model_Core_Table {
+class Customer extends \Model\Core\Table {
     public const STATUS_ENABLED = 1;
     public const STATUS_DISABLED = 0;
 
@@ -21,22 +22,30 @@ class Model_Customer extends Model_Core_Table {
         $id = (int)$id;
         $sql = "SELECT `c`.*, `cg`.`name` `groupName`, GROUP_CONCAT(`ca`.`addressId`) `addressIds`, `ca`.`zipcode` `zipcode`
                 FROM `customer` `c`
-                LEFT JOIN `customergroup` `cg` ON `c`.`groupId` = `cg`.`groupId`
+                LEFT JOIN `customer_group` `cg` ON `c`.`groupId` = `cg`.`groupId`
                 LEFT JOIN `customer_address` `ca` ON `c`.`id` = `ca`.`customerId`
                 GROUP BY `c`.`id` HAVING `c`.`id` = {$id}";
-        return $this->fetchRow($sql);
+        $result = $this->fetchRow($sql);
+        if (!$result) {
+            return false;
+        }
+        $this->setData($result);
+        return $this;
     }
 
-    public function loadAll($conditions = null) {
+    public function loadAll($conditions = null, $orderBy = null) {
         $sql = "SELECT `c`.*, `cg`.`name` `groupName`, GROUP_CONCAT(`ca`.`addressId`) `addressIds`, `ca`.`zipcode` `zipcode`
                 FROM `customer` `c`
-                LEFT JOIN `customergroup` `cg` ON `c`.`groupId` = `cg`.`groupId`
+                LEFT JOIN `customer_group` `cg` ON `c`.`groupId` = `cg`.`groupId`
                 LEFT JOIN `customer_address` `ca` ON `c`.`id` = `ca`.`customerId`
                 GROUP BY `c`.`id`";
-        if ($conditions) {
+        if (!empty($conditions)) {
             $sql .= " WHERE " . implode(" AND ", $conditions);
         }
-        return $this->fetchAll($sql);
+        if (!empty($orderBy)) {
+            $sql .= " ORDER BY " . implode(', ', $orderBy);
+        }
+        return  new \Model\Collection\Customer($this->fetchAll($sql));
     }
 
 }

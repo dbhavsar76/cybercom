@@ -1,6 +1,7 @@
 <?php
+namespace Model\Admin;
 
-class Model_Admin_Message extends Model_Admin_Session {
+class Message extends Session {
     public const SUCCESS = 'MESSAGE_SUCCESS';
     public const FAILURE = 'MESSAGE_FAILURE';
     public const NOTICE = 'MESSAGE_NOTICE';

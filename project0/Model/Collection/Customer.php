@@ -1,7 +1,8 @@
 <?php
+namespace Model\Collection;
 
-class Model_Collection_Customer extends Model_Core_Collection {
+class Customer extends \Model\Core\Collection {
     public function __construct(array $array = []) {
-        parent::__construct($array, 'Model_Customer');
+        parent::__construct($array, '\\Model\\Customer');
     }
 }

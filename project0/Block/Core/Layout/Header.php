@@ -1,6 +1,7 @@
 <?php
+namespace Block\Core\Layout;
 
-class Block_Core_Layout_Header extends Block_Core_Template {
+class Header extends \Block\Core\Template {
     public function __construct()
     {
         $this->setTemplate('/core/layout/header.php');

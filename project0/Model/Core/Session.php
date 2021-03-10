@@ -1,6 +1,7 @@
 <?php
+namespace Model\Core;
 
-class Model_Core_Session {
+class Session {
     protected $nameSpace = 'core';
 
     public function __construct() {

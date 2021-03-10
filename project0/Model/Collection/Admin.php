@@ -1,7 +1,8 @@
 <?php
+namespace Model\Collection;
 
-class Model_Collection_Admin extends Model_Core_Collection {
+class Admin extends \Model\Core\Collection {
     public function __construct(array $array = []) {
-        parent::__construct($array, 'Model_Admin');
+        parent::__construct($array, '\\Model\\Admin');
     }
 }

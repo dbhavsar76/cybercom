@@ -1,6 +1,7 @@
 <?php
+namespace Model\Core;
 
-class Model_Core_Adapter {
+class Adapter {
     // default configuration
     private $config = [
         'host' => 'localhost',
@@ -8,25 +9,25 @@ class Model_Core_Adapter {
         'pass' => 'q1w2e3r4',
         'dbname' => 'project0'
     ];
-    private ?mysqli $con = null;
+    private static ?\mysqli $con = null;
 
     private function isConnected() {
-        return $this->con && !$this->con->connect_errno;
+        return static::$con && !static::$con->connect_errno;
     }
 
     private function getConnection() {
         if (!$this->isConnected()) {
-            $this->con = new mysqli(
+            static::$con = new \mysqli(
                 $this->config['host'],
                 $this->config['user'],
                 $this->config['pass'],
                 $this->config['dbname']
             );
             if (!$this->isConnected()) {
-                throw new Exception("Database Connection Error.");
+                throw new \Exception("Database Connection Error.");
             }
         }
-        return $this->con;
+        return static::$con;
     }
 
     public function fetchRow($sql) {
@@ -50,7 +51,7 @@ class Model_Core_Adapter {
         if (!$result) {
             return $result;
         }
-        return $this->con->insert_id;
+        return $this->getConnection()->insert_id;
     }
 
     public function update($sql) {

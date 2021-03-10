@@ -1,6 +1,7 @@
 <?php
+namespace Block\Core\Layout;
 
-class Block_Core_Layout_Footer extends Block_Core_Template {
+class Footer extends \Block\Core\Template {
     public function __construct()
     {
         $this->setTemplate('/core/layout/footer.php');

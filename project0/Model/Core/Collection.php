@@ -1,9 +1,10 @@
 <?php
+namespace Model\Core;
 
-class Model_Core_Collection extends \ArrayObject {
+class Collection extends \ArrayObject {
     protected $dataType = null;
 
-    public function __construct(array $array = [], string $type = 'Model_Core_Table') {
+    public function __construct(array $array = [], string $type = '\\Model\\Core\\Table') {
         parent::__construct([]);
         $this->setDataType($type);
 

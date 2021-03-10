@@ -1,6 +1,8 @@
 <?php
 
-abstract class Controller_Core_Base {
+namespace Controller\Core;
+
+abstract class Base {
     protected $layout = null;
     protected $request = null;
     protected $messageService = null;
@@ -12,7 +14,7 @@ abstract class Controller_Core_Base {
 
     public function setMessageService($messageService = null) {
         if (!$messageService) {
-            $messageService = new Model_Core_Message();
+            $messageService = new \Model\Core\Message();
         }
         $this->messageService = $messageService;
         return $this;
@@ -22,9 +24,9 @@ abstract class Controller_Core_Base {
         return $this->messageService;
     }
 
-    public function setLayout(Block_Core_Layout $layout = null) {
+    public function setLayout(\Block\Core\Layout $layout = null) {
         if (!$layout) {
-            $layout  = new Block_Core_Layout();
+            $layout  = new \Block\Core\Layout();
         }
         $this->layout = $layout;
         return $this;
@@ -55,12 +57,11 @@ abstract class Controller_Core_Base {
         return $this->request;
     }
 
-    public function setRequest(Model_Core_Request $request = null) {
+    public function setRequest(\Model\Core\Request $request = null) {
         if (!$request) {
-            $request = new Model_Core_Request();            
+            $request = new \Model\Core\Request();
         }
         $this->request = $request;
         return $this;
     }
-
 }

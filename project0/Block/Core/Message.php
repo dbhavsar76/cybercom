@@ -1,6 +1,7 @@
 <?php
+namespace Block\Core;
 
-class Block_Core_Message extends Block_Core_Template {
+class Message extends \Block\Core\Template {
     public const MESSAGE_SUCCESS = 'alert-success';
     public const MESSAGE_FAILURE = 'alert-danger';
     public const MESSAGE_NOTICE = 'alert-warning';

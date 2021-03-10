@@ -1,6 +1,7 @@
 <?php
+namespace Model\Core;
 
-class Model_Core_Request {
+class Request {
     public function isPost() {
         return $_SERVER['REQUEST_METHOD'] === 'POST';
     }

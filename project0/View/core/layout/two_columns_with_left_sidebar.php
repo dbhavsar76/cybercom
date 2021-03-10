@@ -12,7 +12,7 @@ echo $this->getChild('header')->render();
             <?php
                 $message = $this->getMessageService()->getMessage();
                 if ($message) {
-                    echo (new Block_Core_Message($message))->render();
+                    echo (new \Block\Core\Message($message))->render();
                     $this->getMessageService()->clearMessage();
                 }
             ?>
