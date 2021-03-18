@@ -1,7 +1,0 @@
-last nignt windows crashed due to faulty driver update
-so i'm fixing it rn
-
-i had to take a backup of my files and then reinstall the operating system
-and then restore the files and application, it took a full day and some more
-
-couldnt do anything today

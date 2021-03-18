@@ -1,5 +1,3 @@
-# cybercom
-Cybercom Creation Training Repository
+# MVC
 
-> For HTML challanges and practices go to 'html' branch.
-> For JavaScript challanges and practices go to 'js' branch
+- Change ROOT and BASE_URL in index.php
