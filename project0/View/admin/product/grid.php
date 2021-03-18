@@ -11,9 +11,9 @@ $products = $this->products;
 <div class="container-fluid">
     <div class="d-flex align-items-center justify-content-between mb-3">
         <p class="h2 d-inline">Products</p>
-        <a href="#" onclick="mage.setUrl('<?= UrlManager::getUrl('add') ?>').resetParams().load()" class="btn btn-success">Create Product</a>
+        <a href="javascript:void(0);" onclick="mage.setUrl('<?= UrlManager::getUrl('add') ?>').resetParams().load()" class="btn btn-success">Create Product</a>
     </div>
-    <table class="table table-striped">
+    <table class="table">
         <thead>
             <tr>
                 <th class="align-top" scope="col">ID</th>
@@ -30,10 +30,15 @@ $products = $this->products;
             </tr>
         </thead>
         <tbody>
-<?php foreach ($products as $product) {
-    $id = $product->{$product->getPrimaryKey()};
-    [$status,$statusClass] = $statuses[$product->status];
-?>
+        <?php if ($products->count() == 0) : ?>
+            <tr>
+                <td colspan="11" class="text-center">No Records Found.</td>
+            </tr>
+        <?php else : ?>
+            <?php foreach ($products as $product) :
+                $id = $product->{$product->getPrimaryKey()};
+                [$status,$statusClass] = $statuses[$product->status];
+            ?>
             <tr>
                 <td><?= $id ?></td>
                 <td><?= $product->sku ?></td>
@@ -42,15 +47,16 @@ $products = $this->products;
                 <td><?= $product->discount ?></td>
                 <td><?= $product->quantity ?></td>
                 <td><?= $product->description ?></td>
-                <td><a class="btn <?= $statusClass ?>" href="#" onclick="mage.setUrl('<?= UrlManager::getUrl('toggleStatus', null, [$product->getPrimaryKey() => $id]) ?>').resetParams().load()"><?= $status ?></a></td>
+                <td><a class="btn <?= $statusClass ?>" href="javascript:void(0);" onclick="mage.setUrl('<?= UrlManager::getUrl('toggleStatus', null, [$product->getPrimaryKey() => $id]) ?>').resetParams().load()"><?= $status ?></a></td>
                 <td><?= $product->createdDate ?></td>
                 <td><?= $product->updatedDate ?></td>
                 <td>
-                    <a href="#" onclick="mage.setUrl('<?= UrlManager::getUrl('edit', NULL, [$product->getPrimaryKey() => $id]) ?>').resetParams().load()" class="btn btn-primary"><i class="fas fa-edit fa-fw"></i></a>
-                    <a href="#" onclick="mage.setUrl('<?= UrlManager::getUrl('delete', NULL, [$product->getPrimaryKey() => $id]) ?>').resetParams().load()" class="btn btn-danger"><i class="fas fa-trash fa-fw"></i></a>
+                    <a href="javascript:void(0);" onclick="mage.setUrl('<?= UrlManager::getUrl('edit', NULL, [$product->getPrimaryKey() => $id]) ?>').resetParams().load()" class="btn btn-primary"><i class="fas fa-edit fa-fw"></i></a>
+                    <a href="javascript:void(0);" onclick="mage.setUrl('<?= UrlManager::getUrl('delete', NULL, [$product->getPrimaryKey() => $id]) ?>').resetParams().load()" class="btn btn-danger"><i class="fas fa-trash fa-fw"></i></a>
                 </td>
             </tr>
-<?php } ?>
+            <?php endforeach ?>
+        <?php endif ?>
         </tbody>
     </table>
 </div>

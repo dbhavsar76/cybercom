@@ -1,41 +1,30 @@
 <?php
 namespace Controller\Admin;
 
-class Product extends \Controller\Core\Base {
-    public function __construct() {
-        parent::__construct();
-        $this->setMessageService(new \Model\Admin\Message);
-    }
+use Block\Core\{Message, Layout};
+
+class Product extends \Controller\Core\Admin {
 
     public function gridAction() {
         try {
             $gridHtml = (new \Block\Admin\Product\Grid)->render();
         } catch (\Exception $e) {
             $this->getMessageService()->setFailure($e->getMessage());
-        } finally {
-            $response = [
-                'status' => 'success',
-                'layout' => \Block\Core\Layout::LAYOUT_ONE_COLUMN,
-                'element' => [
-                    [
-                        'selector' => '#content',
-                        'html' => $gridHtml
-                    ],
-                ]
-            ];
+        } 
+        
+        $response = $this->getResponse();
+        $response->setStatus('success');
+        $response->setLayout(Layout::LAYOUT_ONE_COLUMN);
+        $response->addElement('#content', $gridHtml);
 
-            $message = $this->getMessageService()->getMessage();
-            if ($message) {
-                $response['element'][] = [
-                    'selector' => '#message',
-                    'html' => (new \Block\Core\Message($message))->render()
-                ];
-                $this->getMessageService()->clearMessage();
-            }
-
-            header("Content-type: application/json; charset=utf-8");
-            echo json_encode($response);
+        $message = $this->getMessageService()->getMessage();
+        if ($message) {
+            $messageHtml = (new Message($message))->render();
+            $response->addElement('#message', $messageHtml);
+            $this->getMessageService()->clearMessage();
         }
+
+        $response->send();
     }
 
     public function addAction() {
@@ -43,30 +32,20 @@ class Product extends \Controller\Core\Base {
             $tabsHtml = (new \Block\Admin\Product\Edit\Tabs(true))->render();
         } catch (\Exception $e) {
             $this->getMessageService()->setFailure($e->getMessage());
-        } finally {
-            $response = [
-                'status' => 'success',
-                'layout' => \Block\Core\Layout::LAYOUT_TWO_COLUMNS_WITH_LEFT_SIDEBAR,
-                'element' => [
-                    [
-                        'selector' => '#left',
-                        'html' => $tabsHtml
-                    ],
-                ]
-            ];
-
-            $message = $this->getMessageService()->getMessage();
-            if ($message) {
-                $response['element'][] = [
-                    'selector' => '#message',
-                    'html' => (new \Block\Core\Message($message))->render()
-                ];
-                $this->getMessageService()->clearMessage();
-            }
-
-            header("Content-type: application/json; charset=utf-8");
-            echo json_encode($response);
         }
+
+        $response = $this->getResponse();
+        $response->setStatus('success');
+        $response->setLayout(Layout::LAYOUT_TWO_COLUMNS_WITH_LEFT_SIDEBAR);
+        $response->addElement('#left', $tabsHtml);
+        $message = $this->getMessageService()->getMessage();
+        if ($message) {
+            $messageHtml = (new Message($message))->render();
+            $response->addElement('#message', $messageHtml);
+            $this->getMessageService()->clearMessage();
+        }
+
+        $response->send();
     }
 
     public function editAction() {
@@ -79,30 +58,24 @@ class Product extends \Controller\Core\Base {
             $tabsHtml = (new \Block\Admin\Product\Edit\Tabs)->render();
         } catch (\Exception $e) {
             $this->getMessageService()->setFailure($e->getMessage());
-        } finally {
-            $response = [
-                'status' => 'success',
-                'layout' => \Block\Core\Layout::LAYOUT_TWO_COLUMNS_WITH_LEFT_SIDEBAR,
-                'element' => [
-                    [
-                        'selector' => '#left',
-                        'html' => $tabsHtml
-                    ],
-                ]
-            ];
-
-            $message = $this->getMessageService()->getMessage();
-            if ($message) {
-                $response['element'][] = [
-                    'selector' => '#message',
-                    'html' => (new \Block\Core\Message($message))->render()
-                ];
-                $this->getMessageService()->clearMessage();
-            }
-
-            header("Content-type: application/json; charset=utf-8");
-            echo json_encode($response);
         }
+        
+        $response = $this->getResponse();
+        $response->setStatus('success');
+        
+        if ($tabsHtml) {
+            $response->setLayout(Layout::LAYOUT_TWO_COLUMNS_WITH_LEFT_SIDEBAR);
+            $response->addElement('#left', $tabsHtml);
+        }
+        
+        $message = $this->getMessageService()->getMessage();
+        if ($message) {
+            $messageHtml = (new Message($message))->render();
+            $response->addElement('#message', $messageHtml);
+            $this->getMessageService()->clearMessage();
+        }
+
+        $response->send();
     }
 
     public function tabAction() {
@@ -112,29 +85,20 @@ class Product extends \Controller\Core\Base {
             $formHtml = (new \Block\Admin\Product\Edit((int)$id))->render();
         } catch (\Exception $e) {
             $this->getMessageService()->setFailure($e->getMessage());
-        } finally {
-            $response = [
-                'status' => 'success',
-                'element' => [
-                    [
-                        'selector' => '#content',
-                        'html' => $formHtml
-                    ],
-                ]
-            ];
-
-            $message = $this->getMessageService()->getMessage();
-            if ($message) {
-                $response['element'][] = [
-                    'selector' => '#message',
-                    'html' => (new \Block\Core\Message($message))->render()
-                ];
-                $this->getMessageService()->clearMessage();
-            }
-
-            header("Content-type: application/json; charset=utf-8");
-            echo json_encode($response);
         }
+        
+        $response = $this->getResponse();
+        $response->setStatus('success');
+        $response->addElement('#content', $formHtml);
+
+        $message = $this->getMessageService()->getMessage();
+        if ($message) {
+            $messageHtml = (new Message($message))->render();
+            $response->addElement('#message', $messageHtml);
+            $this->getMessageService()->clearMessage();
+        }
+
+        $response->send();
     }
 
     public function saveAction() {
@@ -146,15 +110,15 @@ class Product extends \Controller\Core\Base {
             $product = new \Model\Product();
             $pPrimaryKey = $product->getPrimaryKey();
             $id = $req->getGet($pPrimaryKey);
+            if ($id) {
+                $product->$pPrimaryKey = $id;
+                $product->updatedDate = null;
+            }
 
             $tab = strtolower($req->getGet('tab', \Block\Admin\Product\Edit\Tabs::getDefaultTab()));
             if (!$tab) {
                 throw new \Exception('Something went wrong. Could not save data.');
             } else if ($tab == 'information') {
-                if ($id) {
-                    $product->$pPrimaryKey = $id;
-                    $product->updatedDate = null;
-                }
                 $product->setData($req->getPost('product'));
                 $product->status = $product->status ? \Model\Product::STATUS_ENABLED : \Model\Product::STATUS_DISABLED;
                 $result = $product->save();
@@ -168,11 +132,17 @@ class Product extends \Controller\Core\Base {
                 foreach ($groupPricesArray['existing'] ?? [] as $eId => $price) {
                     $groupPrice->resetData()->setData([$groupPrice->getPrimaryKey() => $eId, 'price' => $price])->save();
                 }
-                foreach ($groupPricesArray['new'] ?? [] as $cgId => $price) {
-                    $groupPrice->resetData()->setData(['groupId' => $cgId, 'productId' => $id, 'price' => $price])->save();
+                $groupPrice->insertMultiple($id, $groupPricesArray['new'] ?? []);
+                $this->getMessageService()->setSuccess('Data saved successfully.');
+            } else if ($tab == 'category') {
+                $productCategories = $req->getPost('productCategories', []);
+                $result = $product->updateCategories($productCategories);
+                if (!$result) {
+                    throw new \Exception('Something went wrong. Could not save data.');
                 }
                 $this->getMessageService()->setSuccess('Data saved successfully.');
             }
+            $product->save();
         } catch (\Exception $e) {
             $this->getMessageService()->setFailure($e->getMessage());
         } finally {

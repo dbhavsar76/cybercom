@@ -14,7 +14,7 @@ $media = $this->media;
             </div>
         </div>
         <div class="form-group ml-3">
-            <a class="btn btn-primary" href="#" onclick="mage.setForm('#imageUploadForm').load()">Upload</a>
+            <a class="btn btn-primary" href="javascript:void(0);" onclick="mage.setForm('#imageUploadForm').load()">Upload</a>
         </div>
     </form>
 </div>
@@ -28,8 +28,8 @@ $media = $this->media;
 <div class="container">
     <form id="mediaForm" action="<?= UrlManager::getUrl('update') ?>">
         <div class="mb-2 d-flex justify-content-end">
-            <a class="btn btn-primary" href="#" onclick="mage.setForm('#mediaForm').load()">Update</a>
-            <a class="btn btn-danger ml-3" href="#" onclick="mage.setForm('#mediaForm').setUrl('<?= UrlManager::getUrl('remove') ?>').load()">Remove</a>
+            <a class="btn btn-primary" href="javascript:void(0);" onclick="mage.setForm('#mediaForm').load()">Update</a>
+            <a class="btn btn-danger ml-3" href="javascript:void(0);" onclick="mage.setForm('#mediaForm').setUrl('<?= UrlManager::getUrl('remove') ?>').load()">Remove</a>
         </div>
         <table class="table table-stripped">
             <thead>
@@ -44,12 +44,16 @@ $media = $this->media;
                 </tr>
             </thead>
             <tbody>
-<?php
-$primaryKey = (new Media)->getPrimaryKey();
-foreach ($media as $image) {
-    $id = $image->$primaryKey;
-
-?>
+            <?php if ($media->count() == 0) : ?>
+                <tr>
+                    <td class="text-center" colspan="7">No Records Found.</td>
+                </tr>
+            <?php else : ?>
+                <?php
+                $primaryKey = (new Media)->getPrimaryKey();
+                foreach ($media as $image) :
+                    $id = $image->$primaryKey;
+                ?>
                 <tr>
                     <td><img src="<?= $image->getUrl() ?>" alt="<?= $id ?>" height="100px" width="100px"></td>
                     <td class="label-container"> <input class="form-control" type="text" name="label[<?= $id ?>]" value="<?= $image->label ?>" disabled> </td>
@@ -59,7 +63,8 @@ foreach ($media as $image) {
                     <td class="text-center"> <input type="checkbox" name="gallery[]" value="<?= $id ?>" <?= $image->gallery == Media::GALLERY_SHOW ? 'checked' : '' ?>> </td>
                     <td class="text-center"> <input type="checkbox" name="remove[]" value="<?= $id ?>"> </td>
                 </tr>
-<?php } ?>
+                <?php endforeach ?>
+            <?php endif ?>
             </tbody>
         </table>
     </form>

@@ -1,7 +1,7 @@
 <?php
-namespace Block\Core;
+namespace Block\Core\Edit;
 
-class Tabs extends Template {
+class Tabs extends \Block\Core\Template {
     public const HORIZONTAL = 'flex-row';
     public const VERTICAL = 'flex-column';
 

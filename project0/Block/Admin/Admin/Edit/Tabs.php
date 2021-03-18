@@ -1,13 +1,13 @@
 <?php
 namespace Block\Admin\Admin\Edit;
 
-class Tabs extends \Block\Core\Tabs {
+class Tabs extends \Block\Core\Edit\Tabs {
     protected static $defaultTab = 'information';
 
-    public function __construct() {
+    public function __construct($addMode = false) {
         $tabs = [
             ['name' => 'information'],
         ];
-        parent::__construct($tabs, self::VERTICAL);
+        parent::__construct($tabs, self::VERTICAL, $addMode);
     }
 }

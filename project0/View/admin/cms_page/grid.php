@@ -11,9 +11,9 @@ $cmsPages = $this->cmsPages;
 <div class="container-fluid">
     <div class="d-flex align-items-center justify-content-between mb-3">
         <p class="h2 d-inline">CMS Pages</p>
-        <a href="#" onclick="mage.setUrl('<?= UrlManager::getUrl('add', null, null, true) ?>').resetParams().load()" class="btn btn-success">Create CMS Page</a>
+        <a href="javascript:void(0);" onclick="mage.setUrl('<?= UrlManager::getUrl('add', null, null, true) ?>').resetParams().load()" class="btn btn-success">Create CMS Page</a>
     </div>
-    <table class="table table-striped">
+    <table class="table">
         <thead>
             <tr>
                 <th scope="col">ID</th>
@@ -25,22 +25,28 @@ $cmsPages = $this->cmsPages;
             </tr>
         </thead>
         <tbody>
-<?php foreach ($cmsPages as $cmsPage) {
-        $id = $cmsPage->{$cmsPage->getPrimaryKey()};
-        [$status, $statusClass] = $statuses[$cmsPage->status];
-?>
-        <tr>
-            <td><?= $id ?></td>
-            <td><?= $cmsPage->title ?></td>
-            <td><?= $cmsPage->identifier ?></td>
-            <td><a class="btn <?= $statusClass ?>" href="#" onclick="mage.setUrl('<?= UrlManager::getUrl('toggleStatus', null, [$cmsPage->getPrimaryKey() => $id]) ?>').resetParams().load()"><?= $status ?></a></td>
-            <td><?= $cmsPage->createdDate ?></td>
-            <td>
-                <a href="#" onclick="mage.setUrl('<?= UrlManager::getUrl('edit', NULL, [$cmsPage->getPrimaryKey() => $id]) ?>').resetParams().load()" class="btn btn-primary"><i class="fas fa-edit fa-fw"></i></a>
-                <a href="#" onclick="mage.setUrl('<?= UrlManager::getUrl('delete', NULL, [$cmsPage->getPrimaryKey() => $id]) ?>').resetParams().load()" class="btn btn-danger"><i class="fas fa-trash fa-fw"></i></a>
-            </td>
-        </tr>
-<?php } ?>
+        <?php if ($cmsPages->count() == 0) : ?>
+            <tr>
+                <td class="text-center" colspan="6">No Records Found.</td>
+            </tr>
+        <?php else : ?>
+            <?php foreach ($cmsPages as $cmsPage) :
+                $id = $cmsPage->{$cmsPage->getPrimaryKey()};
+                [$status, $statusClass] = $statuses[$cmsPage->status];
+            ?>
+            <tr>
+                <td><?= $id ?></td>
+                <td><?= $cmsPage->title ?></td>
+                <td><?= $cmsPage->identifier ?></td>
+                <td><a class="btn <?= $statusClass ?>" href="javascript:void(0);" onclick="mage.setUrl('<?= UrlManager::getUrl('toggleStatus', null, [$cmsPage->getPrimaryKey() => $id]) ?>').resetParams().load()"><?= $status ?></a></td>
+                <td><?= $cmsPage->createdDate ?></td>
+                <td>
+                    <a href="javascript:void(0);" onclick="mage.setUrl('<?= UrlManager::getUrl('edit', NULL, [$cmsPage->getPrimaryKey() => $id]) ?>').resetParams().load()" class="btn btn-primary"><i class="fas fa-edit fa-fw"></i></a>
+                    <a href="javascript:void(0);" onclick="mage.setUrl('<?= UrlManager::getUrl('delete', NULL, [$cmsPage->getPrimaryKey() => $id]) ?>').resetParams().load()" class="btn btn-danger"><i class="fas fa-trash fa-fw"></i></a>
+                </td>
+            </tr>
+            <?php endforeach ?>
+        <?php endif ?>
         </tbody>
     </table>
 </div>

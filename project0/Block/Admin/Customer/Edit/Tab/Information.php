@@ -2,7 +2,7 @@
 namespace Block\Admin\Customer\Edit\Tab;
 
 class Information extends \Block\Core\Template {
-    public function __construct(int $id = null) {
+    public function __construct($id = null) {
         parent::__construct();
         $this->setTemplate('/admin/customer/edit/tab/information.php');
 

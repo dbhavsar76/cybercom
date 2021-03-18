@@ -5,7 +5,7 @@
 foreach ($this->getTabs() as $tab) {
     $url = $tab['url'] ?? UrlManager::getUrl('tab', null, ['tab' => $this->prepareName($tab['name'])]);
 ?>
-    <a class="text-capitalize nav-link" href="#" onclick="mage.setUrl('<?= $url ?>').resetParams().load()"><?= $tab['name'] ?></a>
+    <a class="text-capitalize nav-link" href="javascript:void(0);" onclick="mage.setUrl('<?= $url ?>').resetParams().load()"><?= $tab['name'] ?></a>
 <?php } ?>
 <script>
     $('#tabs .nav-link').on('click', function(event) {

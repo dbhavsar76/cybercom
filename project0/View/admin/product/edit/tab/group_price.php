@@ -6,22 +6,23 @@ $productPrice = $this->productPrice;
 ?>
 
 <fieldset>
-    <legend>Product Price</legend>
-    <div class="form-group row mx-0">
-        <label class="col-sm-3 col-form-label" for="product-price">Original Price</label>
-        <div class="col-sm-9">
-            <input type="text" id="product-price" class="form-control text-dark bg-light" value="<?= $productPrice ?>" disabled>
-        </div>
-    </div>
-</fieldset>
-<fieldset>
     <legend>Group Prices</legend>
-    <?php foreach($groupPrices as $groupPrice): ?>
-    <div class="form-group row mx-0">
-        <label class="col-sm-3 col-form-label" for="<?= $groupPrice->$cgPrimaryKey ?>-price"><?= $groupPrice->name ?></label>
-        <div class="col-sm-9">
-            <input type="number" name="groupPrices[<?= $groupPrice->$gpPrimaryKey ? 'existing' : 'new' ?>][<?= $groupPrice->$gpPrimaryKey ?? $groupPrice->$cgPrimaryKey ?>]" id="<?= $groupPrice->$cgPrimaryKey ?>-price" value="<?= $groupPrice->price ?>" class="form-control" placeholder="Price for this group">
-        </div>
-    </div>
-    <?php endforeach ?>
+    <table class="table table-borderless">
+        <thead>
+            <tr>
+                <th scope="col">Group</th>
+                <th scope="col">Product Price</th>
+                <th scope="col">Group Price</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach($groupPrices as $groupPrice): ?>
+            <tr>
+                <td><label for="<?= $groupPrice->$cgPrimaryKey ?>-price"><?= $groupPrice->name ?></label></td>
+                <td><?= $productPrice ?></td>
+                <td><input type="number" name="groupPrices[<?= $groupPrice->$gpPrimaryKey ? 'existing' : 'new' ?>][<?= $groupPrice->$gpPrimaryKey ?? $groupPrice->$cgPrimaryKey ?>]" id="<?= $groupPrice->$cgPrimaryKey ?>-price" value="<?= $groupPrice->price ?>" class="form-control" placeholder="Price for this group"></td>
+            </tr>
+        <?php endforeach ?>
+        </tbody>
+    </table>
 </fieldset>

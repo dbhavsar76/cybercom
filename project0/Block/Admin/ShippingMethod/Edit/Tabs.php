@@ -1,7 +1,7 @@
 <?php
 namespace Block\Admin\ShippingMethod\Edit;
 
-class Tabs extends \Block\Core\Tabs {
+class Tabs extends \Block\Core\Edit\Tabs {
     protected static $defaultTab = 'information';
 
     public function __construct() {

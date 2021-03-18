@@ -14,8 +14,8 @@ $title = $this->title;
             <?= $this->getChild('tab')->render() ?>
         </div>
         <div class="from-group">
-            <a href="#" onclick="mage.setForm('#editForm').load()" id="submit-btn" class="btn btn-primary">Save</a>
-            <a href="#" onclick="mage.setUrl('<?= UrlManager::getUrl('grid', null, null, true) ?>').resetParams().load()" class="btn btn-secondary text-white ml-2">Cancel</a>
+            <a href="javascript:void(0);" onclick="mage.setForm('#editForm').load()" id="submit-btn" class="btn btn-primary">Save</a>
+            <a href="javascript:void(0);" onclick="mage.setUrl('<?= UrlManager::getUrl('grid', null, null, true) ?>').resetParams().load()" class="btn btn-secondary text-white ml-2">Cancel</a>
         </div>
     </form>
 </div>

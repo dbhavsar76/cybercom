@@ -1,41 +1,30 @@
 <?php
 namespace Controller\Admin\Customer;
 
-class Group extends \Controller\Core\Base {
-    public function __construct() {
-        parent::__construct();
-        $this->setMessageService(new \Model\Admin\Message);
-    }
+use Block\Core\{Layout, Message};
+
+class Group extends \Controller\Core\Admin {
 
     public function gridAction() {
         try {
             $gridHtml = (new \Block\Admin\Customer\Group\Grid)->render();
         } catch (\Exception $e) {
             $this->getMessageService()->setFailure($e->getMessage());
-        } finally {
-            $response = [
-                'status' => 'success',
-                'layout' => \Block\Core\Layout::LAYOUT_ONE_COLUMN,
-                'element' => [
-                    [
-                        'selector' => '#content',
-                        'html' => $gridHtml
-                    ],
-                ]
-            ];
-
-            $message = $this->getMessageService()->getMessage();
-            if ($message) {
-                $response['element'][] = [
-                    'selector' => '#message',
-                    'html' => (new \Block\Core\Message($message))->render()
-                ];
-                $this->getMessageService()->clearMessage();
-            }
-
-            header("Content-type: application/json; charset=utf-8");
-            echo json_encode($response);
         }
+        
+        $response = $this->getResponse();
+        $response->setStatus('success');
+        $response->setLayout(Layout::LAYOUT_ONE_COLUMN);
+        $response->addElement('#content', $gridHtml);
+
+        $message = $this->getMessageService()->getMessage();
+        if ($message) {
+            $messageHtml = (new Message($message))->render();
+            $response->addElement('#message', $messageHtml);
+            $this->getMessageService()->clearMessage();
+        }
+
+        $response->send();
     }
 
     public function addAction() {
@@ -43,30 +32,21 @@ class Group extends \Controller\Core\Base {
             $tabsHtml = (new \Block\Admin\Customer\Group\Edit\Tabs)->render();
         } catch (\Exception $e) {
             $this->getMessageService()->setFailure($e->getMessage());
-        } finally {
-            $response = [
-                'status' => 'success',
-                'layout' => \Block\Core\Layout::LAYOUT_TWO_COLUMNS_WITH_LEFT_SIDEBAR,
-                'element' => [
-                    [
-                        'selector' => '#left',
-                        'html' => $tabsHtml
-                    ],
-                ]
-            ];
-
-            $message = $this->getMessageService()->getMessage();
-            if ($message) {
-                $response['element'][] = [
-                    'selector' => '#message',
-                    'html' => (new \Block\Core\Message($message))->render()
-                ];
-                $this->getMessageService()->clearMessage();
-            }
-
-            header("Content-type: application/json; charset=utf-8");
-            echo json_encode($response);
         }
+        
+        $response = $this->getResponse();
+        $response->setStatus('success');
+        $response->setLayout(Layout::LAYOUT_TWO_COLUMNS_WITH_LEFT_SIDEBAR);
+        $response->addElement('#left', $tabsHtml);
+
+        $message = $this->getMessageService()->getMessage();
+        if ($message) {
+            $messageHtml = (new Message($message))->render();
+            $response->addElement('#message', $messageHtml);
+            $this->getMessageService()->clearMessage();
+        }
+
+        $response->send();
     }
 
     public function editAction() {
@@ -79,30 +59,23 @@ class Group extends \Controller\Core\Base {
             $tabsHtml = (new \Block\Admin\Customer\Group\Edit\Tabs)->render();
         } catch (\Exception $e) {
             $this->getMessageService()->setFailure($e->getMessage());
-        } finally {
-            $response = [
-                'status' => 'success',
-                'layout' => \Block\Core\Layout::LAYOUT_TWO_COLUMNS_WITH_LEFT_SIDEBAR,
-                'element' => [
-                    [
-                        'selector' => '#left',
-                        'html' => $tabsHtml
-                    ],
-                ]
-            ];
-
-            $message = $this->getMessageService()->getMessage();
-            if ($message) {
-                $response['element'][] = [
-                    'selector' => '#message',
-                    'html' => (new \Block\Core\Message($message))->render()
-                ];
-                $this->getMessageService()->clearMessage();
-            }
-
-            header("Content-type: application/json; charset=utf-8");
-            echo json_encode($response);
         }
+        
+        $response = $this->getResponse();
+        $response->setStatus('success');
+        if ($tabsHtml) {
+            $response->setLayout(Layout::LAYOUT_TWO_COLUMNS_WITH_LEFT_SIDEBAR);
+            $response->addElement('#left', $tabsHtml);
+        }
+
+        $message = $this->getMessageService()->getMessage();
+        if ($message) {
+            $messageHtml = (new Message($message))->render();
+            $response->addElement('#message', $messageHtml);
+            $this->getMessageService()->clearMessage();
+        }
+
+        $response->send();
     }
 
     public function tabAction() {
@@ -112,29 +85,20 @@ class Group extends \Controller\Core\Base {
             $formHtml = (new \Block\Admin\Customer\Group\Edit((int)$id))->render();
         } catch (\Exception $e) {
             $this->getMessageService()->setFailure($e->getMessage());
-        } finally {
-            $response = [
-                'status' => 'success',
-                'element' => [
-                    [
-                        'selector' => '#content',
-                        'html' => $formHtml
-                    ],
-                ]
-            ];
-
-            $message = $this->getMessageService()->getMessage();
-            if ($message) {
-                $response['element'][] = [
-                    'selector' => '#message',
-                    'html' => (new \Block\Core\Message($message))->render()
-                ];
-                $this->getMessageService()->clearMessage();
-            }
-
-            header("Content-type: application/json; charset=utf-8");
-            echo json_encode($response);
         }
+        
+        $response = $this->getResponse();
+        $response->setStatus('success');
+        $response->addElement('#content', $formHtml);
+
+        $message = $this->getMessageService()->getMessage();
+        if ($message) {
+            $messageHtml = (new Message($message))->render();
+            $response->addElement('#message', $messageHtml);
+            $this->getMessageService()->clearMessage();
+        }
+
+        $response->send();
     }
 
 

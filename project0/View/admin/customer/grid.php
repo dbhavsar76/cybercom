@@ -13,9 +13,9 @@ $primaryKey = (new Customer)->getPrimaryKey();
 <div class="container-fluid">
     <div class="d-flex align-items-center justify-content-between mb-3">
         <p class="h2 d-inline">Customers</p>
-        <a href="#" onclick="mage.setUrl('<?= UrlManager::getUrl('add', null, null, true) ?>').resetParams().load()" class="btn btn-success">Add Customer</a>
+        <a href="javascript:void(0);" onclick="mage.setUrl('<?= UrlManager::getUrl('add', null, null, true) ?>').resetParams().load()" class="btn btn-success">Add Customer</a>
     </div>
-    <table class="table table-striped">
+    <table class="table">
         <thead>
             <tr>
                 <th scope="col">ID</th>
@@ -31,12 +31,17 @@ $primaryKey = (new Customer)->getPrimaryKey();
             </tr>
         </thead>
         <tbody>
-<?php
-foreach ($customers as $customer) {
-    $id = $customer->$primaryKey;
-    [$status, $statusClass] = $statuses[$customer->status];
-    $addressIds = explode(',', $customer->addressIds);
-?>
+        <?php if ($customers->count() == 0) : ?>
+            <tr>
+                <td class="text-center" colspan="10">No Records Found.</td>
+            </tr>
+        <?php else : ?>
+            <?php
+            foreach ($customers as $customer) :
+                $id = $customer->$primaryKey;
+                [$status, $statusClass] = $statuses[$customer->status];
+                $addressIds = explode(',', $customer->addressIds);
+            ?>
             <tr>
                 <td><?= $id ?></td>
                 <td><?= $customer->groupName ?? '-' ?></td>
@@ -44,15 +49,16 @@ foreach ($customers as $customer) {
                 <td><?= $customer->lastName ?></td>
                 <td><?= $customer->email ?></td>
                 <td><?= $customer->zipcode ?></td>
-                <td><a class="btn <?= $statusClass ?>" href="#" onclick="mage.setUrl('<?= UrlManager::getUrl('toggleStatus', NULL, [$primaryKey => $customer->id]) ?>').resetParams().load()"><?= $status ?></a></td>
+                <td><a class="btn <?= $statusClass ?>" href="javascript:void(0);" onclick="mage.setUrl('<?= UrlManager::getUrl('toggleStatus', NULL, [$primaryKey => $customer->id]) ?>').resetParams().load()"><?= $status ?></a></td>
                 <td><?= $customer->createdDate ?></td>
                 <td><?= $customer->updatedDate ?></td>
                 <td>
-                    <a href="#" onclick="mage.setUrl('<?= UrlManager::getUrl('edit', NULL, [$primaryKey => $id, 'billingAddressId' => $addressIds[0] ?? '', 'shippingAddressId' => $addressIds[1] ?? '']) ?>').resetParams().load()" class="btn btn-primary"><i class="fas fa-edit fa-fw"></i></a>
-                    <a href="#" onclick="mage.setUrl('<?= UrlManager::getUrl('delete', NULL, [$primaryKey => $id, ]) ?>').resetParams().load()" class="btn btn-danger"><i class="fas fa-trash fa-fw"></i></a>
+                    <a href="javascript:void(0);" onclick="mage.setUrl('<?= UrlManager::getUrl('edit', NULL, [$primaryKey => $id, 'billingAddressId' => $addressIds[0] ?? '', 'shippingAddressId' => $addressIds[1] ?? '']) ?>').resetParams().load()" class="btn btn-primary"><i class="fas fa-edit fa-fw"></i></a>
+                    <a href="javascript:void(0);" onclick="mage.setUrl('<?= UrlManager::getUrl('delete', NULL, [$primaryKey => $id, ]) ?>').resetParams().load()" class="btn btn-danger"><i class="fas fa-trash fa-fw"></i></a>
                 </td>
             </tr>
-<?php } ?>
+            <?php endforeach ?>
+        <?php endif ?>
         </tbody>
     </table>
 </div>

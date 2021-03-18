@@ -11,9 +11,9 @@ $paymentMethods = $this->paymentMethods;
 <div class="container-fluid">
     <div class="d-flex align-items-center justify-content-between mb-3">
         <p class="h2 d-inline">Payment Methods</p>
-        <a href="#" onclick="mage.setUrl('<?= UrlManager::getUrl('add', null, null, true) ?>').resetParams().load()" class="btn btn-success">Create Payment Method</a>
+        <a href="javascript:void(0);" onclick="mage.setUrl('<?= UrlManager::getUrl('add', null, null, true) ?>').resetParams().load()" class="btn btn-success">Create Payment Method</a>
     </div>
-    <table class="table table-striped">
+    <table class="table">
         <thead>
             <tr>
                 <th scope="col">ID</th>
@@ -26,23 +26,29 @@ $paymentMethods = $this->paymentMethods;
             </tr>
         </thead>
         <tbody>
-<?php foreach ($paymentMethods as $paymentMethod) { 
-        $id = $paymentMethod->{$paymentMethod->getPrimaryKey()};
-        [$status,$statusClass] = $statuses[$paymentMethod->status];
-?>
+        <?php if ($paymentMethods->count() == 0) : ?>
+            <tr>
+                <td class="text-center" colspan="7">No Records Found.</td>
+            </tr>
+        <?php else : ?>
+            <?php foreach ($paymentMethods as $paymentMethod) :
+                    $id = $paymentMethod->{$paymentMethod->getPrimaryKey()};
+                    [$status,$statusClass] = $statuses[$paymentMethod->status];
+            ?>
             <tr>
                 <td><?= $id ?></td>
                 <td><?= $paymentMethod->name ?></td>
                 <td><?= $paymentMethod->code ?></td>
                 <td><?= $paymentMethod->description ?></td>
-                <td><a class="btn <?= $statusClass ?>" href="#" onclick="mage.setUrl('<?= UrlManager::getUrl('toggleStatus', null, [$paymentMethod->getPrimaryKey() => $id]) ?>').resetParams().load()"><?= $status ?></a></td>
+                <td><a class="btn <?= $statusClass ?>" href="javascript:void(0);" onclick="mage.setUrl('<?= UrlManager::getUrl('toggleStatus', null, [$paymentMethod->getPrimaryKey() => $id]) ?>').resetParams().load()"><?= $status ?></a></td>
                 <td><?= $paymentMethod->createdDate ?></td>
                 <td>
-                    <a href="#" onclick="mage.setUrl('<?= UrlManager::getUrl('edit', NULL, [$paymentMethod->getPrimaryKey() => $id]) ?>').resetParams().load()" class="btn btn-primary"><i class="fas fa-edit fa-fw"></i></a>
-                    <a href="#" onclick="mage.setUrl('<?= UrlManager::getUrl('delete', NULL, [$paymentMethod->getPrimaryKey() => $id]) ?>').resetParams().load()" class="btn btn-danger"><i class="fas fa-trash fa-fw"></i></a>
+                    <a href="javascript:void(0);" onclick="mage.setUrl('<?= UrlManager::getUrl('edit', NULL, [$paymentMethod->getPrimaryKey() => $id]) ?>').resetParams().load()" class="btn btn-primary"><i class="fas fa-edit fa-fw"></i></a>
+                    <a href="javascript:void(0);" onclick="mage.setUrl('<?= UrlManager::getUrl('delete', NULL, [$paymentMethod->getPrimaryKey() => $id]) ?>').resetParams().load()" class="btn btn-danger"><i class="fas fa-trash fa-fw"></i></a>
                 </td>
             </tr>
-<?php } ?>
+            <?php endforeach ?>
+        <?php endif ?>
         </tbody>
     </table>
 </div>

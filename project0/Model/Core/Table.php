@@ -2,7 +2,7 @@
 namespace Model\Core;
 
 abstract class Table {
-    protected $tableName = null;
+    private $tableName = null;
     protected $primaryKey = null;
     protected $adapter = null;
     protected $data = [];
@@ -27,16 +27,15 @@ abstract class Table {
         return $result;
     }
 
-    public function load($id = null) {
-        if (!$id) {
-            if ($this->id) {
-                $id = $this->id;
-            } else {
-                return false;
-            }
+    public function load($id = null, $conditions = null) {
+        if (!$id && $this->id) {
+            $id = $this->id;
+            $id = (int)$id;
         }
-        $id = (int)$id;
-        $sql = $this->buildQuery('select', $id);
+        if (!$id && !$conditions) {
+            return false;
+        }
+        $sql = $this->buildQuery('select', $id, $conditions);
         $result = $this->fetchRow($sql);
         if ($result === false) {
             return false;
@@ -49,7 +48,11 @@ abstract class Table {
         $sql = $this->buildQuery('selectAll', null, $conditions, $orderBy);
         $modelClassName = get_class($this);
         $collectionName = substr_replace($modelClassName, '\\Collection\\', strpos($modelClassName, '\\'), 1);
-        return (new $collectionName($this->fetchAll($sql)));
+        $result = $this->fetchAll($sql);
+        if ($result === false) {
+            return $result;
+        }
+        return (new $collectionName($result));
     }
 
     public function fetchRow($sql) {
@@ -69,7 +72,13 @@ abstract class Table {
         $sql = '';
         switch (strtolower($type)) {
             case 'select':
-                $sql = "SELECT * FROM `{$this->tableName}` WHERE `{$this->primaryKey}`={$id}";
+                if ($id) {
+                    if (!$conditions) {
+                        $conditions = [];
+                    }
+                    array_unshift($conditions, "`{$this->primaryKey}`={$id}");
+                }
+                $sql = "SELECT * FROM `{$this->tableName}` WHERE " . implode(' AND ', $conditions);
                 break;
 
             case 'selectall':
@@ -145,9 +154,6 @@ abstract class Table {
 
     public function setData(array $data) {
         $this->data = array_merge($this->data, $data);
-        // if (array_key_exists($this->primaryKey, $this->data)) {
-        //     $this->{$this->primaryKey} = (int)($this->{$this->primaryKey});
-        // }
         return $this;
     }
 
@@ -187,6 +193,10 @@ abstract class Table {
             return null;
         }
         return $this->data[$key];
+    }
+
+    public function __isset($key) {
+        return array_key_exists($key, $this->data);
     }
 
 }

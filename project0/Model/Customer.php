@@ -45,7 +45,11 @@ class Customer extends \Model\Core\Table {
         if (!empty($orderBy)) {
             $sql .= " ORDER BY " . implode(', ', $orderBy);
         }
-        return  new \Model\Collection\Customer($this->fetchAll($sql));
+        $result = $this->fetchAll($sql);
+        if ($result === false) {
+            return $result;
+        }
+        return  new \Model\Collection\Customer($result);
     }
 
 }

@@ -51,6 +51,7 @@ class Session {
 
     public function setNameSpace(string $nameSpace) {
         $this->nameSpace = $nameSpace;
+        $_SESSION[$nameSpace] = [];
         return $this;
     }
 

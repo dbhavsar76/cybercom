@@ -21,10 +21,22 @@ class Price extends \Model\Core\Table {
                 LEFT JOIN `product_group_price` pgp
                 ON pgp.`productId` = {$productId} AND cg.`groupId` = pgp.`groupId`";
         $result = $this->getAdapter()->fetchAll($sql);
-        if (!$result) {
+        if ($result === false) {
             return $result;
         }
 
         return new \Model\Collection\Product\Group\Price($result);
+    }
+
+    public function insertMultiple($productId, $groupPriceData = []) {
+        if (empty($groupPriceData)) {
+            return true;
+        }
+        $values = [];
+        foreach($groupPriceData as $groupId => $price) {
+            $values[] = "({$groupId}, {$productId}, {$price})";
+        }
+        $sql = "INSERT INTO `{$this->getTableName()}`(`groupId`, `productId`, `price`) VALUES " . implode(',', $values);
+        return $this->getAdapter()->insert($sql);
     }
 }

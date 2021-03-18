@@ -1,40 +1,27 @@
 <?php
 namespace Controller\Admin\Product;
 
-class Media extends \Controller\Core\Base {
-    public function __construct() {
-        parent::__construct();
-        $this->setMessageService(new \Model\Admin\Message);
-    }
+class Media extends \Controller\Core\Admin {
 
     public function gridAction() {
         try {
             $gridHtml = (new \Block\Admin\Product\Media\Grid)->render();
         } catch (\Exception $e) {
             $this->getMessageService()->setFailure($e->getMessage());
-        } finally {
-            $response = [
-                'status' => 'success',
-                'element' => [
-                    [
-                        'selector' => '#content',
-                        'html' => $gridHtml
-                    ],
-                ]
-            ];
-
-            $message = $this->getMessageService()->getMessage();
-            if ($message) {
-                $response['element'][] = [
-                    'selector' => '#message',
-                    'html' => (new \Block\Core\Message($message))->render()
-                ];
-                $this->getMessageService()->clearMessage();
-            }
-
-            header("Content-type: application/json; charset=utf-8");
-            echo json_encode($response);
         }
+        
+        $response = $this->getResponse();
+        $response->setStatus('success');
+        $response->addElement('#content', $gridHtml);
+
+        $message = $this->getMessageService()->getMessage();
+        if ($message) {
+            $messageHtml = (new \Block\Core\Message($message))->render();
+            $response->addElement('#message', $messageHtml);
+            $this->getMessageService()->clearMessage();
+        }
+
+        $response->send();
     }
 
     public function uploadAction() {

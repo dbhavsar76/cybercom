@@ -5,11 +5,25 @@ namespace Controller\Core;
 abstract class Base {
     protected $layout = null;
     protected $request = null;
+    protected $response = null;
+    protected $session = null;
     protected $messageService = null;
 
     function __construct() {
         $this->setRequest();
-        $this->setLayout();
+        $this->setResponse();
+    }
+
+    public function setSession($session = null) {
+        if ($session) {
+            $session = new \Model\Core\Session;
+        }
+        $this->session = $session;
+        return $this;
+    }
+
+    public function getSession() {
+        return $this->session;
     }
 
     public function setMessageService($messageService = null) {
@@ -62,6 +76,21 @@ abstract class Base {
             $request = new \Model\Core\Request();
         }
         $this->request = $request;
+        return $this;
+    }
+
+    public function getResponse() {
+        if (!$this->response) {
+            $this->setResponse();
+        }
+        return $this->response;
+    }
+
+    public function setResponse(\Model\Core\Response $response = null) {
+        if (!$response) {
+            $response = new \Model\Core\Response;
+        }
+        $this->response = $response;
         return $this;
     }
 }

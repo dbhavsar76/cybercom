@@ -6,10 +6,6 @@ class Message extends Session {
     public const FAILURE = 'MESSAGE_FAILURE';
     public const NOTICE = 'MESSAGE_NOTICE';
 
-    public function __construct() {
-        parent::__construct();
-    }
-
     public function setMessage(string $message, $messageType) {
         $this->message = ['message' => $message, 'type' => $messageType];
         return $this;

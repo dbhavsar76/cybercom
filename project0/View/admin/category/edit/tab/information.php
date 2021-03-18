@@ -1,6 +1,4 @@
 <?php
-use \Model\Core\UrlManager;
-
 $category = $this->category;
 $statusState = $this->statusState;
 $categoryOptions = $this->categoryOptions;
@@ -15,9 +13,7 @@ $primaryKey = $category->getPrimaryKey();
     <select class="form-control" name="category[parentId]" id="parent-category">
     <option value="0">---</option>
 <?php foreach ($categoryOptions as $option) : ?>
-    <?php if (!in_array($category->$primaryKey, explode(',', $option->path))) : ?>
     <option value="<?= $option->$primaryKey ?>" <?= $option->$primaryKey == $category->parentId ? 'selected' : '' ?>><?= $option->getFullName() ?></option>
-    <?php endif ?>
 <?php endforeach ?>
     </select>
 </div>

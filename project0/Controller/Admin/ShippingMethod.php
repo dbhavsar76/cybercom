@@ -1,149 +1,122 @@
 <?php
 namespace Controller\Admin;
 
-class ShippingMethod extends \Controller\Core\Base {
-    public function __construct() {
-        parent::__construct();
-        $this->setMessageService(new \Model\Admin\Message);
-    }
+use Block\Core\{Message, Layout};
+use Block\Admin\ShippingMethod\Grid;
+use Block\Admin\ShippingMethod\Edit;
+use Block\Admin\ShippingMethod\Edit\Tabs;
+use Model\Core\UrlManager;
+use Model\ShippingMethod as ModelShippingMethod;
+
+class ShippingMethod extends \Controller\Core\Admin {
 
     public function gridAction() {
         try {
-            $gridHtml = (new \Block\Admin\ShippingMethod\Grid)->render();
+            $gridBlock = new Grid;
+            $gridBlock->shippingMethods = (new ModelShippingMethod)->loadAll();
+            $gridHtml = $gridBlock->render();
         } catch (\Exception $e) {
             $this->getMessageService()->setFailure($e->getMessage());
-        } finally {
-            $response = [
-                'status' => 'success',
-                'layout' => \Block\Core\Layout::LAYOUT_ONE_COLUMN,
-                'element' => [
-                    [
-                        'selector' => '#content',
-                        'html' => $gridHtml
-                    ],
-                ]
-            ];
-
-            $message = $this->getMessageService()->getMessage();
-            if ($message) {
-                $response['element'][] = [
-                    'selector' => '#message',
-                    'html' => (new \Block\Core\Message($message))->render()
-                ];
-                $this->getMessageService()->clearMessage();
-            }
-
-            header("Content-type: application/json; charset=utf-8");
-            echo json_encode($response);
         }
+
+        $response = $this->getResponse();
+        $response->setStatus('success');
+        $response->setLayout(Layout::LAYOUT_ONE_COLUMN);
+        if ($gridHtml) {
+            $response->addElement('#content', $gridHtml);
+        }
+
+        $message = $this->getMessageService()->getMessage();
+        if ($message) {
+            $messageHtml = (new Message($message))->render();
+            $this->getMessageService()->clearMessage();
+            $response->addElement('#message', $messageHtml);
+        }
+
+        $response->send();
     }
 
     public function addAction() {
         try {
-            $tabsHtml = (new \Block\Admin\ShippingMethod\Edit\Tabs)->render();
+            $tabsHtml = (new Tabs)->render();
         } catch (\Exception $e) {
             $this->getMessageService()->setFailure($e->getMessage());
-        } finally {
-            $response = [
-                'status' => 'success',
-                'layout' => \Block\Core\Layout::LAYOUT_TWO_COLUMNS_WITH_LEFT_SIDEBAR,
-                'element' => [
-                    [
-                        'selector' => '#left',
-                        'html' => $tabsHtml
-                    ],
-                ]
-            ];
+        } 
+        
+        $response = $this->getResponse();
+        $response->setStatus('success');
+        $response->setLayout(Layout::LAYOUT_TWO_COLUMNS_WITH_LEFT_SIDEBAR);
+        $response->addElement('#left', $tabsHtml);
 
-            $message = $this->getMessageService()->getMessage();
-            if ($message) {
-                $response['element'][] = [
-                    'selector' => '#message',
-                    'html' => (new \Block\Core\Message($message))->render()
-                ];
-                $this->getMessageService()->clearMessage();
-            }
-
-            header("Content-type: application/json; charset=utf-8");
-            echo json_encode($response);
+        $message = $this->getMessageService()->getMessage();
+        if ($message) {
+            $messageHtml = (new Message($message))->render();
+            $response->addElement('#message', $messageHtml);
+            $this->getMessageService()->clearMessage();
         }
+
+        $response->send();
     }
 
     public function editAction() {
         try {
-            $id = $this->getRequest()->getGet((new \Model\ShippingMethod)->getPrimaryKey());
+            $id = $this->getRequest()->getGet((new ModelShippingMethod)->getPrimaryKey());
             if (!$id) {
                 throw new \Exception('Invalid Action. Id not found.');
             }
 
-            $tabsHtml = (new \Block\Admin\ShippingMethod\Edit\Tabs)->render();
+            $tabsHtml = (new Tabs)->render();
         } catch (\Exception $e) {
             $this->getMessageService()->setFailure($e->getMessage());
-        } finally {
-            $response = [
-                'status' => 'success',
-                'layout' => \Block\Core\Layout::LAYOUT_TWO_COLUMNS_WITH_LEFT_SIDEBAR,
-                'element' => [
-                    [
-                        'selector' => '#left',
-                        'html' => $tabsHtml
-                    ],
-                ]
-            ];
-
-            $message = $this->getMessageService()->getMessage();
-            if ($message) {
-                $response['element'][] = [
-                    'selector' => '#message',
-                    'html' => (new \Block\Core\Message($message))->render()
-                ];
-                $this->getMessageService()->clearMessage();
-            }
-
-            header("Content-type: application/json; charset=utf-8");
-            echo json_encode($response);
+        } 
+        
+        $response = $this->getResponse();
+        $response->setStatus('success');
+        if ($tabsHtml) {
+            $response->setLayout(Layout::LAYOUT_TWO_COLUMNS_WITH_LEFT_SIDEBAR);
+            $response->addElement('#left', $tabsHtml);
         }
+
+        $message = $this->getMessageService()->getMessage();
+        if ($message) {
+            $messageHtml = (new Message($message))->render();
+            $response->addElement('#message', $messageHtml);
+            $this->getMessageService()->clearMessage();
+        }
+
+        $response->send();
     }
 
     public function tabAction() {
         try {
-            $id = $this->getRequest()->getGet((new \Model\ShippingMethod)->getPrimaryKey());
+            $id = $this->getRequest()->getGet((new ModelShippingMethod)->getPrimaryKey());
 
-            $formHtml = (new \Block\Admin\ShippingMethod\Edit((int)$id))->render();
+            $formHtml = (new Edit((int)$id))->render();
         } catch (\Exception $e) {
             $this->getMessageService()->setFailure($e->getMessage());
-        } finally {
-            $response = [
-                'status' => 'success',
-                'element' => [
-                    [
-                        'selector' => '#content',
-                        'html' => $formHtml
-                    ],
-                ]
-            ];
+        } 
+        
+        $response = $this->getResponse();
+        $response->setStatus('success');
+        $response->addElement('#content', $formHtml);
 
-            $message = $this->getMessageService()->getMessage();
-            if ($message) {
-                $response['element'][] = [
-                    'selector' => '#message',
-                    'html' => (new \Block\Core\Message($message))->render()
-                ];
-                $this->getMessageService()->clearMessage();
-            }
-
-            header("Content-type: application/json; charset=utf-8");
-            echo json_encode($response);
+        $message = $this->getMessageService()->getMessage();
+        if ($message) {
+            $messageHtml = (new Message($message))->render();
+            $response->addElement('#message', $messageHtml);
+            $this->getMessageService()->clearMessage();
         }
+
+        $response->send();
     }
 
     public function saveAction() {
         try {
             $req = $this->getRequest();
-            if (!$req->isPost() || empty($_SERVER['HTTP_REFERER'])) {
+            if (!$req->isPost()) {
                 throw new \Exception('Invalid Request.');
             }
-            $shippingMethod = new \Model\ShippingMethod();
+            $shippingMethod = new ModelShippingMethod();
             $id = $req->getGet($shippingMethod->getPrimaryKey());
 
             if ($id) {
@@ -151,7 +124,7 @@ class ShippingMethod extends \Controller\Core\Base {
             }
 
             $shippingMethod->setData($req->getPost('shippingMethod', []));
-            $shippingMethod->status = $shippingMethod->status ? \Model\ShippingMethod::STATUS_ENABLED : \Model\ShippingMethod::STATUS_DISABLED;
+            $shippingMethod->status = $shippingMethod->status ? ModelShippingMethod::STATUS_ENABLED : ModelShippingMethod::STATUS_DISABLED;
             $result = $shippingMethod->save();
             if (!$result) {
                 throw new \Exception('Something went wrong. Could not save data.');
@@ -160,13 +133,13 @@ class ShippingMethod extends \Controller\Core\Base {
         } catch (\Exception $e) {
             $this->getMessageService()->setFailure($e->getMessage());
         } finally {
-            $this->gridAction();
+            $this->getResponse()->setAjaxRedirect(UrlManager::getUrl('grid', null, null, true))->send();
         }
     }
     
     public function deleteAction() {
         try {
-            $shippingMethod = new \Model\ShippingMethod();
+            $shippingMethod = new ModelShippingMethod();
 
             $id = $this->getRequest()->getGet($shippingMethod->getPrimaryKey());
             if (!$id) {
@@ -188,7 +161,7 @@ class ShippingMethod extends \Controller\Core\Base {
 
     public function toggleStatusAction() {
         try {
-            $shippingMethod = new \Model\ShippingMethod();
+            $shippingMethod = new ModelShippingMethod();
 
             $id = $this->getRequest()->getGet($shippingMethod->getPrimaryKey());
             if (!$id) {

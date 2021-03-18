@@ -29,7 +29,6 @@ class Layout extends Template {
                 break;
 
             case self::LAYOUT_THREE_COLUMN:
-                $this->setTemplate('/core/layout/three_column.php');
                 $this->addChild(new Layout\Header, 'header');
                 $this->addChild(new Layout\Left, 'left');
                 $this->addChild(new Layout\Content, 'content');

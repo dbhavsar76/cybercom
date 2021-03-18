@@ -21,6 +21,16 @@ class Media extends \Model\Core\Table {
         return BASE_URL . "/media/product/{$this->productId}/{$this->id}.png";
     }
 
+    public function save() {
+        $sql = "SELECT COUNT({$this->getPrimaryKey()}) `count` FROM `{$this->getTableName()}` WHERE `productId` = {$this->productId}";
+        $count = $this->fetchRow($sql);
+        if ($count['count'] == 0) {
+            $this->setData(['small' => 1, 'thumb' => 1, 'base' => 1, 'gallery' => 1]);
+        }
+
+        return parent::save();
+    }
+
     public function saveStates($productId, $smallId = null, $thumbId = null, $baseId = null, $galleryIds = null) {
         if (is_null($smallId) && is_null($thumbId) && is_null($baseId) && is_null($galleryIds)) {
             return false;
