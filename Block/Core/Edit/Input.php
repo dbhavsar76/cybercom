@@ -4,16 +4,13 @@ namespace Block\Core\Edit;
 use Model\Entity\Attribute;
 
 class Input extends \Block\Core\Template {
-    protected $options = null;
-    protected $value = null;
-    protected $id = null;
-    protected $name = null;
-
-    public function __construct($type) {
+    protected $attribute = null;
+    protected $entity = null;
+    
+    public function __construct($attribute) {
         parent::__construct();
-        if ($type) {
-            $this->setType($type);
-        }
+        $this->setAttribute($attribute);
+        $this->setType($attribute->inputTypeId);
     }
 
     public function setType($type) {
@@ -37,7 +34,11 @@ class Input extends \Block\Core\Template {
             case Attribute::INPUT_TYPE_NUMBER:
                 $this->setTemplate('/core/edit/input/number.php');
                 break;
-                                    
+
+            case Attribute::INPUT_TYPE_TEXTAREA:
+                $this->setTemplate('/core/edit/input/textarea.php');
+                break;
+
             case Attribute::INPUT_TYPE_TEXT:
             default:
                 $this->setTemplate('/core/edit/input/text.php');
@@ -45,39 +46,22 @@ class Input extends \Block\Core\Template {
         }
     }
 
-    public function setOptions($options) {
-        $this->options = $options;
+    public function setAttribute($attribute) {
+        $this->attribute = $attribute;
         return $this;
     }
 
-    public function getOptions() {
-        return $this->options;
+    public function getAttribute() {
+        return $this->attribute;
     }
 
-    public function setValue($value) {
-        $this->value = $value;
+    public function setEntity($entity) {
+        $this->entity = $entity;
         return $this;
     }
 
-    public function getValue() {
-        return $this->value;
+    public function getEntity() {
+        return $this->entity;
     }
 
-    public function setId($id) {
-        $this->id = $id;
-        return $this;
-    }
-
-    public function getId() {
-        return $this->id;
-    }
-
-    public function setName($name) {
-        $this->name = $name;
-        return $this;
-    }
-
-    public function getName() {
-        return $this->name;
-    }
 }

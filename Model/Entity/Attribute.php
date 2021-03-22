@@ -5,14 +5,17 @@ use Model\Entity\Attribute\Option;
 
 class Attribute extends \Model\Core\Table {
     public const INPUT_TYPE_TEXT = 'text';
+    public const INPUT_TYPE_TEXTAREA = 'textarea';
     public const INPUT_TYPE_NUMBER = 'number';
     public const INPUT_TYPE_RADIO = 'radio';
     public const INPUT_TYPE_CHECKBOX = 'checkbox';
     public const INPUT_TYPE_SELECT = 'select';
     public const INPUT_TYPE_SELECT_MULTIPLE = 'select_multiple';
 
+    public const BACKEND_TYPE_BOOLEAN = 'BOOLEAN';
     public const BACKEND_TYPE_INT = 'INT';
     public const BACKEND_TYPE_VARCHAR = 'VARCHAR(250)';
+    public const BACKEND_TYPE_TEXT = 'TEXT';
     public const BACKEND_TYPE_DATE = 'DATE';
     public const BACKEND_TYPE_DATETIME = 'DATETIME';
     public const BACKEND_TYPE_TIMESTAMP = 'TIMESTAMP';
@@ -68,6 +71,7 @@ class Attribute extends \Model\Core\Table {
     public function getInputTypeOptions() {
         return [
             self::INPUT_TYPE_TEXT            => 'Text',
+            self::INPUT_TYPE_TEXTAREA        => 'Textbox',
             self::INPUT_TYPE_NUMBER          => 'Number',
             self::INPUT_TYPE_RADIO           => 'Radio',
             self::INPUT_TYPE_CHECKBOX        => 'Checkbox',
@@ -78,20 +82,18 @@ class Attribute extends \Model\Core\Table {
 
     public function getBackendTypeOptions() {
         return [
+            self::BACKEND_TYPE_BOOLEAN   => 'Boolean',
             self::BACKEND_TYPE_INT       => 'Integer',
             self::BACKEND_TYPE_VARCHAR   => 'Varchar (250)',
+            self::BACKEND_TYPE_TEXT   => 'Text',
             self::BACKEND_TYPE_DATE      => 'Date',
             self::BACKEND_TYPE_DATETIME  => 'Date Time',
             self::BACKEND_TYPE_TIMESTAMP => 'Timestamp',
         ];
     }
 
-    public function getAttributeHtml() {
-        # pending
-    }
-
     public function getOptions() {
         $option = new Option;
-        return $option->loadAll(["`attributeId` = {$this->{$this->getPrimaryKey()}}"]);
+        return $option->loadAll(["`attributeId` = {$this->{$this->getPrimaryKey()}}"], ['`sortOrder` ASC']);
     }
 }

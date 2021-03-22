@@ -28,6 +28,7 @@ class Response {
     }
 
     public function send() {
+        // session_write_close();
         header('Content-type: application/json; charset=utf-8');
         echo json_encode($this->responseData);
         /* exit(0); */

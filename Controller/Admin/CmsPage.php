@@ -1,13 +1,18 @@
 <?php
 namespace Controller\Admin;
 
+use Block\Admin\CmsPage\Grid;
 use Block\Core\{Message, Layout};
+use Model\CmsPage as ModelCmsPage;
 
 class CmsPage extends \Controller\Core\Admin {
 
     public function gridAction() {
         try {
-            $gridHtml = (new \Block\Admin\CmsPage\Grid)->render();
+            $gridBlock = new Grid();
+            $filter = $this->getFilterService()->getFilter(get_class($gridBlock));
+            $gridBlock->prepareCollection($filter);
+            $gridHtml = $gridBlock->render();
         } catch (\Exception $e) {
             $this->getMessageService()->setFailure($e->getMessage());
         }
@@ -164,7 +169,7 @@ class CmsPage extends \Controller\Core\Admin {
             if (!$cmsPage->load($id)) {
                 throw new \Exception('Could not load data.');
             }
-            $result = $cmsPage->setData(['status' => (1 - $cmsPage->status)])->save();
+            $result = $cmsPage->setData(['status' => ($cmsPage->status == ModelCmsPage::STATUS_ENABLED ? ModelCmsPage::STATUS_DISABLED : ModelCmsPage::STATUS_ENABLED)])->save();
             if (!$result) {
                 throw new \Exception('Something went wrong. Could not save data.');
             }

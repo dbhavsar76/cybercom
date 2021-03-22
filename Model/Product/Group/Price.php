@@ -9,7 +9,7 @@ class Price extends \Model\Core\Table {
         $this->setPrimaryKey('entityId');
     }
 
-    public function loadAll($conditions = null, $orderBy = null)
+    public function loadAll($conditions = null, $orderBy = null, $limit = null)
     {
         if (empty($conditions) || empty($conditions['productId'])) {
             $productId = 0;

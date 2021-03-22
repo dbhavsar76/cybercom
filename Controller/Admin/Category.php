@@ -2,12 +2,17 @@
 namespace Controller\Admin;
 
 use Block\Core\{Message, Layout};
+use Block\Admin\Category\Grid;
+use Model\Category as ModelCategory;
 
 class Category extends \Controller\Core\Admin {
 
     public function gridAction() {
         try {
-            $gridHtml = (new \Block\Admin\Category\Grid)->render();
+            $gridBlock = new Grid();
+            $filter = $this->getFilterService()->getFilter(get_class($gridBlock));
+            $gridBlock->prepareCollection($filter);
+            $gridHtml = $gridBlock->render();
         } catch (\Exception $e) {
             $this->getMessageService()->setFailure($e->getMessage());
         }
@@ -182,7 +187,7 @@ class Category extends \Controller\Core\Admin {
             if (!$category->load($id)) {
                 throw new \Exception('Could not load data.');
             }
-            $result = $category->setData(['status' => (1 - $category->status)])->save();
+            $result = $category->setData(['status' => ($category->status == ModelCategory::STATUS_ENABLED ? ModelCategory::STATUS_DISABLED : ModelCategory::STATUS_ENABLED)])->save();
             if (!$result) {
                 throw new \Exception('Something went wrong. Could not save data.');
             }

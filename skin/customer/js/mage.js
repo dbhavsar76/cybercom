@@ -1,5 +1,5 @@
 $.ajaxSetup({
-    cache: true
+    cache: false
 });
 
 const Base = function() {};

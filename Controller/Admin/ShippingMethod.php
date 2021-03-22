@@ -13,7 +13,8 @@ class ShippingMethod extends \Controller\Core\Admin {
     public function gridAction() {
         try {
             $gridBlock = new Grid;
-            $gridBlock->shippingMethods = (new ModelShippingMethod)->loadAll();
+            $filter = $this->getFilterService()->getFilter(get_class($gridBlock));
+            $gridBlock->prepareCollection($filter);
             $gridHtml = $gridBlock->render();
         } catch (\Exception $e) {
             $this->getMessageService()->setFailure($e->getMessage());
@@ -170,7 +171,7 @@ class ShippingMethod extends \Controller\Core\Admin {
             if (!$shippingMethod->load($id)) {
                 throw new \Exception('Could not load data.');
             }
-            $result = $shippingMethod->setData(['status' => (1 - $shippingMethod->status)])->save();
+            $result = $shippingMethod->setData(['status' => ($shippingMethod->status == ModelShippingMethod::STATUS_ENABLED ? ModelShippingMethod::STATUS_DISABLED : ModelShippingMethod::STATUS_ENABLED)])->save();
             if (!$result) {
                 throw new \Exception('Something went wrong. Could not save data.');
             }
@@ -178,7 +179,7 @@ class ShippingMethod extends \Controller\Core\Admin {
         } catch (\Exception $e) {
             $this->getMessageService()->setFailure($e->getMessage());
         } finally {
-            $this->gridAction();
+            $this->getResponse()->setAjaxRedirect(UrlManager::getUrl('grid', null, null, true))->send();
         }
     }
 }

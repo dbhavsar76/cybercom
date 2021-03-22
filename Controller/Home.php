@@ -8,6 +8,7 @@ class Home extends Core\Customer {
             $layout = $this->getLayout();
             $layout->prepareChildren(\Block\Layout::LAYOUT_THREE_COLUMN);
             $layout->getHeader()->addChild(new \Block\Header);
+            $layout->getContent()->addChild(new \Block\Home);
             $layout->getFooter()->addChild(new \Block\Footer);
             echo $layout->render();
         } catch (\Exception $e) {

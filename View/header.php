@@ -1,49 +1,238 @@
-<?php
-
-use Model\Core\UrlManager;
-?>
-<div id="header-top" class="container-fluid px-0 bg-white">
-    <div class="px-5 bg-secondary">
-        &nbsp;
+<!-- wpf loader Two -->
+<div id="wpf-loader-two">
+    <div class="wpf-loader-two-inner">
+        <span>Loading</span>
     </div>
-    <nav class="primaryNavbar px-5 navbar navbar-expand navbar-light justify-content-between bg-white">
-        <a href="<?= BASE_URL ?>" class="navbar-brand h1">App</a>
-        <form class="form-inline col-6 my-2 my-lg-0" id="searchForm" >
-            <div class="input-group w-100">
-                <input class="form-control border-primary" type="search" placeholder="Search" aria-label="Search">
-                <div class="input-group-append">
-                    <button class="btn btn-primary" type="submit"><i class="fa fa-search fa-fw" aria-hidden="true"></i></button>
+</div>
+<!-- / wpf loader Two -->
+<!-- SCROLL TOP BUTTON -->
+<a class="scrollToTop" href="#"><i class="fa fa-chevron-up"></i></a>
+<!-- END SCROLL TOP BUTTON -->
+
+
+<!-- Start header section -->
+<header id="aa-header">
+    <!-- start header top  -->
+    <div class="aa-header-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="aa-header-top-area">
+                        <!-- start header top left -->
+                        <div class="aa-header-top-left">
+                            <!-- start cellphone -->
+                            <div class="cellphone hidden-xs">
+                                <p><span class="fa fa-phone"></span>00-62-658-658</p>
+                            </div>
+                            <!-- / cellphone -->
+                        </div>
+                        <!-- / header top left -->
+                        <div class="aa-header-top-right">
+                            <ul class="aa-head-top-nav-right">
+                                <li><a href="account.html">My Account</a></li>
+                                <li class="hidden-xs"><a href="wishlist.html">Wishlist</a></li>
+                                <li class="hidden-xs"><a href="cart.html">My Cart</a></li>
+                                <li class="hidden-xs"><a href="checkout.html">Checkout</a></li>
+                                <li><a href="" data-toggle="modal" data-target="#login-modal">Login</a></li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </form>
-        <div class="navbar-nav">
-            <a href="#" class="btn btn-light"><i class="fa fa-user fa-fw" aria-hidden="true"></i> User</a>
-            <a href="#" class="btn btn-light ml-3"> <i class="fa fa-shopping-cart fa-fw" aria-hidden="true"></i> Cart</a>
         </div>
-    </nav>
-    <nav class="deptNavbar px-5 navbar navbar-expand bg-white justify-content-center border-top border-bottom border-dark">
-        <ul class="nav navbar-nav">
-            <li class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" id="c1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Category 1</a>
-                <div class="dropdown-menu" aria-labelledby="c1">
-                    <a href="#" class="dropdown-item">Sub Cat 1</a>
-                    <a href="#" class="dropdown-item">Sub Cat 1</a>
-                    <a href="#" class="dropdown-item">Sub Cat 1</a>
-                    <a href="#" class="dropdown-item">Sub Cat 1</a>
+    </div>
+    <!-- / header top  -->
+
+    <!-- start header bottom  -->
+    <div class="aa-header-bottom">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="aa-header-bottom-area">
+                        <!-- logo  -->
+                        <div class="aa-logo">
+                            <!-- Text based logo -->
+                            <a href="index.html">
+                                <span class="fa fa-shopping-cart"></span>
+                                <p>daily<strong>Shop</strong> <span>Your Shopping Partner</span></p>
+                            </a>
+                            <!-- img based logo -->
+                            <!-- <a href="index.html"><img src="img/logo.jpg" alt="logo img"></a> -->
+                        </div>
+                        <!-- / logo  -->
+                        <!-- cart box -->
+                        <div class="aa-cartbox">
+                            <a class="aa-cart-link" href="#">
+                                <span class="fa fa-shopping-basket"></span>
+                                <span class="aa-cart-title">SHOPPING CART</span>
+                                <span class="aa-cart-notify">2</span>
+                            </a>
+                            <div class="aa-cartbox-summary">
+                                <ul>
+                                    <li>
+                                        <a class="aa-cartbox-img" href="#"><img src="img/woman-small-2.jpg"
+                                                alt="img"></a>
+                                        <div class="aa-cartbox-info">
+                                            <h4><a href="#">Product Name</a></h4>
+                                            <p>1 x $250</p>
+                                        </div>
+                                        <a class="aa-remove-product" href="#"><span class="fa fa-times"></span></a>
+                                    </li>
+                                    <li>
+                                        <a class="aa-cartbox-img" href="#"><img src="img/woman-small-1.jpg"
+                                                alt="img"></a>
+                                        <div class="aa-cartbox-info">
+                                            <h4><a href="#">Product Name</a></h4>
+                                            <p>1 x $250</p>
+                                        </div>
+                                        <a class="aa-remove-product" href="#"><span class="fa fa-times"></span></a>
+                                    </li>
+                                    <li>
+                                        <span class="aa-cartbox-total-title">
+                                            Total
+                                        </span>
+                                        <span class="aa-cartbox-total-price">
+                                            $500
+                                        </span>
+                                    </li>
+                                </ul>
+                                <a class="aa-cartbox-checkout aa-primary-btn" href="#">Checkout</a>
+                            </div>
+                        </div>
+                        <!-- / cart box -->
+                        <!-- search box -->
+                        <div class="aa-search-box">
+                            <form action="">
+                                <input type="text" name="" id="" placeholder="Search here ex. 'man' ">
+                                <button type="submit"><span class="fa fa-search"></span></button>
+                            </form>
+                        </div>
+                        <!-- / search box -->
+                    </div>
                 </div>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link">Category 1</a>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link">Category 1</a>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link">Category 1</a>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link">Category 1</a>
-            </li>
-        </ul>
-    </nav>
-</div>
+            </div>
+        </div>
+    </div>
+    <!-- / header bottom  -->
+</header>
+<!-- / header section -->
+<!-- menu -->
+<section id="menu">
+    <div class="container">
+        <div class="menu-area">
+            <!-- Navbar -->
+            <div class="navbar navbar-default" role="navigation">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse"
+                        data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <!-- Left nav -->
+                    <ul class="nav navbar-nav">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="#">Men <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Casual</a></li>
+                                <li><a href="#">Sports</a></li>
+                                <li><a href="#">Formal</a></li>
+                                <li><a href="#">Standard</a></li>
+                                <li><a href="#">T-Shirts</a></li>
+                                <li><a href="#">Shirts</a></li>
+                                <li><a href="#">Jeans</a></li>
+                                <li><a href="#">Trousers</a></li>
+                                <li><a href="#">And more.. <span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#">Sleep Wear</a></li>
+                                        <li><a href="#">Sandals</a></li>
+                                        <li><a href="#">Loafers</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li><a href="#">Women <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Kurta & Kurti</a></li>
+                                <li><a href="#">Trousers</a></li>
+                                <li><a href="#">Casual</a></li>
+                                <li><a href="#">Sports</a></li>
+                                <li><a href="#">Formal</a></li>
+                                <li><a href="#">Sarees</a></li>
+                                <li><a href="#">Shoes</a></li>
+                                <li><a href="#">And more.. <span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#">Sleep Wear</a></li>
+                                        <li><a href="#">Sandals</a></li>
+                                        <li><a href="#">Loafers</a></li>
+                                        <li><a href="#">And more.. <span class="caret"></span></a>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="#">Rings</a></li>
+                                                <li><a href="#">Earrings</a></li>
+                                                <li><a href="#">Jewellery Sets</a></li>
+                                                <li><a href="#">Lockets</a></li>
+                                                <li class="disabled"><a class="disabled" href="#">Disabled item</a>
+                                                </li>
+                                                <li><a href="#">Jeans</a></li>
+                                                <li><a href="#">Polo T-Shirts</a></li>
+                                                <li><a href="#">SKirts</a></li>
+                                                <li><a href="#">Jackets</a></li>
+                                                <li><a href="#">Tops</a></li>
+                                                <li><a href="#">Make Up</a></li>
+                                                <li><a href="#">Hair Care</a></li>
+                                                <li><a href="#">Perfumes</a></li>
+                                                <li><a href="#">Skin Care</a></li>
+                                                <li><a href="#">Hand Bags</a></li>
+                                                <li><a href="#">Single Bags</a></li>
+                                                <li><a href="#">Travel Bags</a></li>
+                                                <li><a href="#">Wallets & Belts</a></li>
+                                                <li><a href="#">Sunglases</a></li>
+                                                <li><a href="#">Nail</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li><a href="#">Kids <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Casual</a></li>
+                                <li><a href="#">Sports</a></li>
+                                <li><a href="#">Formal</a></li>
+                                <li><a href="#">Standard</a></li>
+                                <li><a href="#">T-Shirts</a></li>
+                                <li><a href="#">Shirts</a></li>
+                                <li><a href="#">Jeans</a></li>
+                                <li><a href="#">Trousers</a></li>
+                                <li><a href="#">And more.. <span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#">Sleep Wear</a></li>
+                                        <li><a href="#">Sandals</a></li>
+                                        <li><a href="#">Loafers</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li><a href="#">Sports</a></li>
+                        <li><a href="#">Digital <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Camera</a></li>
+                                <li><a href="#">Mobile</a></li>
+                                <li><a href="#">Tablet</a></li>
+                                <li><a href="#">Laptop</a></li>
+                                <li><a href="#">Accesories</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">Furniture</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <!--/.nav-collapse -->
+            </div>
+        </div>
+    </div>
+</section>
+<!-- / menu -->

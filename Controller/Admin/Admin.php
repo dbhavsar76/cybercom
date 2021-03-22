@@ -1,14 +1,17 @@
 <?php
 namespace Controller\Admin;
 
+use Block\Admin\Admin\Grid;
 use Block\Core\{Message, Layout};
+use Model\Admin as ModelAdmin;
 
 class Admin extends \Controller\Core\Admin {
 
     public function gridAction() {
         try {
-            $gridBlock = new \Block\Admin\Admin\Grid;
-            $gridBlock->admins = (new \Model\Admin)->loadAll();
+            $gridBlock = new Grid();
+            $filter = $this->getFilterService()->getFilter(get_class($gridBlock));
+            $gridBlock->prepareCollection($filter);
             $gridHtml = $gridBlock->render();
             if (!$gridHtml) {
                 throw new \Exception('Something went wrong.');
@@ -180,7 +183,7 @@ class Admin extends \Controller\Core\Admin {
             if (!$admin->load($id)) {
                 throw new \Exception('Could not load data.');
             }
-            $result = $admin->setData(['status' => (1 - $admin->status), 'updatedDate' => null])->save();
+            $result = $admin->setData(['status' => ($admin->status == ModelAdmin::STATUS_ENABLED ? ModelAdmin::STATUS_DISABLED : ModelAdmin::STATUS_ENABLED), 'updatedDate' => null])->save();
             if (!$result) {
                 throw new \Exception('Something went wrong. Could not save data.');
             }

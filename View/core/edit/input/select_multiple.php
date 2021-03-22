@@ -1,9 +1,16 @@
+<?php
+$attribute = $this->getAttribute();
+$entity = $this->getEntity();
+?>
 
 <div class="form-group">
-    <label for="<?= $this->getId() ?>"></label>
-    <select id="<?= $this->getId() ?>" name="<?= $this->getName() ?>" class="custom-select" multiple>
-    <?php foreach ($this->getOptions() as $option) : ?>
-        <option value="<?= $option->{$option->getPrimaryKey()} ?>"><?= $option->name ?></option>
+    <select id="" name="<?= "{$entity->getTableName()}[attributes][{$attribute->code}][]" ?>" class="custom-select" multiple>
+    <?php 
+    $ids = explode(',', $entity->{$attribute->code});
+    foreach ($this->getAttribute()->getOptions() as $option) : 
+        $id = $option->{$option->getPrimaryKey()};
+    ?>
+        <option value="<?= $id ?>" <?=  in_array($id, $ids) ? 'selected' : '' ?>><?= $option->name ?></option>
     <?php endforeach ?>
     </select>
 </div>

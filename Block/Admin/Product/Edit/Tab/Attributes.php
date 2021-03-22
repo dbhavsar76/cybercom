@@ -9,7 +9,7 @@ class Attributes extends \Block\Core\Edit\Tab\Attributes {
         if ($id && !$product->load($id)) {
             throw new \Exception('Id not found.');
         }
-        $this->product = $product;
+        $this->entity = $product;
         $this->attributes = $product->getAttributes();
     }
 }

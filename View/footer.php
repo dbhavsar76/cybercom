@@ -1,59 +1,112 @@
-<div class="container-fluid px-5 bg-white">
-    <div id="footerNewsLetter" class="row p2">
-        <div class="col-12 p-5 d-flex justify-content-center">
-            <p class="align-baseline my-auto mr-3">Be the first to know about our best deals!</p>
-            <form action="#" class="form-inline">
-                <div class="input-group">
-                    <input type="email" name="newsletter" id="newsletter" class="form-control border-primary">
-                    <div class="input-group-append">
-                        <button class="btn btn-primary" type="submit">Submit</button>
-                    </div>
-                </div>
+  <!-- Subscribe section -->
+  <section id="aa-subscribe">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="aa-subscribe-area">
+            <h3>Subscribe our newsletter </h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ex, velit!</p>
+            <form action="" class="aa-subscribe-form">
+              <input type="email" name="" id="" placeholder="Enter your Email">
+              <input type="submit" value="Subscribe">
             </form>
+          </div>
         </div>
+      </div>
     </div>
-    <div id="footerMain" class="row p-2">
-        <div class="col-4">
-            <p class="h2 mb-3">About Us</p>
-            <ul class="list-unstyled">
-                <li class="mb-2"><a class=" text-secondary" href="#">Footer Link</a></li>
-                <li class="mb-2"><a class=" text-secondary" href="#">Footer Link</a></li>
-                <li class="mb-2"><a class=" text-secondary" href="#">Footer Link</a></li>
-                <li class="mb-2"><a class=" text-secondary" href="#">Footer Link</a></li>
-            </ul>
-        </div>
-        <div class="col-4">
-            <p class="h2 mb-3">Customer Service</p>
-            <ul class="list-unstyled">
-                <li class="mb-2"><a class=" text-secondary" href="#">Footer Link</a></li>
-                <li class="mb-2"><a class=" text-secondary" href="#">Footer Link</a></li>
-                <li class="mb-2"><a class=" text-secondary" href="#">Footer Link</a></li>
-                <li class="mb-2"><a class=" text-secondary" href="#">Footer Link</a></li>
-            </ul>
-        </div>
-        <div class="col-4">
-            <p class="h2 mb-3">Contact Us</p>
-            <div class="mb-2 d-flex flex-column align-items-center">
-                <a href="#" class="col-5 btn btn-primary mb-2"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i> Quick Service</a>
-                <a href="#" class="col-5 btn btn-outline-primary"><i class="fa fa-phone fa-fw" aria-hidden="true"></i> Call Us</a>
+  </section>
+  <!-- / Subscribe section -->
+
+  <!-- footer -->  
+  <footer id="aa-footer">
+    <!-- footer bottom -->
+    <div class="aa-footer-top">
+     <div class="container">
+        <div class="row">
+        <div class="col-md-12">
+          <div class="aa-footer-top-area">
+            <div class="row">
+              <div class="col-md-3 col-sm-6">
+                <div class="aa-footer-widget">
+                  <h3>Main Menu</h3>
+                  <ul class="aa-footer-nav">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Our Services</a></li>
+                    <li><a href="#">Our Products</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-md-3 col-sm-6">
+                <div class="aa-footer-widget">
+                  <div class="aa-footer-widget">
+                    <h3>Knowledge Base</h3>
+                    <ul class="aa-footer-nav">
+                      <li><a href="#">Delivery</a></li>
+                      <li><a href="#">Returns</a></li>
+                      <li><a href="#">Services</a></li>
+                      <li><a href="#">Discount</a></li>
+                      <li><a href="#">Special Offer</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 col-sm-6">
+                <div class="aa-footer-widget">
+                  <div class="aa-footer-widget">
+                    <h3>Useful Links</h3>
+                    <ul class="aa-footer-nav">
+                      <li><a href="#">Site Map</a></li>
+                      <li><a href="#">Search</a></li>
+                      <li><a href="#">Advanced Search</a></li>
+                      <li><a href="#">Suppliers</a></li>
+                      <li><a href="#">FAQ</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 col-sm-6">
+                <div class="aa-footer-widget">
+                  <div class="aa-footer-widget">
+                    <h3>Contact Us</h3>
+                    <address>
+                      <p> 25 Astor Pl, NY 10003, USA</p>
+                      <p><span class="fa fa-phone"></span>+1 212-982-4589</p>
+                      <p><span class="fa fa-envelope"></span>dailyshop@gmail.com</p>
+                    </address>
+                    <div class="aa-footer-social">
+                      <a href="#"><span class="fa fa-facebook"></span></a>
+                      <a href="#"><span class="fa fa-twitter"></span></a>
+                      <a href="#"><span class="fa fa-google-plus"></span></a>
+                      <a href="#"><span class="fa fa-youtube"></span></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
+     </div>
     </div>
-    <div id="footerLegal" class="row p-2">
-        <div class="col-12 d-flex flex-column align-items-center">
-            <div id="socialLinks">
-                <a href="#"><i class="fa fa-lg fa-twitter fa-fw" aria-hidden="true"></i></a>
-                <a href="#"><i class="fa fa-lg fa-facebook fa-fw" aria-hidden="true"></i></a>
-                <a href="#"><i class="fa fa-lg fa-instagram fa-fw" aria-hidden="true"></i></a>
-                <a href="#"><i class="fa fa-lg fa-pinterest fa-fw" aria-hidden="true"></i></a>
+    <!-- footer-bottom -->
+    <div class="aa-footer-bottom">
+      <div class="container">
+        <div class="row">
+        <div class="col-md-12">
+          <div class="aa-footer-bottom-area">
+            <p>Designed by <a href="http://www.markups.io/">MarkUps.io</a></p>
+            <div class="aa-footer-payment">
+              <span class="fa fa-cc-mastercard"></span>
+              <span class="fa fa-cc-visa"></span>
+              <span class="fa fa-paypal"></span>
+              <span class="fa fa-cc-discover"></span>
             </div>
-            <div id="legalLinks" class="text-center">
-                <a href="#">Terms of Use</a> | 
-                <a href="#">Privacy Policy</a>
-            </div>
-            <div id="copyright" class="text-center">
-                &copy; 2021 App
-            </div>
+          </div>
         </div>
+      </div>
+      </div>
     </div>
-</div>
+  </footer>
+  <!-- / footer -->

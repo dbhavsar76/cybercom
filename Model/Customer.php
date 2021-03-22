@@ -2,8 +2,8 @@
 namespace Model;
 
 class Customer extends \Model\Core\Table {
-    public const STATUS_ENABLED = 1;
-    public const STATUS_DISABLED = 0;
+    public const STATUS_ENABLED = 'enabled';
+    public const STATUS_DISABLED = 'disabled';
 
     public function __construct() {
         parent::__construct();
@@ -33,7 +33,7 @@ class Customer extends \Model\Core\Table {
         return $this;
     }
 
-    public function loadAll($conditions = null, $orderBy = null) {
+    public function loadAll($conditions = null, $orderBy = null, $limit = null) {
         $sql = "SELECT `c`.*, `cg`.`name` `groupName`, GROUP_CONCAT(`ca`.`addressId`) `addressIds`, `ca`.`zipcode` `zipcode`
                 FROM `customer` `c`
                 LEFT JOIN `customer_group` `cg` ON `c`.`groupId` = `cg`.`groupId`
@@ -44,6 +44,9 @@ class Customer extends \Model\Core\Table {
         }
         if (!empty($orderBy)) {
             $sql .= " ORDER BY " . implode(', ', $orderBy);
+        }
+        if (!empty($limit)) {
+            $sql .= " LIMIT {$limit}";
         }
         $result = $this->fetchAll($sql);
         if ($result === false) {

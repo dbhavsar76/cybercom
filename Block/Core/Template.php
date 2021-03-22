@@ -1,13 +1,13 @@
 <?php
 namespace Block\Core;
 
+
 class Template {
     protected $template = null;
     protected $context = [];
     protected $children = [];
-    protected $messageService = null;
 
-    function __construct() {
+    public function __construct() {
         #empty
     }
 
@@ -68,22 +68,8 @@ class Template {
         return $this;
     }
 
-    public function createBlock($className) {
-        return new $className();
-    }
-
-    public function setMessageService($messageService = null) {
-        if (!$messageService) {
-            $messageService = new \Model\Admin\Message();
-        }
-        $this->messageService = $messageService;
-    }
-
-    public function getMessageService() {
-        if (!$this->messageService) {
-            $this->setMessageService();
-        }
-        return $this->messageService;
+    public function getBlock($className) {
+        return \Mage::getBlock($className);
     }
 
 }

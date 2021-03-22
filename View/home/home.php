@@ -1,3 +1,0 @@
-<section>
-    Home Page
-</section>

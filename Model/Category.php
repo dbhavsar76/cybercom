@@ -2,8 +2,8 @@
 namespace Model;
 
 class Category extends \Model\Core\Table {
-    public const STATUS_ENABLED = 1;
-    public const STATUS_DISABLED = 0;
+    public const STATUS_ENABLED = 'enabled';
+    public const STATUS_DISABLED = 'disabled';
     
     protected static $mapping = null;
     

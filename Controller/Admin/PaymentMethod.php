@@ -2,12 +2,17 @@
 namespace Controller\Admin;
 
 use Block\Core\{Message, Layout};
+use Block\Admin\PaymentMethod\Grid;
+use Model\PaymentMethod as ModelPaymentMethod;
 
 class PaymentMethod extends \Controller\Core\Admin {
 
     public function gridAction() {
         try {
-            $gridHtml = (new \Block\Admin\PaymentMethod\Grid)->render();
+            $gridBlock = new Grid();
+            $filter = $this->getFilterService()->getFilter(get_class($gridBlock));
+            $gridBlock->prepareCollection($filter);
+            $gridHtml = $gridBlock->render();
         } catch (\Exception $e) {
             $this->getMessageService()->setFailure($e->getMessage());
         }
@@ -51,7 +56,7 @@ class PaymentMethod extends \Controller\Core\Admin {
 
     public function editAction() {
         try {
-            $id = $this->getRequest()->getGet((new \Model\PaymentMethod)->getPrimaryKey());
+            $id = $this->getRequest()->getGet((new ModelPaymentMethod)->getPrimaryKey());
             if (!$id) {
                 throw new \Exception('Invalid Action. Id not found.');
             }
@@ -81,7 +86,7 @@ class PaymentMethod extends \Controller\Core\Admin {
 
     public function tabAction() {
         try {
-            $id = $this->getRequest()->getGet((new \Model\PaymentMethod)->getPrimaryKey());
+            $id = $this->getRequest()->getGet((new ModelPaymentMethod)->getPrimaryKey());
 
             $formHtml = (new \Block\Admin\PaymentMethod\Edit((int)$id))->render();
         } catch (\Exception $e) {
@@ -108,7 +113,7 @@ class PaymentMethod extends \Controller\Core\Admin {
             if (!$req->isPost() || empty($_SERVER['HTTP_REFERER'])) {
                 throw new \Exception("Invalid Request");
             }
-            $paymentMethod = new \Model\PaymentMethod();
+            $paymentMethod = new ModelPaymentMethod();
             $id = $req->getGet($paymentMethod->getPrimaryKey());
 
             if ($id) {
@@ -116,7 +121,7 @@ class PaymentMethod extends \Controller\Core\Admin {
             }
 
             $paymentMethod->setData($req->getPost('paymentMethod'));
-            $paymentMethod->status = $paymentMethod->status ? \Model\PaymentMethod::STATUS_ENABLED : \Model\PaymentMethod::STATUS_DISABLED;
+            $paymentMethod->status = $paymentMethod->status ? ModelPaymentMethod::STATUS_ENABLED : ModelPaymentMethod::STATUS_DISABLED;
             $result = $paymentMethod->save();
             if (!$result) {
                 throw new \Exception('Something went wrong. Could not save data.');
@@ -131,7 +136,7 @@ class PaymentMethod extends \Controller\Core\Admin {
 
     public function deleteAction() {
         try {
-            $paymentMethod = new \Model\PaymentMethod();
+            $paymentMethod = new ModelPaymentMethod();
 
             $id = $this->getRequest()->getGet($paymentMethod->getPrimaryKey());
             if (!$id) {
@@ -153,7 +158,7 @@ class PaymentMethod extends \Controller\Core\Admin {
 
     public function toggleStatusAction() {
         try {
-            $paymentMethod = new \Model\PaymentMethod();
+            $paymentMethod = new ModelPaymentMethod();
 
             $id = $this->getRequest()->getGet($paymentMethod->getPrimaryKey());
             if (!$id) {
@@ -162,7 +167,7 @@ class PaymentMethod extends \Controller\Core\Admin {
             if (!$paymentMethod->load($id)) {
                 throw new \Exception('Could not load data.');
             }
-            $result = $paymentMethod->setData(['status' => (1 - $paymentMethod->status)])->save();
+            $result = $paymentMethod->setData(['status' => ($paymentMethod->status == ModelPaymentMethod::STATUS_ENABLED ? ModelPaymentMethod::STATUS_DISABLED : ModelPaymentMethod::STATUS_ENABLED)])->save();
             if (!$result) {
                 throw new \Exception('Something went wrong. Could not save data.');
             }

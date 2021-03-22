@@ -44,8 +44,8 @@ abstract class Table {
         return $this;
     }
 
-    public function loadAll($conditions = null, $orderBy = null) {
-        $sql = $this->buildQuery('selectAll', null, $conditions, $orderBy);
+    public function loadAll($conditions = null, $orderBy = null, $limit = null) {
+        $sql = $this->buildQuery('selectAll', null, $conditions, $orderBy, $limit);
         $modelClassName = get_class($this);
         $collectionName = substr_replace($modelClassName, '\\Collection\\', strpos($modelClassName, '\\'), 1);
         $result = $this->fetchAll($sql);
@@ -68,7 +68,7 @@ abstract class Table {
         return $this->adapter->delete($sql);
     }
 
-    public function buildQuery($type, $id=null, $conditions = null, $orderBy = null) {
+    public function buildQuery($type, $id=null, $conditions = null, $orderBy = null, $limit = null) {
         $sql = '';
         switch (strtolower($type)) {
             case 'select':
@@ -88,6 +88,9 @@ abstract class Table {
                 }
                 if (!empty($orderBy)) {
                     $sql .= " ORDER BY " . implode(", ", $orderBy);
+                }
+                if (!empty($limit)) {
+                    $sql .= " LIMIT {$limit}";
                 }
                 break;
 
@@ -199,4 +202,7 @@ abstract class Table {
         return array_key_exists($key, $this->data);
     }
 
+    public function getRow() {
+        return clone $this;
+    }
 }

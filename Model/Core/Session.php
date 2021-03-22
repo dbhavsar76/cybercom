@@ -10,6 +10,7 @@ class Session {
 
     public function start() {
         if (session_status() === PHP_SESSION_NONE) {
+            session_cache_limiter('nocache');
             session_start();
         }
         return $this;
@@ -32,12 +33,13 @@ class Session {
 
     public function __set($key, $value) {
         $_SESSION[$this->nameSpace][$key] = $value;
-        return $this;
     }
 
     public function __get($key) {
-        if (array_key_exists($key, $_SESSION[$this->nameSpace])) {
-            return $_SESSION[$this->nameSpace][$key];
+        if (array_key_exists($this->nameSpace, $_SESSION)) {
+            if (array_key_exists($key, $_SESSION[$this->nameSpace])) {
+                return $_SESSION[$this->nameSpace][$key];
+            }
         }
         return null;
     }
@@ -51,7 +53,6 @@ class Session {
 
     public function setNameSpace(string $nameSpace) {
         $this->nameSpace = $nameSpace;
-        $_SESSION[$nameSpace] = [];
         return $this;
     }
 

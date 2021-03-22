@@ -8,6 +8,7 @@ abstract class Base {
     protected $response = null;
     protected $session = null;
     protected $messageService = null;
+    protected $filterService = null;
 
     function __construct() {
         $this->setRequest();
@@ -15,7 +16,7 @@ abstract class Base {
     }
 
     public function setSession($session = null) {
-        if ($session) {
+        if (!$session) {
             $session = new \Model\Core\Session;
         }
         $this->session = $session;
@@ -36,6 +37,18 @@ abstract class Base {
 
     public function getMessageService() {
         return $this->messageService;
+    }
+
+    public function setFilterService($filterService = null) {
+        if (!$filterService) {
+            $filterService = new \Model\Core\Filter;
+        }
+        $this->filterService = $filterService;
+        return $this;
+    } 
+
+    public function getFilterService() {
+        return $this->filterService;
     }
 
     public function setLayout(\Block\Core\Layout $layout = null) {

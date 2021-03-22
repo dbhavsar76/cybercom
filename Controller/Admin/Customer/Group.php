@@ -1,13 +1,17 @@
 <?php
 namespace Controller\Admin\Customer;
 
+use Block\Admin\Customer\Group\Grid;
 use Block\Core\{Layout, Message};
 
 class Group extends \Controller\Core\Admin {
 
     public function gridAction() {
         try {
-            $gridHtml = (new \Block\Admin\Customer\Group\Grid)->render();
+            $gridBlock = new Grid();
+            $filter = $this->getFilterService()->getFilter(get_class($gridBlock));
+            $gridBlock->prepareCollection($filter);
+            $gridHtml = $gridBlock->render();
         } catch (\Exception $e) {
             $this->getMessageService()->setFailure($e->getMessage());
         }

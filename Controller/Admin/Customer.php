@@ -2,12 +2,17 @@
 namespace Controller\Admin;
 
 use Block\Core\{Message, Layout};
+use Block\Admin\Customer\Grid;
+use Model\Customer as ModelCustomer;
 
 class Customer extends \Controller\Core\Admin {
 
     public function gridAction() {
         try {
-            $gridHtml = (new \Block\Admin\Customer\Grid)->render();
+            $gridBlock = new Grid();
+            $filter = $this->getFilterService()->getFilter(get_class($gridBlock));
+            $gridBlock->prepareCollection($filter);
+            $gridHtml = $gridBlock->render();
         } catch (\Exception $e) {
             $this->getMessageService()->setFailure($e->getMessage());
         }
@@ -199,7 +204,7 @@ class Customer extends \Controller\Core\Admin {
                 throw new \Exception('Could not load data.');
             }
             $status = $customer->status;
-            $result = $customer->resetData()->setData([$customer->getPrimaryKey() => $id, 'status' => (1 - $status), 'updatedDate' => null])->save();
+            $result = $customer->resetData()->setData([$customer->getPrimaryKey() => $id, 'status' => ($status == ModelCustomer::STATUS_ENABLED ? ModelCustomer::STATUS_DISABLED : ModelCustomer::STATUS_ENABLED), 'updatedDate' => null])->save();
             if (!$result) {
                 throw new \Exception('Something went wrong. Could not save data.');
             }

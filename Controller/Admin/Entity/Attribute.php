@@ -1,13 +1,17 @@
 <?php
 namespace Controller\Admin\Entity;
 
+use Block\Admin\Entity\Attribute\Grid;
 use Block\Core\{Layout, Message};
 
 class Attribute extends \Controller\Core\Admin {
 
     public function gridAction() {
         try {
-            $gridHtml = (new \Block\Admin\Entity\Attribute\Grid)->render();
+            $gridBlock = new Grid();
+            $filter = $this->getFilterService()->getFilter(get_class($gridBlock));
+            $gridBlock->prepareCollection($filter);
+            $gridHtml = $gridBlock->render();
         } catch (\Exception $e) {
             $this->getMessageService()->setFailure($e->getMessage());
         }

@@ -1,13 +1,18 @@
 <?php
 namespace Controller\Admin;
 
+use Block\Admin\Product\Grid;
 use Block\Core\{Message, Layout};
+use Model\Product as ModelProduct;
 
 class Product extends \Controller\Core\Admin {
 
     public function gridAction() {
         try {
-            $gridHtml = (new \Block\Admin\Product\Grid)->render();
+            $gridBlock = new Grid();
+            $filter = $this->getFilterService()->getFilter(get_class($gridBlock));
+            $gridBlock->prepareCollection($filter);
+            $gridHtml = $gridBlock->render();
         } catch (\Exception $e) {
             $this->getMessageService()->setFailure($e->getMessage());
         } 
@@ -133,6 +138,7 @@ class Product extends \Controller\Core\Admin {
                     $groupPrice->resetData()->setData([$groupPrice->getPrimaryKey() => $eId, 'price' => $price])->save();
                 }
                 $groupPrice->insertMultiple($id, $groupPricesArray['new'] ?? []);
+                $product->save();
                 $this->getMessageService()->setSuccess('Data saved successfully.');
             } else if ($tab == 'category') {
                 $productCategories = $req->getPost('productCategories', []);
@@ -140,9 +146,13 @@ class Product extends \Controller\Core\Admin {
                 if (!$result) {
                     throw new \Exception('Something went wrong. Could not save data.');
                 }
+                $product->save();
+                $this->getMessageService()->setSuccess('Data saved successfully.');
+            } else if ($tab == 'attributes') {
+                $attributesData = $req->getPost('product')['attributes'];
+                $product->saveAttributes($attributesData);
                 $this->getMessageService()->setSuccess('Data saved successfully.');
             }
-            $product->save();
         } catch (\Exception $e) {
             $this->getMessageService()->setFailure($e->getMessage());
         } finally {
@@ -184,7 +194,7 @@ class Product extends \Controller\Core\Admin {
             if (!$product->load($id)) {
                 throw new \Exception('Could not load data.');
             }
-            $result = $product->setData(['status' => (1 - $product->status), 'updatedDate' => null])->save();
+            $result = $product->setData(['status' => ($product->status == ModelProduct::STATUS_ENABLED ? ModelProduct::STATUS_DISABLED : ModelProduct::STATUS_ENABLED)])->save();
             if (!$result) {
                 throw new \Exception('Something went wrong. Could not save data.');
             }
