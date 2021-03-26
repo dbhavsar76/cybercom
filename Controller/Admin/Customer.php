@@ -11,7 +11,7 @@ class Customer extends \Controller\Core\Admin {
         try {
             $gridBlock = new Grid();
             $filter = $this->getFilterService()->getFilter(get_class($gridBlock));
-            $gridBlock->prepareCollection($filter);
+            $gridBlock->prepareCollection(null); // enable filter change null to $filter
             $gridHtml = $gridBlock->render();
         } catch (\Exception $e) {
             $this->getMessageService()->setFailure($e->getMessage());

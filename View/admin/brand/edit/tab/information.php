@@ -8,6 +8,7 @@ $brand = $this->brand;
 </div>
 <div class="form-group">
     <label class="d-block">Brand Logo</label>
+    <img src="<?= $brand->getImageUrl() ?>" height="100" alt="">
     <div class="custom-file w-25">
         <input type="file" name="logo" id="brand-logo" class="custom-file-input">
         <label for="brand-logo" class="custom-file-label">Choose Image File</label>

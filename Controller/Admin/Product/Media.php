@@ -104,7 +104,9 @@ class Media extends \Controller\Core\Admin {
 
             foreach ($imageIds as $imageId) {
                 $target = ROOT . "/media/product/{$productId}/{$imageId}.png";
-                unlink($target);
+                if (file_exists($target)) {
+                    unlink($target);
+                }
             }
 
             $this->getMessageService()->setSuccess('Images removed.');

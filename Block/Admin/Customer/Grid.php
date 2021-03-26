@@ -32,7 +32,7 @@ class Grid extends \Block\Core\Grid {
 
     public function prepareButtons() {
         $this->addButton('add', [
-            'label' => 'Add Brand',
+            'label' => 'Add Customer',
             'url'   => UrlManager::getUrl('add', null, null, true),
             'class' => 'btn-success',
             'ajax'  => true,
