@@ -98,6 +98,12 @@ class Grid extends \Block\Core\Grid {
     }
 
     public function prepareActions() {
+        $this->addAction('addToCart', [
+            'label'  => '<i class="fa fa-cart-plus fa-fw" aria-hidden="true"></i>',
+            'method' => 'getAddToCartUrl',
+            'class'  => 'btn-warning text-white', 
+            'ajax'   => true,
+        ]);
         $this->addAction('edit', [
             'label'  => '<i class="fas fa-edit fa-fw"></i>',
             'method' => 'getEditUrl',
@@ -110,6 +116,10 @@ class Grid extends \Block\Core\Grid {
             'ajax'   => true
         ]);
         return $this;
+    }
+
+    public function getAddToCartUrl($row) {
+        return UrlManager::getUrl('addProduct', 'admin_cart', ['productId' => $row->getId()], true);
     }
 
     public function getEditUrl($row) {

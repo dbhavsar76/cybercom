@@ -55,4 +55,32 @@ class Customer extends \Model\Core\Table {
         return  new \Model\Collection\Customer($result);
     }
 
+    public function getFullNames() {
+        $pk = $this->getPrimaryKey();
+        $names = [];
+        $sql = "SELECT `{$pk}`, `firstName`, `lastName` FROM `{$this->getTableName()}`";
+        $result = $this->fetchAll($sql);
+        foreach ($result as $row) {
+            $names[$row[$pk]] = "{$row['firstName']} {$row['lastName']}";
+        }
+        return $names;
+    }
+
+    public function getBillingAddress() {
+        if (!$this->getId()) {
+            return false;
+        }
+        $address = \Mage::getModel('customer_address');
+        $addressType = $address::TYPE_BILLING;
+        return $address->load(null, ["`customerId` = {$this->getId()}", "`type` = '{$addressType}'"]);
+    }
+
+    public function getShippingAddress() {
+        if (!$this->getId()) {
+            return false;
+        }
+        $address = \Mage::getModel('customer_address');
+        $addressType = $address::TYPE_SHIPPING;
+        return $address->load(null, ["`customerId` = {$this->getId()}", "`type` = '{$addressType}'"]);
+    }
 }

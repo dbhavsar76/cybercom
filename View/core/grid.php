@@ -42,7 +42,7 @@ $filter = $this->getFilter();
             </tr>
         </thead>
         <tbody>
-        <?php if ($collection->count() == 0) : ?>
+        <?php if (!$collection || $collection->count() == 0) : ?>
             <tr>
                 <td class="text-center" colspan="<?= count($columns) + (boolval(count($actions))) ?>">No Records Found.</td>
             </tr>

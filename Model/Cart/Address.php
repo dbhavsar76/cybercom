@@ -1,5 +1,5 @@
 <?php
-namespace Model\Customer;
+namespace Model\Cart;
 
 class Address extends \Model\Core\Table {
     public const TYPE_BILLING = 'billing';
@@ -7,7 +7,7 @@ class Address extends \Model\Core\Table {
 
     public function __construct() {
         parent::__construct();
-        $this->setTableName('customer_address');
-        $this->setPrimaryKey('addressId');
+        $this->setTableName('cart_address');
+        $this->setPrimaryKey('cartAddressId');
     }
 }

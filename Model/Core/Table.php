@@ -11,6 +11,10 @@ abstract class Table {
         $this->setAdapter();
     }
 
+    public function getId() {
+        return $this->{$this->primaryKey};
+    }
+
     public function save() {
         if (!array_key_exists($this->primaryKey, $this->data)) {
             // insert
@@ -37,7 +41,7 @@ abstract class Table {
         }
         $sql = $this->buildQuery('select', $id, $conditions);
         $result = $this->fetchRow($sql);
-        if ($result === false) {
+        if ($result == false) {
             return false;
         }
         $this->setData($result);
@@ -200,6 +204,12 @@ abstract class Table {
 
     public function __isset($key) {
         return array_key_exists($key, $this->data);
+    }
+
+    public function __unset($key) {
+        if (array_key_exists($key, $this->data)){
+            unset($this->data[$key]);
+        }
     }
 
     public function getRow() {
