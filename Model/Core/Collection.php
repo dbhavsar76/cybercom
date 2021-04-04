@@ -10,7 +10,7 @@ class Collection extends \ArrayObject {
 
         if (!empty($array)) {
             foreach ($array as $key => $rowData) {
-                $this[$key] = (new $this->dataType)->setData($rowData);
+                $this[$key] = (new $this->dataType)->setOriginalData($rowData);
             }
         }
     }

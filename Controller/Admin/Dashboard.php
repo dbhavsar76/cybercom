@@ -29,4 +29,14 @@ class Dashboard extends \Controller\Core\Admin {
             \Model\Core\UrlManager::redirect('dashboard', null, null, true);
         }
     }
+
+    public function testAction() {
+        echo '<pre>';
+        $model = \Mage::getModel('admin');
+        $model->name = 'admin';
+        print_r($model);
+        $model->load(1);
+        print_r($model);
+        $model->save();
+    }
 }

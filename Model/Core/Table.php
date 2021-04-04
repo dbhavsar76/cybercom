@@ -6,6 +6,7 @@ abstract class Table {
     protected $primaryKey = null;
     protected $adapter = null;
     protected $data = [];
+    protected $originalData = [];
 
     protected function __construct() {
         $this->setAdapter();
@@ -16,13 +17,15 @@ abstract class Table {
     }
 
     public function save() {
-        if (!array_key_exists($this->primaryKey, $this->data)) {
+        if (!$this->getId()) {
             // insert
             $sql = $this->buildQuery('insert');
             $result = $this->adapter->insert($sql);
         } else {
             // update
             $sql = $this->buildQuery('update');
+            echo $sql;
+            die;
             $result = $this->adapter->update($sql);
         }
         if (!$result) {
@@ -32,8 +35,8 @@ abstract class Table {
     }
 
     public function load($id = null, $conditions = null) {
-        if (!$id && $this->id) {
-            $id = $this->id;
+        if (!$id && $this->getId()) {
+            $id = $this->getId();
             $id = (int)$id;
         }
         if (!$id && !$conditions) {
@@ -44,7 +47,8 @@ abstract class Table {
         if ($result == false) {
             return false;
         }
-        $this->setData($result);
+        $this->setOriginalData($result);
+        $this->resetData();
         return $this;
     }
 
@@ -117,7 +121,7 @@ abstract class Table {
             case 'update':
                 $sql = "UPDATE `{$this->tableName}` SET ";
                 $first = true;
-                foreach ($this->data as $key => $value) {
+                foreach ($this->getData() as $key => $value) {
                     if ($key === $this->primaryKey) {
                         continue;
                     }
@@ -173,6 +177,20 @@ abstract class Table {
         return $this->data;
     }
 
+    public function setOriginalData(array $data) {
+        $this->originalData = array_merge($this->originalData, $data);
+        return $this;
+    }
+
+    public function resetOriginalData() {
+        $this->originalData = [];
+        return $this;
+    }
+
+    public function getOriginalData() {
+        return $this->originalData;
+    }
+
     public function setAdapter($adapter = null) {
         if (!$adapter) {
             $adapter = new Adapter();
@@ -196,10 +214,15 @@ abstract class Table {
 
     public function __get($key)
     {
-        if (!array_key_exists($key, $this->data)) {
-            return null;
+        if (array_key_exists($key, $this->data)) {
+            return $this->data[$key];
         }
-        return $this->data[$key];
+        
+        if (array_key_exists($key, $this->originalData)) {
+            return $this->originalData[$key];
+        }
+        
+        return null;
     }
 
     public function __isset($key) {
